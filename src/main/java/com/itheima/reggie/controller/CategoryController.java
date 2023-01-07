@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +46,8 @@ public class CategoryController {
 	public Reggie<Page<Category>> pagination(@RequestParam("pageNum") final Integer pageNum,
 			@RequestParam("pageSize") final Integer pageSize) {
 		// 聲明分頁構造器；
-		final Page<Category> pageInfo = Page.of(pageNum, pageSize);
+		final PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
+		final Page<Category> pageInfo;
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
 		// 添加排序條件，根據sort進行排序；
