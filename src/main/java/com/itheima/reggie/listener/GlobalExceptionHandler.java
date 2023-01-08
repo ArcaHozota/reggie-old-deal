@@ -21,8 +21,8 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2022-11-12
  */
 @Slf4j
-@ControllerAdvice(annotations = { RestController.class, Controller.class })
 @ResponseBody
+@ControllerAdvice(annotations = { RestController.class, Controller.class })
 public class GlobalExceptionHandler {
 
 	/**

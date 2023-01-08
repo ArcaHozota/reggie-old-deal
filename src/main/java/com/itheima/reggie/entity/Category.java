@@ -60,17 +60,17 @@ public class Category implements Serializable {
 	private LocalDateTime createTime;
 
 	/**
-	 * 創建人
-	 */
-	@Column(name = "create_user", updatable = false)
-	private Long createUser;
-
-	/**
 	 * 更新時間
 	 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name = "update_time")
 	private LocalDateTime updateTime;
+
+	/**
+	 * 創建人
+	 */
+	@Column(name = "create_user", updatable = false)
+	private Long createUser;
 
 	/**
 	 * 修改者
