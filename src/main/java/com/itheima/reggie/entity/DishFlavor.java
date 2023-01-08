@@ -3,19 +3,28 @@ package com.itheima.reggie.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 菜品口味實體類
  *
  * @author Administrator
  */
-@Data
+@Getter
+@Setter
+@Entity
+@Table(name = "dish_flavor")
 public class DishFlavor implements Serializable {
 
 	private static final long serialVersionUID = 6752106293794210881L;
@@ -23,17 +32,21 @@ public class DishFlavor implements Serializable {
 	/**
 	 * ID
 	 */
-	@TableId
+	@Id
+	@GenericGenerator(name = "snowflakeId", strategy = "com.itheima.reggie.utils.SnowflakeIdGenerator")
+	@GeneratedValue(generator = "snowflakeId")
 	private Long id;
 
 	/**
 	 * 菜品ID
 	 */
+	@Column(name = "dish_id", nullable = false)
 	private Long dishId;
 
 	/**
 	 * 口味名稱
 	 */
+	@Column(nullable = false)
 	private String name;
 
 	/**
@@ -44,31 +57,33 @@ public class DishFlavor implements Serializable {
 	/**
 	 * 創建時間
 	 */
-	@TableField(fill = FieldFill.INSERT)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(name = "create_time", updatable = false, nullable = false)
 	private LocalDateTime createTime;
 
 	/**
 	 * 更新時間
 	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(name = "update_time", nullable = false)
 	private LocalDateTime updateTime;
 
 	/**
 	 * 創建人
 	 */
-	@TableField(fill = FieldFill.INSERT)
+	@Column(name = "create_user", updatable = false, nullable = false)
 	private Long createUser;
 
 	/**
 	 * 修改者
 	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@Column(name = "update_user", nullable = false)
 	private Long updateUser;
 
 	/**
 	 * 邏輯刪除字段
 	 */
-	@TableLogic
+	@Column(name = "is_deleted", nullable = false)
 	private Integer isDeleted;
 
 }
