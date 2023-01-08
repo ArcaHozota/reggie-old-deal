@@ -87,5 +87,4 @@ public class DishFlavor implements Serializable {
 	 */
 	@Column(name = "is_deleted", nullable = false)
 	private Integer isDeleted;
-
 }
