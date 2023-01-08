@@ -4,19 +4,30 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * 套餐與菜品關係實體類
- * 
+ *
  * @author Administrator
  */
-@Data
+@Getter
+@Setter
+@Entity
+@NoArgsConstructor
+@Table(name = "setmeal_dish")
 public class SetmealDish implements Serializable {
 
 	private static final long serialVersionUID = -641135780975738908L;
@@ -24,17 +35,21 @@ public class SetmealDish implements Serializable {
 	/**
 	 * ID
 	 */
-	@TableId
+	@Id
+	@GenericGenerator(name = "snowflakeId", strategy = "com.itheima.reggie.utils.SnowflakeIdGenerator")
+	@GeneratedValue(generator = "snowflakeId")
 	private Long id;
 
 	/**
 	 * 套餐ID
 	 */
+	@Column(name = "setmeal_id", nullable = false)
 	private Long setmealId;
 
 	/**
 	 * 菜品ID
 	 */
+	@Column(name = "dish_id", nullable = false)
 	private Long dishId;
 
 	/**
@@ -50,40 +65,44 @@ public class SetmealDish implements Serializable {
 	/**
 	 * 份數
 	 */
+	@Column(nullable = false)
 	private Integer copies;
 
 	/**
 	 * 排序
 	 */
+	@Column(nullable = false)
 	private Integer sort;
 
 	/**
 	 * 創建時間
 	 */
-	@TableField(fill = FieldFill.INSERT)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(name = "create_time", updatable = false, nullable = false)
 	private LocalDateTime createTime;
 
 	/**
 	 * 更新時間
 	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(name = "update_time", nullable = false)
 	private LocalDateTime updateTime;
 
 	/**
 	 * 創建人
 	 */
-	@TableField(fill = FieldFill.INSERT)
+	@Column(name = "create_user", updatable = false, nullable = false)
 	private Long createUser;
 
 	/**
 	 * 修改者
 	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@Column(name = "update_user", nullable = false)
 	private Long updateUser;
 
 	/**
 	 * 邏輯刪除字段
 	 */
-	@TableLogic
+	@Column(name = "is_deleted", nullable = false)
 	private Integer isDeleted;
 }
