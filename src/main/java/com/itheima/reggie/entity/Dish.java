@@ -41,11 +41,13 @@ public class Dish implements Serializable {
 	/**
 	 * 菜品名稱
 	 */
+	@Column(nullable = false)
 	private String name;
 
 	/**
 	 * 菜品分類ID
 	 */
+	@Column(name = "category_id", nullable = false)
 	private Long categoryId;
 
 	/**
@@ -56,11 +58,13 @@ public class Dish implements Serializable {
 	/**
 	 * 商品碼
 	 */
+	@Column(nullable = false)
 	private String code;
 
 	/**
 	 * 圖片
 	 */
+	@Column(nullable = false)
 	private String image;
 
 	/**
@@ -71,42 +75,44 @@ public class Dish implements Serializable {
 	/**
 	 * 菜品銷售狀態:0停售, 1在售;
 	 */
+	@Column(nullable = false)
 	private Integer status;
 
 	/**
 	 * 順序
 	 */
+	@Column(nullable = false)
 	private Integer sort;
 
 	/**
 	 * 創建時間
 	 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@Column(name = "create_time", updatable = false)
+	@Column(name = "create_time", updatable = false, nullable = false)
 	private LocalDateTime createTime;
 
 	/**
 	 * 更新時間
 	 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@Column(name = "update_time")
+	@Column(name = "update_time", nullable = false)
 	private LocalDateTime updateTime;
 
 	/**
 	 * 創建人
 	 */
-	@Column(name = "create_user", updatable = false)
+	@Column(name = "create_user", updatable = false, nullable = false)
 	private Long createUser;
 
 	/**
 	 * 修改者
 	 */
-	@Column(name = "update_user")
+	@Column(name = "update_user", nullable = false)
 	private Long updateUser;
 
 	/**
 	 * 邏輯刪除字段
 	 */
-	@Column(name = "is_deleted")
+	@Column(name = "is_deleted", nullable = false)
 	private Integer isDeleted;
 }

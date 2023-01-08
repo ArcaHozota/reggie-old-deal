@@ -14,6 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -24,6 +25,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "category")
 public class Category implements Serializable {
 
@@ -45,42 +47,44 @@ public class Category implements Serializable {
 	/**
 	 * 分類名稱
 	 */
+	@Column(nullable = false)
 	private String name;
 
 	/**
 	 * 順序
 	 */
+	@Column(nullable = false)
 	private Integer sort;
 
 	/**
 	 * 創建時間
 	 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@Column(name = "create_time", updatable = false)
+	@Column(name = "create_time", updatable = false, nullable = false)
 	private LocalDateTime createTime;
 
 	/**
 	 * 更新時間
 	 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@Column(name = "update_time")
+	@Column(name = "update_time", nullable = false)
 	private LocalDateTime updateTime;
 
 	/**
 	 * 創建人
 	 */
-	@Column(name = "create_user", updatable = false)
+	@Column(name = "create_user", updatable = false, nullable = false)
 	private Long createUser;
 
 	/**
 	 * 修改者
 	 */
-	@Column(name = "update_user")
+	@Column(name = "update_user", nullable = false)
 	private Long updateUser;
 
 	/**
 	 * 邏輯刪除字段
 	 */
-	@Column(name = "is_deleted")
+	@Column(name = "is_deleted", nullable = false)
 	private Integer isDeleted;
 }
