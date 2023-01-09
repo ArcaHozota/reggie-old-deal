@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Configuration;
 
 import lombok.Data;
 
+/**
+ * @author Administrator
+ */
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "snowflake")
