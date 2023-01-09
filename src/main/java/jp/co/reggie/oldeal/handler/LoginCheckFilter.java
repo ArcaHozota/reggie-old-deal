@@ -23,7 +23,7 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 登錄檢查過濾器
+ * 登錄検査過濾器
  *
  * @author Administrator
  */
@@ -73,7 +73,7 @@ public class LoginCheckFilter implements Filter {
 	}
 
 	/**
-	 * 檢查本次請求是否位於無需過濾的路徑集合
+	 * 検査本次請求是否位於無需過濾的路徑集合
 	 *
 	 * @param requestURI 本次請求路徑
 	 * @param urls       無需過濾的路徑集合
@@ -88,5 +88,4 @@ public class LoginCheckFilter implements Filter {
 		}
 		return false;
 	}
-
 }
