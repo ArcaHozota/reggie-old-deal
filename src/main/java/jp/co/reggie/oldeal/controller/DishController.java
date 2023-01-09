@@ -9,9 +9,12 @@ import javax.annotation.Resource;
 import jp.co.reggie.oldeal.common.CustomException;
 import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.dto.DishDto;
+import jp.co.reggie.oldeal.repository.CategoryRepository;
+import jp.co.reggie.oldeal.repository.DishFlavorRepository;
+import jp.co.reggie.oldeal.repository.DishRepository;
 import jp.co.reggie.oldeal.utils.Reggie;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,15 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import jp.co.reggie.oldeal.entity.Category;
-import jp.co.reggie.oldeal.entity.Dish;
-import com.itheima.reggie.service.CategoryService;
-import com.itheima.reggie.service.DishFlavorService;
-import com.itheima.reggie.service.DishService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,13 +37,13 @@ import lombok.extern.slf4j.Slf4j;
 public class DishController {
 
 	@Resource
-	private DishService dishService;
+	private DishRepository dishRepository;
 
 	@Resource
-	private CategoryService categoryService;
+	private CategoryRepository categoryRepository;
 
 	@Resource
-	private DishFlavorService dishFlavorService;
+	private DishFlavorRepository dishFlavorRepository;
 
 	/**
 	 * 新增菜品
@@ -60,7 +54,7 @@ public class DishController {
 	@PostMapping
 	public Reggie<String> save(@RequestBody final DishDto dishDto) {
 		log.info("新增菜品：{}" + dishDto.toString());
-		this.dishService.saveWithFlavour(dishDto);
+//		this.dishService.saveWithFlavour(dishDto);
 		return Reggie.success(CustomMessage.SRP004);
 	}
 
@@ -72,8 +66,8 @@ public class DishController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public Reggie<Page<DishDto>> pagination(@Param("pageNum") final Integer pageNum,
-			@Param("pageSize") final Integer pageSize, @Param("name") final String name) {
+	public Reggie<Page<DishDto>> pagination(@RequestParam("pageNum") final Integer pageNum,
+			@RequestParam("pageSize") final Integer pageSize, @RequestParam("name") final String name) {
 		// 聲明分頁構造器對象；
 		final Page<Dish> pageInfo = Page.of(pageNum, pageSize);
 		final Page<DishDto> dtoPage = new Page<>();
