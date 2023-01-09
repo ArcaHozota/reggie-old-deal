@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import jp.co.reggie.oldeal.handler.DatabaseListener;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -16,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 /**
  * 分類管理實體類
@@ -26,6 +29,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @NoArgsConstructor
+@EntityListeners(DatabaseListener.class)
 @Table(name = "category")
 public class Category implements Serializable {
 
