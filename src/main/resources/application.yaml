@@ -2,7 +2,7 @@ server:
    port: 8081
 spring:
    application:
-      name: reggie-old-deal
+      name: reggie-take-out
    datasource:
       druid:
          driver-class-name: org.postgresql.Driver
