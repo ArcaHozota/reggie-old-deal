@@ -40,9 +40,9 @@ public final class Constants {
     public static final String ERROR = "ERROR_OCCURRED";
 
     /**
-     * 重複的主鍵值
+     * 重複的主鍵値
      */
-    public static final String DUPLICATED_KEY = "Duplicate entry";
+    public static final String DUPLICATED_KEY = "DUPLICATE_KY_ETR";
 
     /**
      * 沒有相對應的結果
@@ -52,7 +52,7 @@ public final class Constants {
     /**
      * 獲取Entity類名
      *
-     * @param obj
+     * @param obj object
      * @return class_name
      */
     public static String getEntityName(Object obj) {
