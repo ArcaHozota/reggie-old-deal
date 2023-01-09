@@ -44,11 +44,11 @@ public class DatabaseListener {
 	}
 
 	@PostPersist
-	public void postPersist() throws NoSuchFieldException, IllegalAccessException {
+	public void postPersist(final Object object) throws NoSuchFieldException, IllegalAccessException {
 	}
 
 	@PostUpdate
-	public void postUpdate() throws NoSuchFieldException, IllegalAccessException {
+	public void postUpdate(final Object object) throws NoSuchFieldException, IllegalAccessException {
 	}
 
 	/**
