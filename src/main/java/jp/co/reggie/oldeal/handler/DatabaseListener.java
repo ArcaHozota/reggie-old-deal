@@ -3,7 +3,10 @@ package jp.co.reggie.oldeal.handler;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 import jp.co.reggie.oldeal.common.BaseContext;
 import org.springframework.stereotype.Component;
@@ -17,13 +20,35 @@ public class DatabaseListener {
 	@PrePersist
 	public void prePersist(final Object object) {
 		log.info("公共字段自動填充[insert]...");
-		final Class<? extends Object> class1 = object.getClass();
+		final Class<?> class1 = object.getClass();
 		try {
 			this.addUserId(object, class1, "createUser");
+			this.addUserId(object, class1, "updateUser");
 			this.addUsingTime(object, class1, "createTime");
+			this.addUsingTime(object, class1, "updateTime");
 		} catch (final ReflectiveOperationException e) {
 			log.error("類反射操作異常：", e);
 		}
+	}
+
+	@PreUpdate
+	public void preUpdate(final Object object) {
+		log.info("公共字段自動填充[update]...");
+		final Class<?> class1 = object.getClass();
+		try {
+			this.addUserId(object, class1, "updateUser");
+			this.addUsingTime(object, class1, "updateTime");
+		} catch (final ReflectiveOperationException e) {
+			log.error("類反射操作異常：", e);
+		}
+	}
+
+	@PostPersist
+	public void postPersist() throws NoSuchFieldException, IllegalAccessException {
+	}
+
+	@PostUpdate
+	public void postUpdate() throws NoSuchFieldException, IllegalAccessException {
 	}
 
 	/**
@@ -35,7 +60,7 @@ public class DatabaseListener {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 */
-	private void addUserId(final Object object, final Class<? extends Object> aClass, final String fieldName)
+	private void addUserId(final Object object, final Class<?> aClass, final String fieldName)
 			throws NoSuchFieldException, IllegalAccessException {
 		final Field userId = aClass.getDeclaredField(fieldName);
 		userId.setAccessible(true);
@@ -55,7 +80,7 @@ public class DatabaseListener {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 */
-	private void addUsingTime(final Object object, final Class<? extends Object> aClass, final String fieldName)
+	private void addUsingTime(final Object object, final Class<?> aClass, final String fieldName)
 			throws NoSuchFieldException, IllegalAccessException {
 		final Field time = aClass.getDeclaredField(fieldName);
 		time.setAccessible(true);
