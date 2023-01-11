@@ -4,9 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import jp.co.reggie.oldeal.common.CustomMessage;
-import jp.co.reggie.oldeal.repository.CategoryRepository;
-import jp.co.reggie.oldeal.utils.Reggie;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -21,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.entity.Category;
-
+import jp.co.reggie.oldeal.repository.CategoryDao;
+import jp.co.reggie.oldeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -36,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CategoryController {
 
 	@Resource
-	private CategoryRepository categoryRepository;
+	private CategoryDao categoryDao;
 
 	/**
 	 * 分頁信息顯示
@@ -51,7 +50,7 @@ public class CategoryController {
 		// 聲明分頁構造器；
 		final PageRequest pageRequest = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.ASC, "sort"));
 		// 執行查詢；
-		final Page<Category> pageInfo = this.categoryRepository.findAll(pageRequest);
+		final Page<Category> pageInfo = this.categoryDao.findAll(pageRequest);
 		return Reggie.success(pageInfo);
 	}
 
@@ -64,7 +63,7 @@ public class CategoryController {
 	@PostMapping
 	public Reggie<String> save(@RequestBody final Category category) {
 		log.info("category:{}", category);
-		this.categoryRepository.save(category);
+		this.categoryDao.save(category);
 		return Reggie.success(CustomMessage.SRP001);
 	}
 
@@ -78,7 +77,7 @@ public class CategoryController {
 	public Reggie<String> delete(@RequestParam("ids") final Long id) {
 		log.info("刪除ID={}的分類", id);
 		// 實施刪除；
-		this.categoryRepository.deleteById(id);
+		this.categoryDao.deleteById(id);
 		return Reggie.success(CustomMessage.SRP003);
 	}
 
@@ -92,7 +91,7 @@ public class CategoryController {
 	public Reggie<String> update(@RequestBody final Category category) {
 		log.info("修改分類信息：{}", category);
 		// 執行修改操作；
-		this.categoryRepository.saveAndFlush(category);
+		this.categoryDao.saveAndFlush(category);
 		return Reggie.success(CustomMessage.SRP002);
 	}
 
@@ -113,7 +112,7 @@ public class CategoryController {
 				.withMatcher(type.toString(), ExampleMatcher.GenericPropertyMatchers.exact());
 		final Example<Category> example = Example.of(category1, matcher);
 		// 查詢分類結果集並返回；
-		final List<Category> list = this.categoryRepository.findAll(example);
+		final List<Category> list = this.categoryDao.findAll(example);
 		return Reggie.success(list);
 	}
 }
