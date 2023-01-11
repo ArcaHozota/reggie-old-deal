@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Administrator
  */
-public interface SetmealDishRepository extends JpaRepository<SetmealDish, Long> {
+public interface SetmealDishDao extends JpaRepository<SetmealDish, Long> {
 }

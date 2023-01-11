@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Administrator
  */
-public interface DishFlavorRepository extends JpaRepository<DishFlavor, Long> {
+public interface DishFlavorDao extends JpaRepository<DishFlavor, Long> {
 }

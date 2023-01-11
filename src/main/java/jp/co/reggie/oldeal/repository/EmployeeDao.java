@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Administrator
  */
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+public interface EmployeeDao extends JpaRepository<Employee, Long> {
 }
