@@ -1,12 +1,14 @@
 package jp.co.reggie.oldeal.controller;
 
+import java.util.Optional;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import jp.co.reggie.oldeal.common.Constants;
-import jp.co.reggie.oldeal.common.CustomMessage;
-import jp.co.reggie.oldeal.utils.Reggie;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,14 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jp.co.reggie.oldeal.common.Constants;
+import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.entity.Employee;
-import com.itheima.reggie.service.EmployeeService;
-
+import jp.co.reggie.oldeal.repository.EmployeeDao;
+import jp.co.reggie.oldeal.utils.Reggie;
+import jp.co.reggie.oldeal.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -35,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 public class EmployeeController {
 
 	@Resource
-	private EmployeeService employeeService;
+	private EmployeeDao employeeDao;
 
 	/**
 	 * 員工登錄
@@ -49,21 +52,26 @@ public class EmployeeController {
 		// 將頁面提交的密碼進行MD5加密；
 		final String password = DigestUtils.md5DigestAsHex(employee.getPassword().getBytes()).toUpperCase();
 		// 根據頁面提交的用戸名查詢數據庫；
-		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
-		queryWrapper.eq(Employee::getUsername, employee.getUsername());
-		// 獲取One對象；
-		final Employee aEmployee = this.employeeService.getOne(queryWrapper);
+		final Employee employee2 = new Employee();
+		employee2.setUsername(employee.getUsername());
+		final ExampleMatcher matcher = ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.EXACT)
+				.withIgnoreCase(true).withMatcher(password, ExampleMatcher.GenericPropertyMatchers.exact())
+				.withIgnorePaths("id", "name", "password", "phoneNo", "gender", "idNumber", "status", "createTime",
+						"updateTime", "createUser", "updateUser", "isDeleted");
+		final Example<Employee> example = Example.of(employee2, matcher);
+		// 獲取Optional對象；
+		final Optional<Employee> aEmployee = this.employeeDao.findOne(example);
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
-		if (aEmployee == null || !password.equals(aEmployee.getPassword())) {
+		if (aEmployee.get() == null || StringUtils.isNotEqual(password, aEmployee.get().getPassword())) {
 			return Reggie.error(Constants.LOGIN_FAILED);
 		}
 		// 查看用戸狀態，如果已被禁用，則返回賬號已禁用；
-		if (aEmployee.getStatus() == 0) {
+		if (aEmployee.get().getStatus() == 0) {
 			return Reggie.error(Constants.FORBIDDEN);
 		}
 		// 登錄成功，將員工ID存入Session並返回登錄成功；
-		request.getSession().setAttribute(Constants.getEntityName(employee), aEmployee.getId());
-		return Reggie.success(aEmployee);
+		request.getSession().setAttribute(Constants.getEntityName(employee), aEmployee.get().getId());
+		return Reggie.success(aEmployee.get());
 	}
 
 	/**
@@ -90,7 +98,7 @@ public class EmployeeController {
 		log.info("員工信息：{}", employee.toString());
 		// 設置初始密碼，需進行MD5加密；
 		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
-		this.employeeService.save(employee);
+		this.employeeDao.save(employee);
 		return Reggie.success(CustomMessage.SRP006);
 	}
 
@@ -103,18 +111,22 @@ public class EmployeeController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public Reggie<Page<Employee>> pagination(@Param("pageNum") final Integer pageNum,
-			@Param("pageSize") final Integer pageSize, @Param("name") final String name) {
+	public Reggie<Page<Employee>> pagination(@RequestParam("pageNum") final Integer pageNum,
+			@RequestParam("pageSize") final Integer pageSize, @RequestParam("name") final String name) {
 		// 聲明分頁構造器；
-		final Page<Employee> pageInfo = Page.of(pageNum, pageSize);
+		final PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
 		// 聲明條件構造器；
-		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
+		final Employee employee = new Employee();
 		// 添加過濾條件；
-		queryWrapper.like(!name.isBlank(), Employee::getName, name);
-		// 添加排序條件；
-		queryWrapper.orderByDesc(Employee::getUpdateTime);
+		final ExampleMatcher matcher = ExampleMatcher.matching()
+				.withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING).withIgnoreCase(true)
+				.withMatcher(name, ExampleMatcher.GenericPropertyMatchers.contains()).withIgnorePaths("id", "username",
+						"password", "phoneNo", "gender", "idNumber", "status", "createTime", "updateTime", "createUser",
+						"updateUser", "isDeleted");
+		employee.setName(name);
+		final Example<Employee> example = Example.of(employee, matcher);
 		// 執行查詢；
-		this.employeeService.page(pageInfo, queryWrapper);
+		final Page<Employee> pageInfo = this.employeeDao.findAll(example, pageRequest);
 		return Reggie.success(pageInfo);
 	}
 
@@ -126,7 +138,7 @@ public class EmployeeController {
 	 */
 	@PutMapping
 	public Reggie<String> update(@RequestBody final Employee employee) {
-		this.employeeService.updateById(employee);
+		this.employeeDao.saveAndFlush(employee);
 		return Reggie.success(CustomMessage.SRP008);
 	}
 
@@ -139,7 +151,7 @@ public class EmployeeController {
 	@GetMapping("/{id}")
 	public Reggie<Employee> getById(@PathVariable final Long id) {
 		log.info("根據ID查詢員工信息...");
-		final Employee employee = this.employeeService.getById(id);
+		final Employee employee = this.employeeDao.getById(id);
 		// 如果沒有相對應的結果，則返回錯誤信息；
 		if (employee == null) {
 			return Reggie.error(Constants.NO_CONSEQUENCE);
