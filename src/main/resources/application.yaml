@@ -10,7 +10,7 @@ spring:
          username: postgres
          password: postgres
          max-active: 40
-         max-wait: 150000
+         max-wait: 1500000
    output:
       ansi:
          enabled: ALWAYS

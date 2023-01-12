@@ -68,7 +68,7 @@ public class Snowflake {
 	 * @return SnowflakeIdWorker
 	 */
 	@Bean
-	public Snowflake snowflake() {
+	protected Snowflake snowflake() {
 		return new Snowflake(this.snowflakeProperties.getWorkerId(), this.snowflakeProperties.getDataCenterId());
 	}
 
