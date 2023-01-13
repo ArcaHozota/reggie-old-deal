@@ -113,18 +113,25 @@ public class EmployeeController {
 			@RequestParam("pageSize") final Integer pageSize, @RequestParam("name") final String name) {
 		// 聲明分頁構造器；
 		final PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
+		Page<Employee> pageInfo;
 		// 聲明條件構造器；
 		final Employee employee = new Employee();
-		// 添加過濾條件；
-		employee.setName(name);
-		final ExampleMatcher matcher = ExampleMatcher.matching()
-				.withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING).withIgnoreCase(true)
-				.withMatcher(name, ExampleMatcher.GenericPropertyMatchers.contains()).withIgnorePaths("id", "username",
-						"password", "phoneNo", "gender", "idNumber", "status", "createTime", "updateTime", "createUser",
-						"updateUser", "isDeleted");
-		final Example<Employee> example = Example.of(employee, matcher);
-		// 執行查詢；
-		final Page<Employee> pageInfo = this.employeeDao.findAll(example, pageRequest);
+		// 當過濾條件不為空時；
+		if (StringUtils.isNotEmpty(name)) {
+			// 添加過濾條件；
+			employee.setName(name);
+			final ExampleMatcher matcher = ExampleMatcher.matching()
+					.withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING).withIgnoreCase(true)
+					.withMatcher(name, ExampleMatcher.GenericPropertyMatchers.contains()).withIgnorePaths("id",
+							"username", "password", "phoneNo", "gender", "idNumber", "status", "createTime",
+							"updateTime", "createUser", "updateUser", "isDeleted");
+			final Example<Employee> example = Example.of(employee, matcher);
+			// 執行附帶條件的分頁查詢；
+			pageInfo = this.employeeDao.findAll(example, pageRequest);
+		} else {
+			// 執行普通分頁查詢；
+			pageInfo = this.employeeDao.findAll(pageRequest);
+		}
 		return Reggie.success(pageInfo);
 	}
 
