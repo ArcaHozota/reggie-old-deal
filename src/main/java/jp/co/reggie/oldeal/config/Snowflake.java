@@ -2,8 +2,6 @@ package jp.co.reggie.oldeal.config;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.context.annotation.Configuration;
 
 import lombok.RequiredArgsConstructor;
@@ -50,8 +48,7 @@ public class Snowflake {
 	 * @param workerId     ワークノードID
 	 * @param dataCenterId データセンターID
 	 */
-	@PostConstruct
-	protected void init(final Long workerId, final Long dataCenterId) {
+	protected Snowflake(final Long workerId, final Long dataCenterId) {
 		// 檢查datacenterId値的合法性；
 		if (this.dataCenterId < 0 || this.dataCenterId > MAX_DATA_CENTER_ID) {
 			throw new IllegalArgumentException(String.format("datacenterId的値必須大於0並且小於%d", MAX_DATA_CENTER_ID));
