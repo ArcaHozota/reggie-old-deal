@@ -15,9 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootApplication
 @ServletComponentScan
 @EnableTransactionManagement
-public class ReggieApplication {
+public class ReggieOldApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(ReggieApplication.class, args);
+		SpringApplication.run(ReggieOldApplication.class, args);
 		log.info("本工程啓動成功......");
 	}
 }
