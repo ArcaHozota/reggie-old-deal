@@ -55,9 +55,7 @@ public class EmployeeController {
 		final Employee employee2 = new Employee();
 		employee2.setUsername(employee.getUsername());
 		final ExampleMatcher matcher = ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.EXACT)
-				.withIgnoreCase(true).withMatcher(password, ExampleMatcher.GenericPropertyMatchers.exact())
-				.withIgnorePaths("id", "name", "password", "phoneNo", "gender", "idNumber", "status", "createTime",
-						"updateTime", "createUser", "updateUser", "isDeleted");
+				.withMatcher(employee.getUsername(), ExampleMatcher.GenericPropertyMatchers.exact());
 		final Example<Employee> example = Example.of(employee2, matcher);
 		// 獲取Optional對象；
 		final Optional<Employee> aEmployee = this.employeeDao.findOne(example);
