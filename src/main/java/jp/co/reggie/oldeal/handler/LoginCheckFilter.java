@@ -17,6 +17,8 @@ import com.alibaba.fastjson.JSON;
 
 import jp.co.reggie.oldeal.common.BaseContext;
 import jp.co.reggie.oldeal.common.Constants;
+import jp.co.reggie.oldeal.entity.Employee;
+import jp.co.reggie.oldeal.entity.User;
 import jp.co.reggie.oldeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,8 +47,8 @@ public class LoginCheckFilter implements Filter {
 		final String[] urls = new String[] { "/employee/login", "/employee/logout", "/front/**", "/backend/**",
 				"/common/**", "/user/login", "/user/sendMsg" };
 		// 獲取用戸ID；
-		final Long empId = (Long) request.getSession().getAttribute("employee");
-		final Long userId = (Long) request.getSession().getAttribute("user");
+		final Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(new Employee()));
+		final Long userId = (Long) request.getSession().getAttribute(Constants.getEntityName(new User()));
 		// 判斷本次請求是否需要處理，如果勿需處理，則直接放行；
 		if (this.check(requestURI, urls)) {
 			log.info("本次請求{}不需要處理", requestURI);
@@ -71,7 +73,7 @@ public class LoginCheckFilter implements Filter {
 	}
 
 	/**
-	 * 檢查本次請求是否位於無需過濾的路徑集合
+	 * 検査本次請求是否位於無需過濾的路徑集合
 	 *
 	 * @param requestURI 本次請求路徑
 	 * @param urls       無需過濾的路徑集合
