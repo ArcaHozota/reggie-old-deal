@@ -10,11 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import jp.co.reggie.oldeal.handler.DatabaseListener;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jp.co.reggie.oldeal.handler.DatabaseListener;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,7 +38,7 @@ public class DishFlavor implements Serializable {
 	 * ID
 	 */
 	@Id
-	@GenericGenerator(name = "snowflakeId", strategy = "com.itheima.reggie.utils.SnowflakeIdGenerator")
+	@GenericGenerator(name = "snowflakeId", strategy = "jp.co.reggie.oldeal.utils.SnowflakeIdGenerator")
 	@GeneratedValue(generator = "snowflakeId")
 	private Long id;
 

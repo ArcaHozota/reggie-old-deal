@@ -32,7 +32,7 @@ public class User implements Serializable {
 	 * ID
 	 */
 	@Id
-	@GenericGenerator(name = "snowflakeId", strategy = "com.itheima.reggie.utils.SnowflakeIdGenerator")
+	@GenericGenerator(name = "snowflakeId", strategy = "jp.co.reggie.oldeal.utils.SnowflakeIdGenerator")
 	@GeneratedValue(generator = "snowflakeId")
 	private Long id;
 
