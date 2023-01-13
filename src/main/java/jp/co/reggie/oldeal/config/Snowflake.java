@@ -2,6 +2,8 @@ package jp.co.reggie.oldeal.config;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.context.annotation.Configuration;
 
 import lombok.RequiredArgsConstructor;
@@ -11,7 +13,8 @@ import lombok.RequiredArgsConstructor;
 public class Snowflake {
 
 	// 算法基礎屬性；
-	private final SnowflakeProperties snowflakeProperties = new SnowflakeProperties();
+	private Long workerId;
+	private Long dataCenterId;
 	// 初始時間(紀年)，可用雪花算法服務上線時間戳的値；
 	// 1649059688068L即2022-04-04 16:08:08:UTC+8
 	private static final long INIT_EPOCH = 1649059688068L;
@@ -41,35 +44,25 @@ public class Snowflake {
 	// 時間戳需要左移的位數：12+5+5；
 	private static final long TIMESTAMP_SHIFT = SEQUENCE_BITS + WORKER_ID_BITS + DATA_CENTER_ID_BITS;
 
-//	/**
-//	 * 參數構造器
-//	 *
-//	 * @param workerId     ワークノードID
-//	 * @param dataCenterId データセンターID
-//	 */
-//	private Snowflake(final Long workerId, final Long dataCenterId) {
-//		// 檢查datacenterId値的合法性；
-//		if (this.snowflakeProperties.getDataCenterId() < 0
-//				|| this.snowflakeProperties.getDataCenterId() > MAX_DATA_CENTER_ID) {
-//			throw new IllegalArgumentException(String.format("datacenterId的値必須大於0並且小於%d", MAX_DATA_CENTER_ID));
-//		}
-//		// 檢查workId値的合法性；
-//		if (this.snowflakeProperties.getWorkerId() < 0 || this.snowflakeProperties.getWorkerId() > MAX_WORKER_ID) {
-//			throw new IllegalArgumentException(String.format("workId的値必須大於0並且小於%d", MAX_WORKER_ID));
-//		}
-//		this.snowflakeProperties.setDataCenterId(dataCenterId);
-//		this.snowflakeProperties.setWorkerId(workerId);
-//	}
-
-//	/**
-//	 * 初始化SnowflakeIdWorkerBean
-//	 *
-//	 * @return SnowflakeIdWorker
-//	 */
-//	@Bean
-//	protected Snowflake snowflake() {
-//		return new Snowflake(this.snowflakeProperties.getWorkerId(), this.snowflakeProperties.getDataCenterId());
-//	}
+	/**
+	 * 參數構造器
+	 *
+	 * @param workerId     ワークノードID
+	 * @param dataCenterId データセンターID
+	 */
+	@PostConstruct
+	private void init(final Long workerId, final Long dataCenterId) {
+		// 檢查datacenterId値的合法性；
+		if (this.dataCenterId < 0 || this.dataCenterId > MAX_DATA_CENTER_ID) {
+			throw new IllegalArgumentException(String.format("datacenterId的値必須大於0並且小於%d", MAX_DATA_CENTER_ID));
+		}
+		// 檢查workId値的合法性；
+		if (this.workerId < 0 || this.workerId > MAX_WORKER_ID) {
+			throw new IllegalArgumentException(String.format("workId的値必須大於0並且小於%d", MAX_WORKER_ID));
+		}
+		this.dataCenterId = dataCenterId;
+		this.workerId = workerId;
+	}
 
 	/**
 	 * 獲取指定時間戳的下一時刻，也可以説是下一毫秒；
@@ -114,8 +107,7 @@ public class Snowflake {
 		// 記錄最後使用的毫秒時間戳；
 		this.lastTimeMillis = currentTimeMillis;
 		// 核心算法，將不同部分的數值移動到指定的位置，然后進行或運行；
-		return ((currentTimeMillis - INIT_EPOCH) << TIMESTAMP_SHIFT)
-				| (this.snowflakeProperties.getDataCenterId() << DATA_CENTER_ID_SHIFT)
-				| (this.snowflakeProperties.getWorkerId() << WORK_ID_SHIFT) | this.sequence;
+		return ((currentTimeMillis - INIT_EPOCH) << TIMESTAMP_SHIFT) | (this.dataCenterId << DATA_CENTER_ID_SHIFT)
+				| (this.workerId << WORK_ID_SHIFT) | this.sequence;
 	}
 }
