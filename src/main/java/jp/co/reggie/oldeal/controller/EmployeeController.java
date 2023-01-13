@@ -116,12 +116,12 @@ public class EmployeeController {
 		// 聲明條件構造器；
 		final Employee employee = new Employee();
 		// 添加過濾條件；
+		employee.setName(name);
 		final ExampleMatcher matcher = ExampleMatcher.matching()
 				.withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING).withIgnoreCase(true)
 				.withMatcher(name, ExampleMatcher.GenericPropertyMatchers.contains()).withIgnorePaths("id", "username",
 						"password", "phoneNo", "gender", "idNumber", "status", "createTime", "updateTime", "createUser",
 						"updateUser", "isDeleted");
-		employee.setName(name);
 		final Example<Employee> example = Example.of(employee, matcher);
 		// 執行查詢；
 		final Page<Employee> pageInfo = this.employeeDao.findAll(example, pageRequest);
