@@ -11,15 +11,13 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.co.reggie.oldeal.common.BaseContext;
-import jp.co.reggie.oldeal.common.Constants;
-import jp.co.reggie.oldeal.entity.Employee;
-import jp.co.reggie.oldeal.entity.User;
-import jp.co.reggie.oldeal.utils.Reggie;
 import org.springframework.util.AntPathMatcher;
 
 import com.alibaba.fastjson.JSON;
 
+import jp.co.reggie.oldeal.common.BaseContext;
+import jp.co.reggie.oldeal.common.Constants;
+import jp.co.reggie.oldeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -47,8 +45,8 @@ public class LoginCheckFilter implements Filter {
 		final String[] urls = new String[] { "/employee/login", "/employee/logout", "/front/**", "/backend/**",
 				"/common/**", "/user/login", "/user/sendMsg" };
 		// 獲取用戸ID；
-		final Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(new Employee()));
-		final Long UserId = (Long) request.getSession().getAttribute(Constants.getEntityName(new User()));
+		final Long empId = (Long) request.getSession().getAttribute("employee");
+		final Long userId = (Long) request.getSession().getAttribute("user");
 		// 判斷本次請求是否需要處理，如果勿需處理，則直接放行；
 		if (this.check(requestURI, urls)) {
 			log.info("本次請求{}不需要處理", requestURI);
@@ -60,10 +58,10 @@ public class LoginCheckFilter implements Filter {
 			BaseContext.setCurrentId(empId);
 			filterChain.doFilter(request, response);
 			return;
-		} else if (UserId != null) {
-			log.info("用戸已登錄，用戸ID為：{}", UserId);
+		} else if (userId != null) {
+			log.info("用戸已登錄，用戸ID為：{}", userId);
 			// 將當前ID儲存於内存綫程中；
-			BaseContext.setCurrentId(UserId);
+			BaseContext.setCurrentId(userId);
 			filterChain.doFilter(request, response);
 			return;
 		}
@@ -73,7 +71,7 @@ public class LoginCheckFilter implements Filter {
 	}
 
 	/**
-	 * 検査本次請求是否位於無需過濾的路徑集合
+	 * 檢查本次請求是否位於無需過濾的路徑集合
 	 *
 	 * @param requestURI 本次請求路徑
 	 * @param urls       無需過濾的路徑集合
