@@ -109,10 +109,4 @@ public class Employee implements Serializable {
 	 */
 	@Column(name = "update_user", nullable = false)
 	private Long updateUser;
-
-	/**
-	 * 邏輯刪除字段
-	 */
-	@Column(name = "is_deleted", nullable = false)
-	private Integer isDeleted;
 }

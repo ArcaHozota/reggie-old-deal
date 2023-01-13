@@ -2,7 +2,6 @@ package jp.co.reggie.oldeal.config;
 
 import java.io.Serializable;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import lombok.RequiredArgsConstructor;
@@ -42,35 +41,35 @@ public class Snowflake {
 	// 時間戳需要左移的位數：12+5+5；
 	private static final long TIMESTAMP_SHIFT = SEQUENCE_BITS + WORKER_ID_BITS + DATA_CENTER_ID_BITS;
 
-	/**
-	 * 參數構造器
-	 *
-	 * @param workerId     ワークノードID
-	 * @param dataCenterId データセンターID
-	 */
-	private Snowflake(final Long workerId, final Long dataCenterId) {
-		// 檢查datacenterId値的合法性；
-		if (this.snowflakeProperties.getDataCenterId() < 0
-				|| this.snowflakeProperties.getDataCenterId() > MAX_DATA_CENTER_ID) {
-			throw new IllegalArgumentException(String.format("datacenterId的値必須大於0並且小於%d", MAX_DATA_CENTER_ID));
-		}
-		// 檢查workId値的合法性；
-		if (this.snowflakeProperties.getWorkerId() < 0 || this.snowflakeProperties.getWorkerId() > MAX_WORKER_ID) {
-			throw new IllegalArgumentException(String.format("workId的値必須大於0並且小於%d", MAX_WORKER_ID));
-		}
-		this.snowflakeProperties.setDataCenterId(dataCenterId);
-		this.snowflakeProperties.setWorkerId(workerId);
-	}
+//	/**
+//	 * 參數構造器
+//	 *
+//	 * @param workerId     ワークノードID
+//	 * @param dataCenterId データセンターID
+//	 */
+//	private Snowflake(final Long workerId, final Long dataCenterId) {
+//		// 檢查datacenterId値的合法性；
+//		if (this.snowflakeProperties.getDataCenterId() < 0
+//				|| this.snowflakeProperties.getDataCenterId() > MAX_DATA_CENTER_ID) {
+//			throw new IllegalArgumentException(String.format("datacenterId的値必須大於0並且小於%d", MAX_DATA_CENTER_ID));
+//		}
+//		// 檢查workId値的合法性；
+//		if (this.snowflakeProperties.getWorkerId() < 0 || this.snowflakeProperties.getWorkerId() > MAX_WORKER_ID) {
+//			throw new IllegalArgumentException(String.format("workId的値必須大於0並且小於%d", MAX_WORKER_ID));
+//		}
+//		this.snowflakeProperties.setDataCenterId(dataCenterId);
+//		this.snowflakeProperties.setWorkerId(workerId);
+//	}
 
-	/**
-	 * 初始化SnowflakeIdWorkerBean
-	 *
-	 * @return SnowflakeIdWorker
-	 */
-	@Bean
-	protected Snowflake snowflake() {
-		return new Snowflake(this.snowflakeProperties.getWorkerId(), this.snowflakeProperties.getDataCenterId());
-	}
+//	/**
+//	 * 初始化SnowflakeIdWorkerBean
+//	 *
+//	 * @return SnowflakeIdWorker
+//	 */
+//	@Bean
+//	protected Snowflake snowflake() {
+//		return new Snowflake(this.snowflakeProperties.getWorkerId(), this.snowflakeProperties.getDataCenterId());
+//	}
 
 	/**
 	 * 獲取指定時間戳的下一時刻，也可以説是下一毫秒；
