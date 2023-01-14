@@ -110,7 +110,8 @@ public class EmployeeController {
 	 */
 	@GetMapping("/page")
 	public Reggie<Page<Employee>> pagination(@RequestParam("pageNum") final Integer pageNum,
-			@RequestParam("pageSize") final Integer pageSize, @RequestParam("name") final String name) {
+			@RequestParam("pageSize") final Integer pageSize,
+			@RequestParam(name = "name", required = false) final String name) {
 		// 聲明分頁構造器；
 		final PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
 		Page<Employee> pageInfo;
