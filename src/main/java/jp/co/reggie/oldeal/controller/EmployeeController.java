@@ -136,6 +136,7 @@ public class EmployeeController {
 			pageInfo = this.employeeDao.findAll(pageRequest);
 		}
 		PaginationImpl<Employee> pages = new PaginationImpl<>(pageInfo.getContent());
+		pages.setContent(pageInfo.getContent());
         pages.setTotalRecords(pageInfo.getTotalElements());
 		return Reggie.success(pages);
 	}

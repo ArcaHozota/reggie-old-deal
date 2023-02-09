@@ -25,6 +25,5 @@ public class PaginationImpl<T> extends PageImpl<T> {
 
     public PaginationImpl(final List<T> content) {
         super(content);
-        this.content = content;
     }
 }
