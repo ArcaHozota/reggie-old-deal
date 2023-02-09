@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import jp.co.reggie.oldeal.utils.PaginationImpl;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -25,6 +24,7 @@ import jp.co.reggie.oldeal.common.Constants;
 import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.entity.Employee;
 import jp.co.reggie.oldeal.repository.EmployeeDao;
+import jp.co.reggie.oldeal.utils.PaginationImpl;
 import jp.co.reggie.oldeal.utils.Reggie;
 import jp.co.reggie.oldeal.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -135,9 +135,9 @@ public class EmployeeController {
 			// 執行普通分頁查詢；
 			pageInfo = this.employeeDao.findAll(pageRequest);
 		}
-		PaginationImpl<Employee> pages = new PaginationImpl<>(pageInfo.getContent());
-		pages.setContent(pageInfo.getContent());
-        pages.setTotalRecords(pageInfo.getTotalElements());
+		final List<Employee> employees = pageInfo.getContent();
+		log.info(String.valueOf(pageInfo.hasContent()));
+		final PaginationImpl<Employee> pages = new PaginationImpl<>(employees);
 		return Reggie.success(pages);
 	}
 
