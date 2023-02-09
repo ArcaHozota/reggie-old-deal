@@ -1,10 +1,12 @@
 package jp.co.reggie.oldeal.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import jp.co.reggie.oldeal.utils.PaginationImpl;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -60,7 +62,7 @@ public class EmployeeController {
 		// 獲取Optional對象；
 		final Optional<Employee> aEmployee = this.employeeDao.findOne(example);
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
-		if (aEmployee.get() == null || StringUtils.isNotEqual(password, aEmployee.get().getPassword())) {
+		if (aEmployee.isEmpty() || StringUtils.isNotEqual(password, aEmployee.get().getPassword())) {
 			return Reggie.error(Constants.LOGIN_FAILED);
 		}
 		// 查看用戸狀態，如果已被禁用，則返回賬號已禁用；
@@ -133,7 +135,9 @@ public class EmployeeController {
 			// 執行普通分頁查詢；
 			pageInfo = this.employeeDao.findAll(pageRequest);
 		}
-		return Reggie.success(pageInfo);
+		PaginationImpl<Employee> pages = new PaginationImpl<>(pageInfo.getContent());
+        pages.setTotalRecords(pageInfo.getTotalElements());
+		return Reggie.success(pages);
 	}
 
 	/**
