@@ -107,16 +107,15 @@ public class EmployeeController {
 	 *
 	 * @param pageNum  頁碼
 	 * @param pageSize 頁面大小
-	 * @param name     檢索文
+	 * @param keyword  檢索文
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
 	public Reggie<Page<Employee>> pagination(@RequestParam("pageNum") final Integer pageNum,
 			@RequestParam("pageSize") final Integer pageSize,
-			@RequestParam(name = "name", required = false) final String name) {
-		// 聲明分頁構造器；
+			@RequestParam(name = "name", required = false) final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
-		final Page<Employee> pageInfo = this.employeeRepository.getByNames(name, pageRequest);
+		final Page<Employee> pageInfo = this.employeeRepository.getByNames(keyword, pageRequest);
 		final List<Employee> employees = pageInfo.getContent();
 		log.info(String.valueOf(pageInfo.hasContent()));
 		final PaginationImpl<Employee> pages = new PaginationImpl<>(employees);
