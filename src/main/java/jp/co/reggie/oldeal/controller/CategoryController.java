@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.entity.Category;
-import jp.co.reggie.oldeal.repository.CategoryDao;
+import jp.co.reggie.oldeal.repository.CategoryRepository;
 import jp.co.reggie.oldeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CategoryController {
 
 	@Resource
-	private CategoryDao categoryDao;
+	private CategoryRepository categoryDao;
 
 	/**
 	 * 分頁信息顯示

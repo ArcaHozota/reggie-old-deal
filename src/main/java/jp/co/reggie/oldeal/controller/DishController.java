@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.dto.DishDto;
-import jp.co.reggie.oldeal.repository.CategoryDao;
-import jp.co.reggie.oldeal.repository.DishDao;
-import jp.co.reggie.oldeal.repository.DishFlavorDao;
+import jp.co.reggie.oldeal.repository.CategoryRepository;
+import jp.co.reggie.oldeal.repository.DishRepository;
+import jp.co.reggie.oldeal.repository.DishFlavorRepository;
 import jp.co.reggie.oldeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,13 +26,13 @@ import lombok.extern.slf4j.Slf4j;
 public class DishController {
 
 	@Resource
-	private DishDao dishDao;
+	private DishRepository dishDao;
 
 	@Resource
-	private CategoryDao categoryDao;
+	private CategoryRepository categoryDao;
 
 	@Resource
-	private DishFlavorDao dishFlavorDao;
+	private DishFlavorRepository dishFlavorDao;
 
 	/**
 	 * 新增菜品
