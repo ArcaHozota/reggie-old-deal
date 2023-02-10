@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jp.co.reggie.oldeal.common.Constants;
 import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.entity.Employee;
-import jp.co.reggie.oldeal.repository.EmployeeDao;
+import jp.co.reggie.oldeal.repository.EmployeeRepository;
 import jp.co.reggie.oldeal.utils.PaginationImpl;
 import jp.co.reggie.oldeal.utils.Reggie;
 import jp.co.reggie.oldeal.utils.StringUtils;
@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 public class EmployeeController {
 
 	@Resource
-	private EmployeeDao employeeDao;
+	private EmployeeRepository employeeRepository;
 
 	/**
 	 * 員工登錄
@@ -60,7 +60,7 @@ public class EmployeeController {
 				.withMatcher(employee.getUsername(), ExampleMatcher.GenericPropertyMatchers.exact());
 		final Example<Employee> example = Example.of(employee2, matcher);
 		// 獲取Optional對象；
-		final Optional<Employee> aEmployee = this.employeeDao.findOne(example);
+		final Optional<Employee> aEmployee = this.employeeRepository.findOne(example);
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
 		if (aEmployee.isEmpty() || StringUtils.isNotEqual(password, aEmployee.get().getPassword())) {
 			return Reggie.error(Constants.LOGIN_FAILED);
@@ -98,7 +98,7 @@ public class EmployeeController {
 		log.info("員工信息：{}", employee.toString());
 		// 設置初始密碼，需進行MD5加密；
 		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
-		this.employeeDao.save(employee);
+		this.employeeRepository.save(employee);
 		return Reggie.success(CustomMessage.SRP006);
 	}
 
@@ -116,25 +116,7 @@ public class EmployeeController {
 			@RequestParam(name = "name", required = false) final String name) {
 		// 聲明分頁構造器；
 		final PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
-		Page<Employee> pageInfo;
-		// 聲明條件構造器；
-		final Employee employee = new Employee();
-		// 當過濾條件不為空時；
-		if (StringUtils.isNotEmpty(name)) {
-			// 添加過濾條件；
-			employee.setName(name);
-			final ExampleMatcher matcher = ExampleMatcher.matching()
-					.withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING).withIgnoreCase(true)
-					.withMatcher(name, ExampleMatcher.GenericPropertyMatchers.contains()).withIgnorePaths("id",
-							"username", "password", "phoneNo", "gender", "idNumber", "status", "createTime",
-							"updateTime", "createUser", "updateUser", "isDeleted");
-			final Example<Employee> example = Example.of(employee, matcher);
-			// 執行附帶條件的分頁查詢；
-			pageInfo = this.employeeDao.findAll(example, pageRequest);
-		} else {
-			// 執行普通分頁查詢；
-			pageInfo = this.employeeDao.findAll(pageRequest);
-		}
+		final Page<Employee> pageInfo = this.employeeRepository.getByNames(name, pageRequest);
 		final List<Employee> employees = pageInfo.getContent();
 		log.info(String.valueOf(pageInfo.hasContent()));
 		final PaginationImpl<Employee> pages = new PaginationImpl<>(employees);
@@ -149,7 +131,7 @@ public class EmployeeController {
 	 */
 	@PutMapping
 	public Reggie<String> update(@RequestBody final Employee employee) {
-		this.employeeDao.saveAndFlush(employee);
+		this.employeeRepository.saveAndFlush(employee);
 		return Reggie.success(CustomMessage.SRP008);
 	}
 
@@ -162,7 +144,7 @@ public class EmployeeController {
 	@GetMapping("/{id}")
 	public Reggie<Employee> getById(@PathVariable final Long id) {
 		log.info("根據ID查詢員工信息...");
-		final Employee employee = this.employeeDao.getById(id);
+		final Employee employee = this.employeeRepository.getById(id);
 		// 如果沒有相對應的結果，則返回錯誤信息；
 		if (employee == null) {
 			return Reggie.error(Constants.NO_CONSEQUENCE);
