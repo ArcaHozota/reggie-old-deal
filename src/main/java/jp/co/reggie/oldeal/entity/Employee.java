@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -28,8 +29,9 @@ import lombok.Setter;
 @Setter
 @Entity
 @NoArgsConstructor
-@EntityListeners(DatabaseListener.class)
 @Table(name = "employee")
+@EntityListeners(DatabaseListener.class)
+@NamedQuery(name = "Employee.getByNames", query = "select me from Employee me where me.name like concat('%', :name, '%') order by cv.id asc")
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = -6540113185665801143L;
