@@ -14,5 +14,5 @@ import jp.co.reggie.oldeal.entity.Employee;
  */
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-	Page<Employee> getByNames(@Param("name") String keyword, Pageable pageable);
+	Page<Employee> getByNames(@Param("keyword") String keyword, Pageable pageable);
 }
