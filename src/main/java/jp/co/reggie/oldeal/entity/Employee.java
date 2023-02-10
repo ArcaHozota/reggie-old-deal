@@ -31,7 +31,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "employee")
 @EntityListeners(DatabaseListener.class)
-@NamedQuery(name = "Employee.getByNames", query = "select me from Employee me where me.name like concat('%', :keyword, '%') order by cv.id asc")
+@NamedQuery(name = "Employee.getByNames", query = "select me from Employee me where me.name like concat('%', :keyword, '%') order by me.id asc")
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = -6540113185665801143L;
