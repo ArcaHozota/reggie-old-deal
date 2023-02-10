@@ -19,7 +19,7 @@ spring:
          ddl-auto: update
          naming:
             physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-      database: postgresql
+      database: POSTGRESQL
       show-sql: true
       open-in-view: false
 # 自定義傳入文件根目錄路徑
