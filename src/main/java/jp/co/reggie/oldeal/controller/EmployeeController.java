@@ -113,13 +113,21 @@ public class EmployeeController {
 	@GetMapping("/page")
 	public Reggie<Page<Employee>> pagination(@RequestParam("pageNum") final Integer pageNum,
 			@RequestParam("pageSize") final Integer pageSize,
-			@RequestParam(name = "name", required = false) final String keyword) {
+			@RequestParam(name = "name", required = false) String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
-		final Page<Employee> pageInfo = this.employeeRepository.getByNames(keyword, pageRequest);
-		final List<Employee> employees = pageInfo.getContent();
-		log.info(String.valueOf(pageInfo.hasContent()));
-		final PaginationImpl<Employee> pages = new PaginationImpl<>(employees);
-		return Reggie.success(pages);
+		if(StringUtils.isNotEmpty(keyword)){
+            final Page<Employee> pageInfo = this.employeeRepository.getByNames(keyword, pageRequest);
+            final List<Employee> employees = pageInfo.getContent();
+            log.info(String.valueOf(pageInfo.hasContent()));
+            final PaginationImpl<Employee> pages = new PaginationImpl<>(employees);
+            return Reggie.success(pages);
+        }else {
+            final Page<Employee> pageInfo = this.employeeRepository.getAll(pageRequest);
+            final List<Employee> employees = pageInfo.getContent();
+            log.info(String.valueOf(pageInfo.hasContent()));
+            final PaginationImpl<Employee> pages = new PaginationImpl<>(employees);
+            return Reggie.success(pages);
+        }
 	}
 
 	/**
