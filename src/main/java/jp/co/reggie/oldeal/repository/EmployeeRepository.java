@@ -16,9 +16,7 @@ import jp.co.reggie.oldeal.entity.Employee;
  */
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-	@Query(value = "select em.id from employee as em where em.name like:keyword",nativeQuery = true)
 	Page<Employee> getByNames(@Param("keyword") String keyword, Pageable pageable);
 
-	@Query(value = "select * from employee as em order by em.id asc",nativeQuery = true)
 	Page<Employee> getAll(Pageable pageable);
 }
