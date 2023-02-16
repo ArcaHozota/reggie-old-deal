@@ -1,8 +1,5 @@
 package jp.co.reggie.oldeal.utils;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-
 import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.lang.Nullable;
 
@@ -13,16 +10,6 @@ import org.springframework.lang.Nullable;
  *
  */
 public final class String2Utils extends StringUtils {
-
-	/**
-	 * UTF-8キャラセット
-	 */
-	public static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
-
-	/**
-	 * 空のストリング
-	 */
-	public static final String EMPTY_STRING = "";
 
 	/**
 	 * 判斷該字符串是否爲空
@@ -52,7 +39,7 @@ public final class String2Utils extends StringUtils {
 	 * @return 判斷結果
 	 */
 	public static boolean isEqual(@Nullable final String str1, @Nullable final String str2) {
-		boolean isEqual;
+		final boolean isEqual;
 		if (str1 == null && str2 == null) {
 			return true;
 		} else if (str1 == null || str2 == null) {
