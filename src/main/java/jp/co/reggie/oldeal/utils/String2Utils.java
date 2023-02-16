@@ -1,6 +1,7 @@
 package jp.co.reggie.oldeal.utils;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.lang.Nullable;
@@ -16,7 +17,7 @@ public final class String2Utils extends StringUtils {
 	/**
 	 * UTF-8キャラセット
 	 */
-	public static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
+	public static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
 
 	/**
 	 * 空のストリング
