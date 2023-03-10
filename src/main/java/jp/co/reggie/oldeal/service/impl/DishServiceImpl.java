@@ -14,16 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import jp.co.reggie.newdeal.common.BaseContext;
-import jp.co.reggie.newdeal.common.CustomException;
-import jp.co.reggie.newdeal.common.CustomMessage;
-import jp.co.reggie.newdeal.dto.DishDto;
-import jp.co.reggie.newdeal.entity.Dish;
-import jp.co.reggie.newdeal.entity.DishFlavor;
-import jp.co.reggie.newdeal.mapper.DishMapper;
-import jp.co.reggie.newdeal.service.DishFlavorService;
-import jp.co.reggie.newdeal.service.DishService;
-import jp.co.reggie.newdeal.utils.StringUtils;
+import jp.co.reggie.oldeal.common.BaseContext;
+import jp.co.reggie.oldeal.common.CustomException;
+import jp.co.reggie.oldeal.common.CustomMessage;
+import jp.co.reggie.oldeal.dto.DishDto;
+import jp.co.reggie.oldeal.entity.Dish;
+import jp.co.reggie.oldeal.entity.DishFlavor;
+import jp.co.reggie.oldeal.mapper.DishMapper;
+import jp.co.reggie.oldeal.service.DishFlavorService;
+import jp.co.reggie.oldeal.service.DishService;
+import jp.co.reggie.oldeal.utils.StringUtils;
 
 /**
  * @author Administrator

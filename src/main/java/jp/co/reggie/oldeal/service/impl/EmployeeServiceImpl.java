@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import jp.co.reggie.newdeal.entity.Employee;
-import jp.co.reggie.newdeal.mapper.EmployeeMapper;
-import jp.co.reggie.newdeal.service.EmployeeService;
+import jp.co.reggie.oldeal.entity.Employee;
+import jp.co.reggie.oldeal.mapper.EmployeeMapper;
+import jp.co.reggie.oldeal.service.EmployeeService;
 
 /**
  * @author Administrator

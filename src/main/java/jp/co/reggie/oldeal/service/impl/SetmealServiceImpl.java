@@ -12,14 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import jp.co.reggie.newdeal.common.CustomException;
-import jp.co.reggie.newdeal.common.CustomMessage;
-import jp.co.reggie.newdeal.dto.SetmealDto;
-import jp.co.reggie.newdeal.entity.Setmeal;
-import jp.co.reggie.newdeal.entity.SetmealDish;
-import jp.co.reggie.newdeal.mapper.SetmealMapper;
-import jp.co.reggie.newdeal.service.SetmealDishService;
-import jp.co.reggie.newdeal.service.SetmealService;
+import jp.co.reggie.oldeal.common.CustomException;
+import jp.co.reggie.oldeal.common.CustomMessage;
+import jp.co.reggie.oldeal.dto.SetmealDto;
+import jp.co.reggie.oldeal.entity.Setmeal;
+import jp.co.reggie.oldeal.entity.SetmealDish;
+import jp.co.reggie.oldeal.mapper.SetmealMapper;
+import jp.co.reggie.oldeal.service.SetmealDishService;
+import jp.co.reggie.oldeal.service.SetmealService;
 
 /**
  * @author Administrator

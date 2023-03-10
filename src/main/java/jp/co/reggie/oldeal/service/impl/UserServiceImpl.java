@@ -4,9 +4,9 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import jp.co.reggie.newdeal.entity.User;
-import jp.co.reggie.newdeal.mapper.UserMapper;
-import jp.co.reggie.newdeal.service.UserService;
+import jp.co.reggie.oldeal.entity.User;
+import jp.co.reggie.oldeal.mapper.UserMapper;
+import jp.co.reggie.oldeal.service.UserService;
 
 /**
  * @author Administrator

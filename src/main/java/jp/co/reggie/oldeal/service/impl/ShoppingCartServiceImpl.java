@@ -4,9 +4,9 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import jp.co.reggie.newdeal.entity.ShoppingCart;
-import jp.co.reggie.newdeal.mapper.ShoppingCartMapper;
-import jp.co.reggie.newdeal.service.ShoppingCartService;
+import jp.co.reggie.oldeal.entity.ShoppingCart;
+import jp.co.reggie.oldeal.mapper.ShoppingCartMapper;
+import jp.co.reggie.oldeal.service.ShoppingCartService;
 
 /**
  * @author Administrator
