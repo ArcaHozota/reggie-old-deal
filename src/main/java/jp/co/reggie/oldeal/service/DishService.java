@@ -1,11 +1,11 @@
 package jp.co.reggie.oldeal.service;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import jp.co.reggie.newdeal.dto.DishDto;
-import jp.co.reggie.newdeal.entity.Dish;
-
-import java.util.List;
+import jp.co.reggie.oldeal.dto.DishDto;
+import jp.co.reggie.oldeal.entity.Dish;
 
 /**
  * @author Administrator

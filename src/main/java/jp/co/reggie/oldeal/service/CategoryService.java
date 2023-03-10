@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import jp.co.reggie.newdeal.entity.Category;
+import jp.co.reggie.oldeal.entity.Category;
 
 /**
  * @author Administrator
