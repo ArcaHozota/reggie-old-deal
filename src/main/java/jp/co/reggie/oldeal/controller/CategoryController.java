@@ -2,13 +2,7 @@ package jp.co.reggie.oldeal.controller;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.entity.Category;
-import jp.co.reggie.oldeal.mapper.CategoryRepository;
+import jp.co.reggie.oldeal.service.CategoryService;
 import jp.co.reggie.oldeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,8 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/category")
 public class CategoryController {
 
-	@Resource
-	private CategoryRepository categoryDao;
+	@Autowired
+	private CategoryService categoryService;
 
 	/**
 	 * 分頁信息顯示
@@ -47,10 +43,8 @@ public class CategoryController {
 	@GetMapping("/page")
 	public Reggie<Page<Category>> pagination(@RequestParam("pageNum") final Integer pageNum,
 			@RequestParam("pageSize") final Integer pageSize) {
-		// 聲明分頁構造器；
-		final PageRequest pageRequest = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.ASC, "sort"));
 		// 執行查詢；
-		final Page<Category> pageInfo = this.categoryDao.findAll(pageRequest);
+		final Page<Category> pageInfo = this.categoryService.pagination(pageNum, pageSize);
 		return Reggie.success(pageInfo);
 	}
 
@@ -63,7 +57,7 @@ public class CategoryController {
 	@PostMapping
 	public Reggie<String> save(@RequestBody final Category category) {
 		log.info("category:{}", category);
-		this.categoryDao.save(category);
+		this.categoryService.save(category);
 		return Reggie.success(CustomMessage.SRP001);
 	}
 
@@ -77,7 +71,7 @@ public class CategoryController {
 	public Reggie<String> delete(@RequestParam("ids") final Long id) {
 		log.info("刪除ID={}的分類", id);
 		// 實施刪除；
-		this.categoryDao.deleteById(id);
+		this.categoryService.remove(id);
 		return Reggie.success(CustomMessage.SRP003);
 	}
 
@@ -91,7 +85,7 @@ public class CategoryController {
 	public Reggie<String> update(@RequestBody final Category category) {
 		log.info("修改分類信息：{}", category);
 		// 執行修改操作；
-		this.categoryDao.saveAndFlush(category);
+		this.categoryService.updateById(category);
 		return Reggie.success(CustomMessage.SRP002);
 	}
 
@@ -103,16 +97,8 @@ public class CategoryController {
 	 */
 	@GetMapping("/list")
 	public Reggie<List<Category>> queryList(final Category category) {
-		// 獲取分類數據；
-		final Integer type = category.getType();
-		assert type != null;
-		final Category category1 = new Category();
-		category1.setType(type);
-		final ExampleMatcher matcher = ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.EXACT)
-				.withMatcher(type.toString(), ExampleMatcher.GenericPropertyMatchers.exact());
-		final Example<Category> example = Example.of(category1, matcher);
 		// 查詢分類結果集並返回；
-		final List<Category> list = this.categoryDao.findAll(example);
+		final List<Category> list = this.categoryService.findByType(category.getType());
 		return Reggie.success(list);
 	}
 }

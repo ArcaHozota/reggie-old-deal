@@ -2,11 +2,11 @@ package jp.co.reggie.oldeal.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import jp.co.reggie.oldeal.common.CustomException;
@@ -29,19 +29,19 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 	/**
 	 * 分類mapper
 	 */
-	@Resource
+	@Autowired
 	private CategoryMapper categoryMapper;
 
 	/**
 	 * 菜品服務類；
 	 */
-	@Resource
+	@Autowired
 	private DishService dishService;
 
 	/**
 	 * 套餐服務類；
 	 */
-	@Resource
+	@Autowired
 	private SetmealService setmealService;
 
 	/**
@@ -79,6 +79,20 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 	 */
 	@Override
 	public List<Category> findByType(final Integer categoryType) {
-		return this.categoryMapper.selectByType(categoryType);
+		final LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(categoryType != null, Category::getType, categoryType);
+		return this.categoryMapper.selectList(queryWrapper);
+	}
+
+	@Override
+	public Page<Category> pagination(final Integer pageNum, final Integer pageSize) {
+		// 聲明分頁構造器；
+		final Page<Category> pageInfo = Page.of(pageNum, pageSize);
+		// 聲明條件構造器；
+		final LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+		// 添加排序條件，根據sort進行排序；
+		queryWrapper.orderByAsc(Category::getSort);
+		// 執行查詢；
+		return this.categoryMapper.selectPage(pageInfo, queryWrapper);
 	}
 }
