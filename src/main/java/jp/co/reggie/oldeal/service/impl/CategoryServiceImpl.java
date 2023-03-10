@@ -84,6 +84,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 		return this.categoryMapper.selectList(queryWrapper);
 	}
 
+	/**
+	 * 查詢分頁數據
+	 *
+	 * @param pageNum
+	 * @param pageSize
+	 * @return Page<Category>
+	 */
 	@Override
 	public Page<Category> pagination(final Integer pageNum, final Integer pageSize) {
 		// 聲明分頁構造器；
