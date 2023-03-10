@@ -2,6 +2,7 @@ package jp.co.reggie.oldeal.service;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import jp.co.reggie.oldeal.dto.DishDto;
@@ -49,4 +50,14 @@ public interface DishService extends IService<Dish> {
 	 * @return List<Dish>
 	 */
 	List<Dish> findList(Dish dish);
+
+	/**
+	 * 查詢分頁數據
+	 *
+	 * @param pageNum  頁碼
+	 * @param pageSize 頁面大小
+	 * @param name     檢索關鍵詞
+	 * @return Page<DishDto>
+	 */
+	Page<DishDto> pagination(Integer pageNum, Integer pageSize, String name);
 }

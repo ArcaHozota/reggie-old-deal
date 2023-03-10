@@ -11,13 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import jp.co.reggie.oldeal.common.CustomException;
 import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.dto.DishDto;
+import jp.co.reggie.oldeal.entity.Category;
 import jp.co.reggie.oldeal.entity.Dish;
 import jp.co.reggie.oldeal.entity.DishFlavor;
+import jp.co.reggie.oldeal.mapper.CategoryMapper;
 import jp.co.reggie.oldeal.mapper.DishMapper;
 import jp.co.reggie.oldeal.service.DishFlavorService;
 import jp.co.reggie.oldeal.service.DishService;
@@ -35,6 +38,12 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	 */
 	@Autowired
 	private DishMapper dishMapper;
+
+	/**
+	 * 分類管理接口類
+	 */
+	@Autowired
+	private CategoryMapper categoryMapper;
 
 	/**
 	 * 菜品口味服務類
@@ -149,5 +158,50 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
 		// 查詢菜品信息並返回；
 		return this.dishMapper.selectList(queryWrapper);
+	}
+
+	/**
+	 * 查詢分頁數據
+	 *
+	 * @param pageNum  頁碼
+	 * @param pageSize 頁面大小
+	 * @param name     檢索關鍵詞
+	 * @return Page<DishDto>
+	 */
+	@Override
+	public Page<DishDto> pagination(final Integer pageNum, final Integer pageSize, final String name) {
+		// 聲明分頁構造器對象；
+		final Page<Dish> pageInfo = Page.of(pageNum, pageSize);
+		// 創建條件構造器；
+		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
+		// 添加過濾條件；
+		queryWrapper.like(!name.isBlank(), Dish::getName, name);
+		// 添加排序條件；
+		queryWrapper.orderByDesc(Dish::getUpdateTime);
+		// 執行分頁查詢；
+		final Page<Dish> dishPage = this.dishMapper.selectPage(pageInfo, queryWrapper);
+		// 獲取分頁數據；
+		final List<DishDto> records = dishPage.getRecords().stream().map(item -> {
+			// 聲明菜品及口味數據傳輸類對象；
+			final DishDto dishDto = new DishDto();
+			// 拷貝除分類ID以外的屬性；
+			BeanUtils.copyProperties(item, dishDto);
+			// 獲取分類ID；
+			final Long categoryId = item.getCategoryId();
+			// 根據ID查詢分類對象；
+			final Category category = this.categoryMapper.selectById(categoryId);
+			if (category != null) {
+				// 獲取分類名稱並存儲於DTO對象中；
+				dishDto.setCategoryName(category.getName());
+			}
+			return dishDto;
+		}).collect(Collectors.toList());
+		// 聲明數據傳輸類分頁構造對象；
+		final Page<DishDto> dtoPage = new Page<>();
+		// 對象拷貝；
+		BeanUtils.copyProperties(dishPage, dtoPage, "records");
+		// 設置分頁數據於構造器中並返回；
+		dtoPage.setRecords(records);
+		return dtoPage;
 	}
 }
