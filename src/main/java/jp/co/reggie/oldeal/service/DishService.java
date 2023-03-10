@@ -41,4 +41,12 @@ public interface DishService extends IService<Dish> {
 	 * @param dishIdList 菜品集合
 	 */
 	void batchUpdateByIds(String status, List<Long> dishIdList);
+
+	/**
+	 * 回顯菜品表單數據
+	 *
+	 * @param dish 實體類對象
+	 * @return List<Dish>
+	 */
+	List<Dish> findList(Dish dish);
 }

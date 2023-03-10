@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import jp.co.reggie.oldeal.common.CustomException;
@@ -129,5 +130,24 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 			return item;
 		}).collect(Collectors.toList());
 		this.dishFlavorService.saveBatch(flavors);
+	}
+
+	/**
+	 * 回顯菜品表單數據
+	 *
+	 * @param dish 實體類對象
+	 * @return List<Dish>
+	 */
+	@Override
+	public List<Dish> findList(final Dish dish) {
+		// 創建條件構造器；
+		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
+		// 添加搜索條件；
+		queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+		queryWrapper.eq(Dish::getStatus, "ea");
+		// 添加排序條件；
+		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+		// 查詢菜品信息並返回；
+		return this.dishMapper.selectList(queryWrapper);
 	}
 }
