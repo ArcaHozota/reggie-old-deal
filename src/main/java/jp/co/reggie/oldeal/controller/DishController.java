@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.dto.DishDto;
-import jp.co.reggie.oldeal.repository.CategoryRepository;
-import jp.co.reggie.oldeal.repository.DishRepository;
-import jp.co.reggie.oldeal.repository.DishFlavorRepository;
+import jp.co.reggie.oldeal.mapper.CategoryRepository;
+import jp.co.reggie.oldeal.mapper.DishFlavorRepository;
+import jp.co.reggie.oldeal.mapper.DishRepository;
 import jp.co.reggie.oldeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
 

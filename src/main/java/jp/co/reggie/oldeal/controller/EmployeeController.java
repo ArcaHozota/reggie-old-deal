@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jp.co.reggie.oldeal.common.Constants;
 import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.entity.Employee;
-import jp.co.reggie.oldeal.repository.EmployeeRepository;
+import jp.co.reggie.oldeal.mapper.EmployeeRepository;
 import jp.co.reggie.oldeal.utils.PaginationImpl;
 import jp.co.reggie.oldeal.utils.Reggie;
 import jp.co.reggie.oldeal.utils.StringUtils;

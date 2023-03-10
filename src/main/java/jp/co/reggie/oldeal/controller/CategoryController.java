@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.entity.Category;
-import jp.co.reggie.oldeal.repository.CategoryRepository;
+import jp.co.reggie.oldeal.mapper.CategoryRepository;
 import jp.co.reggie.oldeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
 

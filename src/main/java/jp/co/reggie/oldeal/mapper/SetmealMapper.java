@@ -1,4 +1,4 @@
-package jp.co.reggie.oldeal.repository;
+package jp.co.reggie.oldeal.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
