@@ -2,7 +2,6 @@ package jp.co.reggie.oldeal.utils;
 
 import java.nio.charset.Charset;
 
-import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.lang.Nullable;
 
 /**
@@ -11,7 +10,7 @@ import org.springframework.lang.Nullable;
  * @author Administrator
  *
  */
-public final class String2Utils extends StringUtils {
+public final class StringUtils {
 
 	/**
 	 * UTF-8キャラセット
