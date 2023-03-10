@@ -26,7 +26,7 @@ import jp.co.reggie.oldeal.entity.Employee;
 import jp.co.reggie.oldeal.repository.EmployeeRepository;
 import jp.co.reggie.oldeal.utils.PaginationImpl;
 import jp.co.reggie.oldeal.utils.Reggie;
-import jp.co.reggie.oldeal.utils.String2Utils;
+import jp.co.reggie.oldeal.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -62,7 +62,7 @@ public class EmployeeController {
 		// 獲取Optional對象；
 		final Optional<Employee> aEmployee = this.employeeRepository.findOne(example);
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
-		if (aEmployee.isEmpty() || String2Utils.isNotEqual(password, aEmployee.get().getPassword())) {
+		if (aEmployee.isEmpty() || StringUtils.isNotEqual(password, aEmployee.get().getPassword())) {
 			return Reggie.error(Constants.LOGIN_FAILED);
 		}
 		// 查看用戸狀態，如果已被禁用，則返回賬號已禁用；
@@ -113,21 +113,18 @@ public class EmployeeController {
 	@GetMapping("/page")
 	public Reggie<Page<Employee>> pagination(@RequestParam("pageNum") final Integer pageNum,
 			@RequestParam("pageSize") final Integer pageSize,
-			@RequestParam(name = "name", required = false) String keyword) {
+			@RequestParam(name = "name", required = false) final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
-		if(String2Utils.isNotEmpty(keyword)){
-            final Page<Employee> pageInfo = this.employeeRepository.getByNames(keyword, pageRequest);
-            final List<Employee> employees = pageInfo.getContent();
-            log.info(String.valueOf(pageInfo.hasContent()));
-            final PaginationImpl<Employee> pages = new PaginationImpl<>(employees);
-            return Reggie.success(pages);
-        }else {
-            final Page<Employee> pageInfo = this.employeeRepository.getAll(pageRequest);
-            final List<Employee> employees = pageInfo.getContent();
-            log.info(String.valueOf(pageInfo.hasContent()));
-            final PaginationImpl<Employee> pages = new PaginationImpl<>(employees);
-            return Reggie.success(pages);
-        }
+		Page<Employee> pageInfo;
+		if (StringUtils.isNotEmpty(keyword)) {
+			pageInfo = this.employeeRepository.getByNames(keyword, pageRequest);
+		} else {
+			pageInfo = this.employeeRepository.getAll(pageRequest);
+		}
+		final List<Employee> employees = pageInfo.getContent();
+		log.info(String.valueOf(employees.isEmpty()));
+		final PaginationImpl<Employee> pages = new PaginationImpl<>(employees);
+		return Reggie.success(pages);
 	}
 
 	/**
