@@ -4,33 +4,19 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import jp.co.reggie.oldeal.handler.DatabaseListener;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 菜品實體類
  *
  * @author Administrator
  */
-@Getter
-@Setter
-@Entity
-@NoArgsConstructor
-@EntityListeners(DatabaseListener.class)
-@Table(name = "dish")
+@Data
 public class Dish implements Serializable {
 
 	private static final long serialVersionUID = 6089472680388107154L;
@@ -38,21 +24,17 @@ public class Dish implements Serializable {
 	/**
 	 * ID
 	 */
-	@Id
-	@GenericGenerator(name = "snowflakeId", strategy = "jp.co.reggie.oldeal.utils.SnowflakeIdGenerator")
-	@GeneratedValue(generator = "snowflakeId")
+	@TableId
 	private Long id;
 
 	/**
 	 * 菜品名稱
 	 */
-	@Column(nullable = false)
 	private String name;
 
 	/**
 	 * 菜品分類ID
 	 */
-	@Column(name = "category_id", nullable = false)
 	private Long categoryId;
 
 	/**
@@ -63,13 +45,11 @@ public class Dish implements Serializable {
 	/**
 	 * 商品碼
 	 */
-	@Column(nullable = false)
 	private String code;
 
 	/**
 	 * 圖片
 	 */
-	@Column(nullable = false)
 	private String image;
 
 	/**
@@ -78,46 +58,42 @@ public class Dish implements Serializable {
 	private String description;
 
 	/**
-	 * 菜品銷售狀態:0停售, 1在售;
+	 * 菜品銷售狀態:ea在售, ec停售;
 	 */
-	@Column(nullable = false)
-	private Integer status;
+	private String status;
 
 	/**
 	 * 順序
 	 */
-	@Column(nullable = false)
 	private Integer sort;
 
 	/**
 	 * 創建時間
 	 */
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@Column(name = "create_time", updatable = false, nullable = false)
+	@TableField(fill = FieldFill.INSERT)
 	private LocalDateTime createTime;
 
 	/**
 	 * 更新時間
 	 */
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@Column(name = "update_time", nullable = false)
+	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private LocalDateTime updateTime;
 
 	/**
 	 * 創建人
 	 */
-	@Column(name = "create_user", updatable = false, nullable = false)
+	@TableField(fill = FieldFill.INSERT)
 	private Long createUser;
 
 	/**
 	 * 修改者
 	 */
-	@Column(name = "update_user", nullable = false)
+	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Long updateUser;
 
 	/**
 	 * 邏輯刪除字段
 	 */
-	@Column(name = "is_deleted", nullable = false)
+	@TableLogic
 	private Integer isDeleted;
 }

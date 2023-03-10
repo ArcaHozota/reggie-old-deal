@@ -2,28 +2,17 @@ package jp.co.reggie.oldeal.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 客戸信息實體類
  *
  * @author Administrator
  */
-@Getter
-@Setter
-@Entity
-@NoArgsConstructor
-@Table(name = "user")
+@Data
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 2324630650798877027L;
@@ -31,9 +20,7 @@ public class User implements Serializable {
 	/**
 	 * ID
 	 */
-	@Id
-	@GenericGenerator(name = "snowflakeId", strategy = "jp.co.reggie.oldeal.utils.SnowflakeIdGenerator")
-	@GeneratedValue(generator = "snowflakeId")
+	@TableId
 	private Long id;
 
 	/**
@@ -44,19 +31,18 @@ public class User implements Serializable {
 	/**
 	 * 手機號
 	 */
-	@Column(name = "phone_num", nullable = false)
+	@TableField(value = "phone_num")
 	private String phoneNo;
 
 	/**
 	 * 性別：0女，1男
 	 */
-	@Column(name = "sex")
+	@TableField(value = "sex")
 	private String gender;
 
 	/**
 	 * 身份證號
 	 */
-	@Column(name = "id_number")
 	private String idNumber;
 
 	/**

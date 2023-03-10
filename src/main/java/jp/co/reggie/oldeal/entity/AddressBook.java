@@ -11,14 +11,14 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 /**
- * 菜品口味實體類
+ * 地址簿實體類
  *
  * @author Administrator
  */
 @Data
-public class DishFlavor implements Serializable {
+public class AddressBook implements Serializable {
 
-	private static final long serialVersionUID = 6752106293794210881L;
+	private static final long serialVersionUID = 3548464562522747007L;
 
 	/**
 	 * ID
@@ -27,19 +27,71 @@ public class DishFlavor implements Serializable {
 	private Long id;
 
 	/**
-	 * 菜品ID
+	 * 用戸ID
 	 */
-	private Long dishId;
+	private Long userId;
 
 	/**
-	 * 口味名稱
+	 * 簽收人
 	 */
-	private String name;
+	private String consignee;
 
 	/**
-	 * 口味數據list
+	 * 手機號
 	 */
-	private String value;
+	@TableField(value = "phone_num")
+	private String phoneNo;
+
+	/**
+	 * 性別
+	 */
+	@TableField(value = "sex")
+	private String gender;
+
+	/**
+	 * 省級行政區劃
+	 */
+	private String provinceCode;
+
+	/**
+	 * 省級名稱
+	 */
+	private String provinceName;
+
+	/**
+	 * 市縣級行政區劃
+	 */
+	private String cityCode;
+
+	/**
+	 * 市縣級名稱
+	 */
+	private String cityName;
+
+	/**
+	 * 區級行政區劃
+	 */
+	private String districtCode;
+
+	/**
+	 * 區級名稱
+	 */
+	private String districtName;
+
+	/**
+	 * 詳細地址
+	 */
+	private String detail;
+
+	/**
+	 * 備注
+	 */
+	private String label;
+
+	/**
+	 * 是否默認
+	 */
+	private Integer isDefault;
 
 	/**
 	 * 創建時間

@@ -3,116 +3,86 @@ package jp.co.reggie.oldeal.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import jp.co.reggie.oldeal.handler.DatabaseListener;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.Proxy;
-
+import lombok.Data;
 
 /**
  * 員工管理實體類
  *
  * @author Administrator
  */
-@Getter
-@Setter
-@Entity
-@NoArgsConstructor
-@Proxy(lazy = false)
-@EntityListeners(DatabaseListener.class)
-@Table(name = "employee")
-@NamedQuery(name = "Employee.getAll", query = "select em from Employee as em order by em.id asc")
-@NamedQuery(name = "Employee.getByNames", query = "select em from Employee as em where em.name like concat('%',:keyword,'%') order by em.id asc")
+@Data
 public class Employee implements Serializable {
 
-    private static final long serialVersionUID = -6540113185665801143L;
+	private static final long serialVersionUID = -6540113185665801143L;
 
-    /**
-     * ID
-     */
-    @Id
-    @GenericGenerator(name = "snowflakeId", strategy = "jp.co.reggie.oldeal.utils.SnowflakeIdGenerator")
-    @GeneratedValue(generator = "snowflakeId")
-    private Long id;
+	/**
+	 * ID
+	 */
+	@TableId
+	private Long id;
 
-    /**
-     * 賬號名
-     */
-    @Column(nullable = false)
-    private String username;
+	/**
+	 * 賬號名
+	 */
+	private String username;
 
-    /**
-     * 姓名
-     */
-    @Column(nullable = false)
-    private String name;
+	/**
+	 * 姓名
+	 */
+	private String name;
 
-    /**
-     * 密碼
-     */
-    @Column(nullable = false)
-    private String password;
+	/**
+	 * 密碼
+	 */
+	private String password;
 
-    /**
-     * 手機號
-     */
-    @Column(name = "phone_num", nullable = false)
-    private String phoneNo;
+	/**
+	 * 手機號
+	 */
+	@TableField(value = "phone_num")
+	private String phoneNo;
 
-    /**
-     * 性別
-     */
-    @Column(name = "sex", nullable = false)
-    private String gender;
+	/**
+	 * 性別
+	 */
+	@TableField(value = "sex")
+	private String gender;
 
-    /**
-     * 身份證號
-     */
-    @Column(name = "id_number", nullable = false)
-    private String idNumber;
+	/**
+	 * 身份證號
+	 */
+	private String idNumber;
 
-    /**
-     * 賬號狀態：0:禁用，1:正常
-     */
-    @Column(nullable = false)
-    private Integer status;
+	/**
+	 * 賬號狀態：0:禁用，1:正常
+	 */
+	private Integer status;
 
-    /**
-     * 創建時間
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "create_time", updatable = false, nullable = false)
-    private LocalDateTime createTime;
+	/**
+	 * 創建時間
+	 */
+	@TableField(fill = FieldFill.INSERT)
+	private LocalDateTime createTime;
 
-    /**
-     * 更新時間
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "update_time", nullable = false)
-    private LocalDateTime updateTime;
+	/**
+	 * 更新時間
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private LocalDateTime updateTime;
 
-    /**
-     * 創建人
-     */
-    @Column(name = "create_user", updatable = false, nullable = false)
-    private Long createUser;
+	/**
+	 * 創建人
+	 */
+	@TableField(fill = FieldFill.INSERT)
+	private Long createUser;
 
-    /**
-     * 修改者
-     */
-    @Column(name = "update_user", nullable = false)
-    private Long updateUser;
+	/**
+	 * 修改者
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Long updateUser;
 }
