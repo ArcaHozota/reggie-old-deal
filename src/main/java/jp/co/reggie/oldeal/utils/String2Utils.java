@@ -1,7 +1,6 @@
 package jp.co.reggie.oldeal.utils;
 
-import java.nio.charset.Charset;
-
+import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.lang.Nullable;
 
 /**
@@ -10,17 +9,7 @@ import org.springframework.lang.Nullable;
  * @author Administrator
  *
  */
-public final class StringUtils {
-
-	/**
-	 * UTF-8キャラセット
-	 */
-	public static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
-
-	/**
-	 * 空のストリング
-	 */
-	public static final String EMPTY_STRING = "";
+public final class String2Utils extends StringUtils {
 
 	/**
 	 * 判斷該字符串是否爲空
