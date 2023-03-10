@@ -37,8 +37,8 @@ public interface DishService extends IService<Dish> {
 	/**
 	 * 根據菜品集合批量停發售
 	 *
-	 * @param status   在售狀態
-	 * @param dishList 菜品集合
+	 * @param status     在售狀態
+	 * @param dishIdList 菜品集合
 	 */
-	void batchUpdateByIds(String status, List<Long> dishList);
+	void batchUpdateByIds(String status, List<Long> dishIdList);
 }

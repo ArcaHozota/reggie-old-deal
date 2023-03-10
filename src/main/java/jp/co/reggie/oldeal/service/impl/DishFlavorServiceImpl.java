@@ -2,8 +2,7 @@ package jp.co.reggie.oldeal.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -19,7 +18,7 @@ import jp.co.reggie.oldeal.service.DishFlavorService;
 @Service
 public class DishFlavorServiceImpl extends ServiceImpl<DishFlavorMapper, DishFlavor> implements DishFlavorService {
 
-	@Resource
+	@Autowired
 	private DishFlavorMapper dishFlavorMapper;
 
 	/**

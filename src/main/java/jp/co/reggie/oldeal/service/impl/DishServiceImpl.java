@@ -1,20 +1,17 @@
 package jp.co.reggie.oldeal.service.impl;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.annotation.Resource;
-
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import jp.co.reggie.oldeal.common.BaseContext;
 import jp.co.reggie.oldeal.common.CustomException;
 import jp.co.reggie.oldeal.common.CustomMessage;
 import jp.co.reggie.oldeal.dto.DishDto;
@@ -35,13 +32,13 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	/**
 	 * 菜品數據接口類
 	 */
-	@Resource
+	@Autowired
 	private DishMapper dishMapper;
 
 	/**
 	 * 菜品口味服務類
 	 */
-	@Resource
+	@Autowired
 	private DishFlavorService dishFlavorService;
 
 	/**
@@ -49,15 +46,13 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	 *
 	 * @param dishDto 菜品及口味數據傳輸類
 	 */
-	@Override
 	@Transactional(rollbackFor = PSQLException.class)
+	@Override
 	public void saveWithFlavour(final DishDto dishDto) {
 		// 保存菜品的基本信息到菜品表；
 		this.save(dishDto);
-		// 獲取菜品口味的集合；
-		List<DishFlavor> flavors = dishDto.getFlavors();
-		// 將菜品ID設置到口味集合中；
-		flavors = flavors.stream().map((item) -> {
+		// 獲取菜品口味的集合並將菜品ID設置到口味集合中；
+		final List<DishFlavor> flavors = dishDto.getFlavors().stream().map((item) -> {
 			item.setDishId(dishDto.getId());
 			return item;
 		}).collect(Collectors.toList());
@@ -94,13 +89,19 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	 * @param dishList 菜品集合
 	 */
 	@Override
-	public void batchUpdateByIds(final String status, final List<Long> dishList) {
-		final LocalDateTime upTime = LocalDateTime.now();
-		final Long upUserId = BaseContext.getCurrentId();
+	public void batchUpdateByIds(final String status, final List<Long> dishIdList) {
 		if (StringUtils.isEqual("ea", status)) {
-			this.dishMapper.bulkUpdateByIds(dishList, "ec", upTime, upUserId);
+			dishIdList.forEach(item -> {
+				final Dish dish = this.dishMapper.selectById(item);
+				dish.setStatus("ec");
+				this.dishMapper.updateById(dish);
+			});
 		} else if (StringUtils.isEqual("ec", status)) {
-			this.dishMapper.bulkUpdateByIds(dishList, "ea", upTime, upUserId);
+			dishIdList.forEach(item -> {
+				final Dish dish = this.dishMapper.selectById(item);
+				dish.setStatus("ea");
+				this.dishMapper.updateById(dish);
+			});
 		} else {
 			throw new CustomException(CustomMessage.ERP017);
 		}
@@ -111,8 +112,8 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	 *
 	 * @param dishDto 菜品及口味數據傳輸類
 	 */
-	@Override
 	@Transactional(rollbackFor = PSQLException.class)
+	@Override
 	public void updateWithFlavour(final DishDto dishDto) {
 		// 更新菜品信息；
 		this.updateById(dishDto);
