@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import jp.co.reggie.newdeal.entity.User;
+import jp.co.reggie.oldeal.entity.User;
 
 /**
  * 客戸信息實體類接口

@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import jp.co.reggie.newdeal.entity.ShoppingCart;
+import jp.co.reggie.oldeal.entity.ShoppingCart;
 
 /**
  * 購物車實體類接口

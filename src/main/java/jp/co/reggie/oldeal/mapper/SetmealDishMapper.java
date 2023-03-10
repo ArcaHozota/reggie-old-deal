@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import jp.co.reggie.newdeal.entity.SetmealDish;
+import jp.co.reggie.oldeal.entity.SetmealDish;
 
 /**
  * 套餐與菜品關係實體類接口
