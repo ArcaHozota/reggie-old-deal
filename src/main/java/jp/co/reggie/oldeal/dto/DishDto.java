@@ -1,11 +1,9 @@
 package jp.co.reggie.oldeal.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.reggie.oldeal.entity.Dish;
 import jp.co.reggie.oldeal.entity.DishFlavor;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,7 +21,7 @@ public class DishDto extends Dish {
 	/**
 	 * 口味集合
 	 */
-	private List<DishFlavor> flavors = new ArrayList<>();
+	private List<DishFlavor> flavors;
 
 	/**
 	 * 分類名稱
