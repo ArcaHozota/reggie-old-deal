@@ -1,8 +1,5 @@
 package jp.co.reggie.oldeal.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
@@ -10,14 +7,15 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * SMS驗證碼工具類
  *
  * @author Administrator
  */
+@Slf4j
 public class SMSUtils {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(SMSUtils.class);
 
 	/**
 	 * 發送SMS訊息
@@ -39,7 +37,7 @@ public class SMSUtils {
 		request.setTemplateParam("{\"code\":\"" + param + "\"}");
 		try {
 			final SendSmsResponse response = client.getAcsResponse(request);
-			LOGGER.info("驗證訊息發送成功：", response);
+			log.info("驗證訊息發送成功：", response);
 		} catch (final ClientException e) {
 			e.printStackTrace();
 		}

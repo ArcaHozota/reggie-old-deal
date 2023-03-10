@@ -2,7 +2,7 @@ package jp.co.reggie.oldeal.utils;
 
 import java.util.Random;
 
-import jp.co.reggie.newdeal.common.CustomException;
+import jp.co.reggie.oldeal.common.CustomException;
 
 /**
  * 驗證碼生成工具類
