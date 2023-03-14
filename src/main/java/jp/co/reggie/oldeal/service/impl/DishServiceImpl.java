@@ -119,7 +119,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		} else {
 			throw new CustomException(CustomMessages.ERP017);
 		}
-		BaseContext.getCurrentId();
+		BaseContext.remove();
 	}
 
 	/**

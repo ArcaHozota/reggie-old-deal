@@ -15,8 +15,10 @@ public class BaseContext {
 	}
 
 	public static Long getCurrentId() {
-		final Long localId = THREAD_LOCAL.get();
+		return THREAD_LOCAL.get();
+	}
+
+	public static void remove() {
 		THREAD_LOCAL.remove();
-		return localId;
 	}
 }
