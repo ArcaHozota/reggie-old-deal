@@ -29,8 +29,11 @@ public class OrdersController {
 	/**
 	 * 訂單信息分頁查詢
 	 *
-	 * @param pageNum  頁碼
-	 * @param pageSize 頁面大小
+	 * @param pageNum     頁碼
+	 * @param pageSize    頁面大小
+	 * @param orderId     訂單ID
+	 * @param beginTime   開始時間
+	 * @param termialTime 截止時間
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
