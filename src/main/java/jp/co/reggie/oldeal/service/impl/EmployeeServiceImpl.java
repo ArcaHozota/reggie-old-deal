@@ -61,12 +61,13 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 	@Override
 	public Page<Employee> pagination(final Integer pageNum, final Integer pageSize, final String keyword) {
 		Page<Employee> pageInfo = Page.of(pageNum, pageSize);
+		final LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.orderByDesc(Employee::getUpdateTime);
 		if (StringUtils.isNotEmpty(keyword)) {
-			final LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
 			queryWrapper.eq(Employee::getName, keyword);
 			pageInfo = this.employeeMapper.selectPage(pageInfo, queryWrapper);
 		} else {
-			pageInfo = this.employeeMapper.selectPage(pageInfo, null);
+			pageInfo = this.employeeMapper.selectPage(pageInfo, queryWrapper);
 		}
 		return pageInfo;
 	}

@@ -88,8 +88,8 @@
                 }
                 await getMemberList(params).then(res => {
                     if (res.code === 'SUCCESS') {
-                        this.tableData = res.data.content || []
-                        this.counts = res.data.totalRecords
+                        this.tableData = res.data.records || []
+                        this.counts = res.data.total
                     }
                 }).catch(err => {
                     this.$message.error('請求出錯：' + err)
