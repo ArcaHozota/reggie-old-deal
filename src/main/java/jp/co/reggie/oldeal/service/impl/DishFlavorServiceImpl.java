@@ -1,8 +1,5 @@
 package jp.co.reggie.oldeal.service.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,18 +14,4 @@ import jp.co.reggie.oldeal.service.DishFlavorService;
  */
 @Service
 public class DishFlavorServiceImpl extends ServiceImpl<DishFlavorMapper, DishFlavor> implements DishFlavorService {
-
-	@Autowired
-	private DishFlavorMapper dishFlavorMapper;
-
-	/**
-	 * 根據菜品ID查詢口味信息
-	 *
-	 * @param dishId 菜品ID
-	 * @return 菜品口味列表
-	 */
-	@Override
-	public List<DishFlavor> getFlavours(final Long dishId) {
-		return this.dishFlavorMapper.getFlavoursById(dishId);
-	}
 }
