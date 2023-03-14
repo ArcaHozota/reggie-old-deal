@@ -12,7 +12,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jp.co.reggie.oldeal.entity.Orders;
 import jp.co.reggie.oldeal.mapper.OrdersMapper;
 import jp.co.reggie.oldeal.service.IOrdersService;
-import jp.co.reggie.oldeal.utils.StringUtils;
 
 /**
  * @author Administrator
@@ -42,9 +41,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 		// 創建條件構造器；
 		final LambdaQueryWrapper<Orders> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加過濾條件；
-		if (StringUtils.isNotEmpty(orderId.toString())) {
-			queryWrapper.like(orderId != null, Orders::getId, orderId.longValue());
-		}
+		queryWrapper.eq(orderId != null, Orders::getId, orderId);
 		queryWrapper.ge(beginTime != null, Orders::getOrderTime, beginTime);
 		queryWrapper.le(terminalTime != null, Orders::getOrderTime, terminalTime);
 		// 執行分頁查詢；
