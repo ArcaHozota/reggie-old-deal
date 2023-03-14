@@ -20,9 +20,9 @@
             </el-input>
             <div class="tableLab">
                 <span class="span-btn delBut non" @click="deleteHandle('批量', null)">批量刪除</span>
-                <span class="span-btn blueBug non" @click="statusHandle('ea')">批量發售</span>
+                <span class="span-btn blueBug non" @click="statusHandle('ec')">批量發售</span>
                 <span style="border: none;" class="span-btn delBut non"
-                      @click="statusHandle('ec')">批量停售</span>
+                      @click="statusHandle('ea')">批量停售</span>
                 <el-button type="primary" @click="addFoodtype('add')">+ 新建菜品</el-button>
             </div>
         </div>
@@ -169,7 +169,7 @@
                     params.status = row
                 } else {
                     params.id = row.id
-                    params.status = row.status ? 'ec' : 'ea'
+                    params.status = row.status
                 }
                 this.dishState = params
                 this.$confirm('確認更改該菜品狀態?', '提示', {
