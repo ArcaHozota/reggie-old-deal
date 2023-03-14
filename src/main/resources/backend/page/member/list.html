@@ -43,7 +43,7 @@
 				{{scope.row.status == '1' ? '禁用' : '啓用'}}</el-button>
 			</template>
 			</el-table-column> </el-table>
-			<el-pagination class="pageList" :page-sizes="[10, 20, 30, 40]"
+			<el-pagination class="pageList" :page-sizes="[7, 8, 15]"
 				:page-size="pageSize"
 				layout="total, sizes, prev, pager, next, jumper" :total="counts"
 				:current-page.sync="pageNum" @size-change="handleSizeChange"
