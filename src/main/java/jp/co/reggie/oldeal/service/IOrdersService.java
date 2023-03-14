@@ -9,5 +9,5 @@ import jp.co.reggie.oldeal.entity.Orders;
  * @author Administrator
  *
  */
-public interface OrdersService extends IService<Orders> {
+public interface IOrdersService extends IService<Orders> {
 }
