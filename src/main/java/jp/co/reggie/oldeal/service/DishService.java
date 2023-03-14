@@ -56,8 +56,8 @@ public interface DishService extends IService<Dish> {
 	 *
 	 * @param pageNum  頁碼
 	 * @param pageSize 頁面大小
-	 * @param name     檢索關鍵詞
+	 * @param keyword  檢索關鍵詞
 	 * @return Page<DishDto>
 	 */
-	Page<DishDto> pagination(Integer pageNum, Integer pageSize, String name);
+	Page<DishDto> pagination(Integer pageNum, Integer pageSize, String keyword);
 }

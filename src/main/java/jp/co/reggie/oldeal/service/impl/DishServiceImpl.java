@@ -165,17 +165,17 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	 *
 	 * @param pageNum  頁碼
 	 * @param pageSize 頁面大小
-	 * @param name     檢索關鍵詞
+	 * @param keyword  檢索關鍵詞
 	 * @return Page<DishDto>
 	 */
 	@Override
-	public Page<DishDto> pagination(final Integer pageNum, final Integer pageSize, final String name) {
+	public Page<DishDto> pagination(final Integer pageNum, final Integer pageSize, final String keyword) {
 		// 聲明分頁構造器對象；
 		final Page<Dish> pageInfo = Page.of(pageNum, pageSize);
 		// 創建條件構造器；
 		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
 		// 添加過濾條件；
-		queryWrapper.like(!name.isBlank(), Dish::getName, name);
+		queryWrapper.like(!keyword.isBlank(), Dish::getName, keyword);
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Dish::getUpdateTime);
 		// 執行分頁查詢；
