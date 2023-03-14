@@ -7,7 +7,7 @@ const getCategoryPage = (params) => {
     })
 }
 
-//編輯頁面反查詳情接口
+// 編輯頁面反查詳情接口
 const queryCategoryById = (id) => {
     return $axios({
         url: `/category/${id}`,
@@ -15,7 +15,7 @@ const queryCategoryById = (id) => {
     })
 }
 
-//刪除當前列的接口
+// 刪除當前列的接口
 const deleteCategory = (ids) => {
     return $axios({
         url: '/category',
@@ -24,7 +24,7 @@ const deleteCategory = (ids) => {
     })
 }
 
-//修改方法接口
+// 修改方法接口
 const editCategory = (params) => {
     return $axios({
         url: '/category',
@@ -33,7 +33,7 @@ const editCategory = (params) => {
     })
 }
 
-//新增方法接口
+// 新增方法接口
 const addCategory = (params) => {
     return $axios({
         url: '/category',
