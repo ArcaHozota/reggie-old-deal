@@ -6,7 +6,7 @@ package jp.co.reggie.oldeal.common;
  * @author Administrator
  * @date 2022-11-28
  */
-public final class CustomMessage {
+public final class CustomMessages {
 
 	/**
 	 * 分類信息添加成功
