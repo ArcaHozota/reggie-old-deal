@@ -57,8 +57,9 @@ public class DishController {
 	 */
 	@GetMapping("/page")
 	public Reggie<Page<DishDto>> pagination(@RequestParam("pageNum") final Integer pageNum,
-			@RequestParam("pageSize") final Integer pageSize, @RequestParam("name") final String name) {
-		final Page<DishDto> pageInfo = this.dishService.pagination(pageNum, pageSize, name);
+			@RequestParam("pageSize") final Integer pageSize,
+			@RequestParam(value = "name", required = false) final String keyword) {
+		final Page<DishDto> pageInfo = this.dishService.pagination(pageNum, pageSize, keyword);
 		return Reggie.success(pageInfo);
 	}
 
