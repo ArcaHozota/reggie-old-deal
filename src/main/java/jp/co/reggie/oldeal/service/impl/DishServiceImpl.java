@@ -175,7 +175,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		// 創建條件構造器；
 		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
 		// 添加過濾條件；
-		queryWrapper.like(!keyword.isBlank(), Dish::getName, keyword);
+		queryWrapper.like(StringUtils.isNotEmpty(keyword), Dish::getName, keyword);
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Dish::getUpdateTime);
 		// 執行分頁查詢；
