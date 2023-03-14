@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import jp.co.reggie.oldeal.common.BaseContext;
 import jp.co.reggie.oldeal.common.CustomException;
 import jp.co.reggie.oldeal.common.CustomMessages;
 import jp.co.reggie.oldeal.dto.DishDto;
@@ -100,16 +101,19 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	 */
 	@Override
 	public void batchUpdateByIds(final String status, final List<Long> dishIdList) {
+		final Long currentId = BaseContext.getCurrentId();
 		if (StringUtils.isEqual("ea", status)) {
 			dishIdList.forEach(item -> {
 				final Dish dish = this.dishMapper.selectById(item);
 				dish.setStatus("ec");
+				dish.setUpdateUser(currentId);
 				this.dishMapper.updateById(dish);
 			});
 		} else if (StringUtils.isEqual("ec", status)) {
 			dishIdList.forEach(item -> {
 				final Dish dish = this.dishMapper.selectById(item);
 				dish.setStatus("ea");
+				dish.setUpdateUser(currentId);
 				this.dishMapper.updateById(dish);
 			});
 		} else {
