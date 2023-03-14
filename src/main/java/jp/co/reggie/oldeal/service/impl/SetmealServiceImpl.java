@@ -50,8 +50,8 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	 *
 	 * @param setmealDto 數據傳輸類
 	 */
-	@Override
 	@Transactional(rollbackFor = PSQLException.class)
+	@Override
 	public void saveWithDish(final SetmealDto setmealDto) {
 		// 保存套餐的基本信息；
 		this.save(setmealDto);
