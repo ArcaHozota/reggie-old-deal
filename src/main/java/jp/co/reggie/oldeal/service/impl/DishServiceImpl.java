@@ -178,7 +178,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		// 聲明分頁構造器對象；
 		final Page<Dish> pageInfo = Page.of(pageNum, pageSize);
 		// 創建條件構造器；
-		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
+		final LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加過濾條件；
 		queryWrapper.like(StringUtils.isNotEmpty(keyword), Dish::getName, keyword);
 		// 添加排序條件；
