@@ -24,6 +24,7 @@ import jp.co.reggie.oldeal.mapper.CategoryMapper;
 import jp.co.reggie.oldeal.mapper.SetmealMapper;
 import jp.co.reggie.oldeal.service.SetmealDishService;
 import jp.co.reggie.oldeal.service.SetmealService;
+import jp.co.reggie.oldeal.utils.StringUtils;
 
 /**
  * @author Administrator
@@ -104,7 +105,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Setmeal> queryWrapper = Wrappers.lambdaQuery(new Setmeal());
 		// 添加查詢條件，根據檢索文進行模糊查詢；
-		queryWrapper.like(!keyword.isBlank(), Setmeal::getName, keyword);
+		queryWrapper.like(StringUtils.isNotEmpty(keyword), Setmeal::getName, keyword);
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Setmeal::getUpdateTime);
 		// 執行查詢；
