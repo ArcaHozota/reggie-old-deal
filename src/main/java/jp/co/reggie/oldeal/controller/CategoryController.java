@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import jp.co.reggie.oldeal.common.CustomMessage;
+import jp.co.reggie.oldeal.common.CustomMessages;
 import jp.co.reggie.oldeal.entity.Category;
 import jp.co.reggie.oldeal.service.CategoryService;
 import jp.co.reggie.oldeal.utils.Reggie;
@@ -58,7 +58,7 @@ public class CategoryController {
 	public Reggie<String> save(@RequestBody final Category category) {
 		log.info("category:{}", category);
 		this.categoryService.save(category);
-		return Reggie.success(CustomMessage.SRP001);
+		return Reggie.success(CustomMessages.SRP001);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class CategoryController {
 		log.info("刪除ID={}的分類", id);
 		// 實施刪除；
 		this.categoryService.remove(id);
-		return Reggie.success(CustomMessage.SRP003);
+		return Reggie.success(CustomMessages.SRP003);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class CategoryController {
 		log.info("修改分類信息：{}", category);
 		// 執行修改操作；
 		this.categoryService.updateById(category);
-		return Reggie.success(CustomMessage.SRP002);
+		return Reggie.success(CustomMessages.SRP002);
 	}
 
 	/**

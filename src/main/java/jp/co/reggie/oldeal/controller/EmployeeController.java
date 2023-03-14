@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import jp.co.reggie.oldeal.common.Constants;
-import jp.co.reggie.oldeal.common.CustomMessage;
+import jp.co.reggie.oldeal.common.CustomMessages;
 import jp.co.reggie.oldeal.entity.Employee;
 import jp.co.reggie.oldeal.service.EmployeeService;
 import jp.co.reggie.oldeal.utils.Reggie;
@@ -61,7 +61,7 @@ public class EmployeeController {
 	public Reggie<String> logout(final HttpServletRequest request) {
 		// 清除Session中保存的當前登錄員工的ID；
 		request.getSession().removeAttribute(Constants.getEntityName(new Employee()));
-		return Reggie.success(CustomMessage.SRP007);
+		return Reggie.success(CustomMessages.SRP007);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class EmployeeController {
 		// 設置初始密碼，需進行MD5加密；
 		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
 		this.employeeService.save(employee);
-		return Reggie.success(CustomMessage.SRP006);
+		return Reggie.success(CustomMessages.SRP006);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class EmployeeController {
 	@PutMapping
 	public Reggie<String> update(@RequestBody final Employee employee) {
 		this.employeeService.updateById(employee);
-		return Reggie.success(CustomMessage.SRP008);
+		return Reggie.success(CustomMessages.SRP008);
 	}
 
 	/**

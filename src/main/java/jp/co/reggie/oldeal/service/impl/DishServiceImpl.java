@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import jp.co.reggie.oldeal.common.CustomException;
-import jp.co.reggie.oldeal.common.CustomMessage;
+import jp.co.reggie.oldeal.common.CustomMessages;
 import jp.co.reggie.oldeal.dto.DishDto;
 import jp.co.reggie.oldeal.entity.Category;
 import jp.co.reggie.oldeal.entity.Dish;
@@ -113,7 +113,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 				this.dishMapper.updateById(dish);
 			});
 		} else {
-			throw new CustomException(CustomMessage.ERP017);
+			throw new CustomException(CustomMessages.ERP017);
 		}
 	}
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import jp.co.reggie.oldeal.common.CustomMessage;
+import jp.co.reggie.oldeal.common.CustomMessages;
 import jp.co.reggie.oldeal.dto.SetmealDto;
 import jp.co.reggie.oldeal.service.SetmealService;
 import jp.co.reggie.oldeal.utils.Reggie;
@@ -45,7 +45,7 @@ public class SetmealController {
 		log.info("套餐信息：{}", setmealDto);
 		// 儲存套餐；
 		this.setmealService.saveWithDish(setmealDto);
-		return Reggie.success(CustomMessage.SRP010);
+		return Reggie.success(CustomMessages.SRP010);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class SetmealController {
 	public Reggie<String> delete(@RequestParam("ids") final List<Long> ids) {
 		log.info("套餐ID：{}", ids);
 		this.setmealService.removeWithDish(ids);
-		return Reggie.success(CustomMessage.SRP011);
+		return Reggie.success(CustomMessages.SRP011);
 	}
 
 	/**

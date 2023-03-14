@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import jp.co.reggie.oldeal.common.CustomMessage;
+import jp.co.reggie.oldeal.common.CustomMessages;
 import jp.co.reggie.oldeal.dto.DishDto;
 import jp.co.reggie.oldeal.entity.Dish;
 import jp.co.reggie.oldeal.service.DishService;
@@ -45,7 +45,7 @@ public class DishController {
 	public Reggie<String> save(@RequestBody final DishDto dishDto) {
 		log.info("新增菜品：{}" + dishDto.toString());
 		this.dishService.saveWithFlavour(dishDto);
-		return Reggie.success(CustomMessage.SRP004);
+		return Reggie.success(CustomMessages.SRP004);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class DishController {
 	public Reggie<String> update(@RequestBody final DishDto dishDto) {
 		log.info(dishDto.toString());
 		this.dishService.updateWithFlavour(dishDto);
-		return Reggie.success(CustomMessage.SRP005);
+		return Reggie.success(CustomMessages.SRP005);
 	}
 
 	/**
@@ -109,6 +109,6 @@ public class DishController {
 	@PostMapping("/status/{status}")
 	public Reggie<String> changeStatus(@PathVariable final String status, @RequestParam("ids") final Long[] ids) {
 		this.dishService.batchUpdateByIds(status, Arrays.asList(ids));
-		return Reggie.success(CustomMessage.SRP016);
+		return Reggie.success(CustomMessages.SRP016);
 	}
 }

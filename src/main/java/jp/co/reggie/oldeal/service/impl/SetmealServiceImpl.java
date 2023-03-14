@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import jp.co.reggie.oldeal.common.CustomException;
-import jp.co.reggie.oldeal.common.CustomMessage;
+import jp.co.reggie.oldeal.common.CustomMessages;
 import jp.co.reggie.oldeal.dto.SetmealDto;
 import jp.co.reggie.oldeal.entity.Category;
 import jp.co.reggie.oldeal.entity.Setmeal;
@@ -79,7 +79,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		final long count = this.count(queryWrapper);
 		if (count > 0) {
 			// 如果無法刪除，則抛出異常；
-			throw new CustomException(CustomMessage.ERP012);
+			throw new CustomException(CustomMessages.ERP012);
 		}
 		// 刪除套餐表中的數據；
 		this.removeByIds(ids);
