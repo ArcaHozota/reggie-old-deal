@@ -106,19 +106,20 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 			dishIdList.forEach(item -> {
 				final Dish dish = this.dishMapper.selectById(item);
 				dish.setStatus("ec");
-				dish.setUpdateUser(currentId);
 				this.dishMapper.updateById(dish);
+				BaseContext.setCurrentId(currentId);
 			});
 		} else if (StringUtils.isEqual("ec", status)) {
 			dishIdList.forEach(item -> {
 				final Dish dish = this.dishMapper.selectById(item);
 				dish.setStatus("ea");
-				dish.setUpdateUser(currentId);
 				this.dishMapper.updateById(dish);
+				BaseContext.setCurrentId(currentId);
 			});
 		} else {
 			throw new CustomException(CustomMessages.ERP017);
 		}
+		BaseContext.getCurrentId();
 	}
 
 	/**
