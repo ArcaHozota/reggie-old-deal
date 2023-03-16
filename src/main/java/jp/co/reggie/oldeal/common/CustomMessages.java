@@ -9,6 +9,12 @@ package jp.co.reggie.oldeal.common;
 public final class CustomMessages {
 
 	/**
+	 * 私用構造方法
+	 */
+	private CustomMessages() {
+	}
+
+	/**
 	 * 分類信息添加成功
 	 */
 	public static final String SRP001 = "分類信息添加成功";
@@ -93,4 +99,13 @@ public final class CustomMessages {
 	 */
 	public static final String ERP017 = "菜品狀態碼識別錯誤，請刷新本頁";
 
+	/**
+	 * 清空購物車成功
+	 */
+	public static final String SRP018 = "清空購物車成功！";
+
+	/**
+	 * 沒有檢索到該對象
+	 */
+	public static final String ERP019 = "沒有檢索到該對象！";
 }
