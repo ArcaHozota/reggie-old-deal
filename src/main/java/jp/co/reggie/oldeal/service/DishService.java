@@ -49,7 +49,7 @@ public interface DishService extends IService<Dish> {
 	 * @param dish 實體類對象
 	 * @return List<Dish>
 	 */
-	List<Dish> findList(Dish dish);
+	List<DishDto> findList(Dish dish);
 
 	/**
 	 * 查詢分頁數據

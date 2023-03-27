@@ -153,7 +153,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	 * @return List<Dish>
 	 */
 	@Override
-	public List<Dish> findList(final Dish dish) {
+	public List<DishDto> findList(final Dish dish) {
 		// 創建條件構造器；
 		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
 		// 添加搜索條件；
@@ -161,8 +161,34 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		queryWrapper.eq(Dish::getStatus, "ea");
 		// 添加排序條件；
 		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
-		// 查詢菜品信息並返回；
-		return this.dishMapper.selectList(queryWrapper);
+		// 查詢菜品信息；
+		final List<Dish> list = this.list(queryWrapper);
+		// 獲取菜品及口味數據傳輸類；
+		return list.stream().map((item) -> {
+			// 聲明菜品及口味數據傳輸類對象；
+			final DishDto dishDto = new DishDto();
+			// 拷貝除分類ID以外的屬性；
+			BeanUtils.copyProperties(item, dishDto);
+			// 獲取分類ID；
+			final Long categoryId = item.getCategoryId();
+			// 根據ID查詢分類對象；
+			final Category category = this.categoryMapper.selectById(categoryId);
+			if (category != null) {
+				// 獲取分類名稱；
+				final String categoryName = category.getName();
+				// 存儲於DTO對象中並返回；
+				dishDto.setCategoryName(categoryName);
+			}
+			// 當前菜品的ID；
+			final Long dishId = item.getId();
+			// 創建條件構造器；
+			final LambdaQueryWrapper<DishFlavor> queryWrapper2 = Wrappers.lambdaQuery(new DishFlavor());
+			queryWrapper2.eq(DishFlavor::getDishId, dishId);
+			// 檢索口味信息；
+			final List<DishFlavor> flavors = this.dishFlavorService.list(queryWrapper2);
+			dishDto.setFlavors(flavors);
+			return dishDto;
+		}).collect(Collectors.toList());
 	}
 
 	/**

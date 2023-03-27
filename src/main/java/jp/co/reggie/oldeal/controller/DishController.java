@@ -96,8 +96,8 @@ public class DishController {
 	 * @return R.success(菜品信息)
 	 */
 	@GetMapping("/list")
-	public Reggie<List<Dish>> list(@RequestBody final Dish dish) {
-		final List<Dish> list = this.dishService.findList(dish);
+	public Reggie<List<DishDto>> list(@RequestBody final Dish dish) {
+		final List<DishDto> list = this.dishService.findList(dish);
 		return Reggie.success(list);
 	}
 
