@@ -28,4 +28,4 @@ mybatis-plus:
    type-aliases-package: jp.co.reggie.newdeal.enity
 # 自定義傳入文件根目錄路徑
 reggie:
-   path: D:\VSCode\JavaKaiHatsu\file_In\
+   path: D:\VSCode\JavaKaiHatsu\ReggieFoods\
