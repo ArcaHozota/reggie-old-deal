@@ -95,5 +95,5 @@ public class Dish implements Serializable {
 	 * 邏輯刪除字段
 	 */
 	@TableLogic
-	private Integer isDeleted;
+	private String logicDeleteFlg;
 }
