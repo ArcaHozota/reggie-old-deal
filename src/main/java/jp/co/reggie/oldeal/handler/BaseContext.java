@@ -8,17 +8,13 @@ package jp.co.reggie.oldeal.handler;
  */
 public class BaseContext {
 
-	private static final ThreadLocal<Long> THREAD_LOCAL = new ThreadLocal<>();
+	private static Long CURRENT_ID;
 
-	public static void setCurrentId(final Long id) {
-		THREAD_LOCAL.set(id);
+	protected static void setCurrentId(final Long id) {
+		CURRENT_ID = id;
 	}
 
-	public static Long getCurrentId() {
-		return THREAD_LOCAL.get();
-	}
-
-	public static void remove() {
-		THREAD_LOCAL.remove();
+	protected static Long getCurrentId() {
+		return CURRENT_ID;
 	}
 }
