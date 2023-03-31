@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 
-import jp.co.reggie.oldeal.common.BaseContext;
 import lombok.extern.slf4j.Slf4j;
 
 /**

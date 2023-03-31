@@ -1,4 +1,4 @@
-package jp.co.reggie.oldeal.common;
+package jp.co.reggie.oldeal.handler;
 
 /**
  * 基於ThreadLocal封裝工具類，用於獲取和保存當前用戸ID；

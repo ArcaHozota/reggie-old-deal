@@ -15,9 +15,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
-import jp.co.reggie.oldeal.common.BaseContext;
 import jp.co.reggie.oldeal.common.CustomMessages;
 import jp.co.reggie.oldeal.entity.AddressBook;
+import jp.co.reggie.oldeal.handler.BaseContext;
 import jp.co.reggie.oldeal.service.AddressBookService;
 import jp.co.reggie.oldeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
