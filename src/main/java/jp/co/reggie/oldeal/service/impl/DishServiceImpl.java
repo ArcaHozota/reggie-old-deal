@@ -100,16 +100,16 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	 */
 	@Override
 	public void batchUpdateByIds(final String status, final List<Long> dishIdList) {
-		if (StringUtils.isEqual("ea", status)) {
+		if (StringUtils.isEqual("0", status)) {
 			dishIdList.forEach(item -> {
 				final Dish dish = this.dishMapper.selectById(item);
-				dish.setStatus("ec");
+				dish.setStatus("1");
 				this.dishMapper.updateById(dish);
 			});
-		} else if (StringUtils.isEqual("ec", status)) {
+		} else if (StringUtils.isEqual("1", status)) {
 			dishIdList.forEach(item -> {
 				final Dish dish = this.dishMapper.selectById(item);
-				dish.setStatus("ea");
+				dish.setStatus("0");
 				this.dishMapper.updateById(dish);
 			});
 		} else {
