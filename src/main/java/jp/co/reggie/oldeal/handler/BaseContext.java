@@ -14,7 +14,7 @@ public class BaseContext {
 		CURRENT_ID = id;
 	}
 
-	protected static Long getCurrentId() {
+	public static Long getCurrentId() {
 		return CURRENT_ID;
 	}
 }
