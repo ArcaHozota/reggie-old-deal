@@ -33,7 +33,7 @@ public class OrdersController {
 	 * @param pageSize    頁面大小
 	 * @param orderId     訂單ID
 	 * @param beginTime   開始時間
-	 * @param termialTime 截止時間
+	 * @param terminalTime 截止時間
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
