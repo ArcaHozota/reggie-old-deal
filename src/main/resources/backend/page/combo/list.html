@@ -173,7 +173,7 @@
                     params.status = row
                 } else {
                     params.ids = row.id
-                    params.status = row.status ? '0' : '1'
+                    params.status = row.status
                 }
                 this.$confirm('確認修改該套餐狀態?', '提示', {
                     'confirmButtonText': '確定',

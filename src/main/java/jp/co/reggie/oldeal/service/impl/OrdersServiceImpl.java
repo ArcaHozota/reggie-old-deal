@@ -1,7 +1,5 @@
 package jp.co.reggie.oldeal.service.impl;
 
-import java.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +18,9 @@ import jp.co.reggie.oldeal.service.IOrdersService;
 @Service
 public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> implements IOrdersService {
 
+	/**
+	 * 訂單實體類接口
+	 */
 	@Autowired
 	private OrdersMapper ordersMapper;
 
@@ -35,7 +36,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 	 */
 	@Override
 	public Page<Orders> pagination(final Integer pageNum, final Integer pageSize, final Long orderId,
-			final LocalDateTime beginTime, final LocalDateTime terminalTime) {
+			final String beginTime, final String terminalTime) {
 		// 聲明分頁構造器對象；
 		final Page<Orders> pageInfo = Page.of(pageNum, pageSize);
 		// 創建條件構造器；
