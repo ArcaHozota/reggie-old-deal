@@ -98,6 +98,7 @@ public class DishController {
 	 * 修改菜品在售狀態
 	 *
 	 * @param status 菜品狀態
+	 * @param ids    菜品ID集合
 	 * @return R.success(修改成功信息)
 	 */
 	@PostMapping("/status/{status}")
