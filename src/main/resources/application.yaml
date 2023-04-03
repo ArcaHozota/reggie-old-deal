@@ -21,9 +21,9 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
-      logic-delete-field: deleted
-      logic-delete-value: 1
-      logic-not-delete-value: 0
+      logic-delete-field: logicDeleteFlg
+      logic-delete-value: removed
+      logic-not-delete-value: visible
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: jp.co.reggie.oldeal.entity
 # 自定義傳入文件根目錄路徑
