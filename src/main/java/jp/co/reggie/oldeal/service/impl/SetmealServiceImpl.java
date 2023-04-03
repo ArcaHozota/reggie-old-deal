@@ -71,6 +71,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	 *
 	 * @param ids 套餐ID的集合
 	 */
+	@Transactional(rollbackFor = PSQLException.class)
 	@Override
 	public void removeWithDish(final List<Long> ids) {
 		// 查詢套餐狀態以確認是否可以刪除；

@@ -96,7 +96,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	 * 根據菜品集合批量停發售
 	 *
 	 * @param status   在售狀態
-	 * @param dishList 菜品集合
+	 * @param dishIdList 菜品集合
 	 */
 	@Override
 	public void batchUpdateByIds(final String status, final List<Long> dishIdList) {
