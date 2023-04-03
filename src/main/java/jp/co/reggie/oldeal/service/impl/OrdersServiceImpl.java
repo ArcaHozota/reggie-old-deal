@@ -1,5 +1,8 @@
 package jp.co.reggie.oldeal.service.impl;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,12 +42,16 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 			final String beginTime, final String terminalTime) {
 		// 聲明分頁構造器對象；
 		final Page<Orders> pageInfo = Page.of(pageNum, pageSize);
+		// 聲明日期時間格式轉換器對象；
+		final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		// 創建條件構造器；
 		final LambdaQueryWrapper<Orders> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加過濾條件；
 		queryWrapper.eq(orderId != null, Orders::getId, orderId);
-		queryWrapper.ge(beginTime != null, Orders::getOrderTime, beginTime);
-		queryWrapper.le(terminalTime != null, Orders::getOrderTime, terminalTime);
+		if (beginTime != null && terminalTime != null) {
+			queryWrapper.ge(Orders::getOrderTime, LocalDateTime.parse(beginTime, timeFormatter));
+			queryWrapper.le(Orders::getOrderTime, LocalDateTime.parse(terminalTime, timeFormatter));
+		}
 		// 執行分頁查詢；
 		return this.ordersMapper.selectPage(pageInfo, queryWrapper);
 	}
