@@ -40,6 +40,12 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	private CategoryMapper categoryMapper;
 
 	/**
+	 * 套餐管理實體類接口
+	 */
+	@Autowired
+	private SetmealMapper setmealMapper;
+
+	/**
 	 * 套餐與菜品服務類
 	 */
 	@Autowired
@@ -56,14 +62,36 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		// 保存套餐的基本信息；
 		this.save(setmealDto);
 		// 獲取套餐菜品關聯集合；
-		List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
+		final List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
 		// 獲取菜品ID並插入集合；
-		setmealDishes = setmealDishes.stream().map((item) -> {
-			item.setDishId(setmealDto.getId());
-			return item;
-		}).collect(Collectors.toList());
+		setmealDishes.forEach(item -> item.setDishId(setmealDto.getId()));
 		// 保存套餐和菜品的關聯關係；
 		this.setmealDishService.saveBatch(setmealDishes);
+	}
+
+	/**
+	 * 根據套餐集合批量停發售
+	 *
+	 * @param status   在售狀態
+	 * @param smIdList 套餐集合
+	 */
+	@Override
+	public void batchUpdateByIds(final String status, final List<Long> smIdList) {
+		if (StringUtils.isEqual("0", status)) {
+			smIdList.forEach(item -> {
+				final Setmeal setmeal = this.setmealMapper.selectById(item);
+				setmeal.setStatus("1");
+				this.setmealMapper.updateById(setmeal);
+			});
+		} else if (StringUtils.isEqual("1", status)) {
+			smIdList.forEach(item -> {
+				final Setmeal setmeal = this.setmealMapper.selectById(item);
+				setmeal.setStatus("0");
+				this.setmealMapper.updateById(setmeal);
+			});
+		} else {
+			throw new CustomException(CustomMessages.ERP022);
+		}
 	}
 
 	/**

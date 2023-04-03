@@ -28,6 +28,14 @@ public interface SetmealService extends IService<Setmeal> {
 	void removeWithDish(List<Long> ids);
 
 	/**
+	 * 根據套餐集合批量停發售
+	 *
+	 * @param status   在售狀態
+	 * @param smIdList 套餐集合
+	 */
+	void batchUpdateByIds(String status, List<Long> smIdList);
+
+	/**
 	 * 進行分頁
 	 *
 	 * @param pageNum  頁碼
