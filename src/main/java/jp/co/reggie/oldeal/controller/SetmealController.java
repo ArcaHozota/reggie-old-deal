@@ -1,16 +1,11 @@
 package jp.co.reggie.oldeal.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
@@ -62,11 +57,24 @@ public class SetmealController {
 	}
 
 	/**
+	 * 修改套餐在售狀態
+	 *
+	 * @param status 套餐狀態
+	 * @param ids    套餐ID集合
+	 * @return R.success(修改成功信息)
+	 */
+	@PostMapping("/status/{status}")
+	public Reggie<String> changeStatus(@PathVariable final String status, @RequestParam("ids") final Long[] ids) {
+		this.setmealService.batchUpdateByIds(status, Arrays.asList(ids));
+		return Reggie.success(CustomMessages.SRP023);
+	}
+
+	/**
 	 * 分頁信息顯示
 	 *
 	 * @param pageNum  頁碼
 	 * @param pageSize 頁面大小
-	 * @param name     檢索文
+	 * @param keyword  檢索文
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
