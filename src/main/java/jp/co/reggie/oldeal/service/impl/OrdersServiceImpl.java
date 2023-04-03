@@ -26,11 +26,11 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 	/**
 	 * 分頁查詢
 	 *
-	 * @param pageNum     頁碼
-	 * @param pageSize    頁面大小
-	 * @param orderId     訂單ID
-	 * @param beginTime   開始時間
-	 * @param termialTime 截止時間
+	 * @param pageNum      頁碼
+	 * @param pageSize     頁面大小
+	 * @param orderId      訂單ID
+	 * @param beginTime    開始時間
+	 * @param terminalTime 截止時間
 	 * @return Page<Orders>
 	 */
 	@Override
@@ -45,7 +45,6 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 		queryWrapper.ge(beginTime != null, Orders::getOrderTime, beginTime);
 		queryWrapper.le(terminalTime != null, Orders::getOrderTime, terminalTime);
 		// 執行分頁查詢；
-		final Page<Orders> dtoPage = this.ordersMapper.selectPage(pageInfo, queryWrapper);
-		return dtoPage;
+		return this.ordersMapper.selectPage(pageInfo, queryWrapper);
 	}
 }
