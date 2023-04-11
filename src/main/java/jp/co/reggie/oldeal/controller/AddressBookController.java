@@ -108,7 +108,7 @@ public class AddressBookController {
 		log.info("addressBook:{}", addressBook);
 		final LambdaQueryWrapper<AddressBook> queryWrapper = Wrappers.lambdaQuery(new AddressBook());
 		queryWrapper.eq(AddressBook::getUserId, addressBook.getUserId());
-		queryWrapper.orderByDesc(AddressBook::getUpdateTime);
+		queryWrapper.orderByDesc(AddressBook::getUpdatingTime);
 		final List<AddressBook> addressBooks = this.addressBookService.list(queryWrapper);
 		return Reggie.success(addressBooks);
 	}
