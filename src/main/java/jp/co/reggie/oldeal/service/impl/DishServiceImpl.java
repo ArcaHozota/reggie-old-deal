@@ -95,7 +95,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	/**
 	 * 根據菜品集合批量停發售
 	 *
-	 * @param status   在售狀態
+	 * @param status     在售狀態
 	 * @param dishIdList 菜品集合
 	 */
 	@Override
@@ -155,7 +155,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
 		queryWrapper.eq(Dish::getStatus, "ea");
 		// 添加排序條件；
-		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdatingTime);
 		// 查詢菜品信息；
 		final List<Dish> list = this.list(queryWrapper);
 		// 獲取菜品及口味數據傳輸類；
@@ -203,7 +203,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		// 添加過濾條件；
 		queryWrapper.like(StringUtils.isNotEmpty(keyword), Dish::getName, keyword);
 		// 添加排序條件；
-		queryWrapper.orderByDesc(Dish::getUpdateTime);
+		queryWrapper.orderByDesc(Dish::getUpdatingTime);
 		// 執行分頁查詢；
 		final Page<Dish> dishPage = this.dishMapper.selectPage(pageInfo, queryWrapper);
 		// 獲取分頁數據；

@@ -136,7 +136,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		// 添加查詢條件，根據檢索文進行模糊查詢；
 		queryWrapper.like(StringUtils.isNotEmpty(keyword), Setmeal::getName, keyword);
 		// 添加排序條件；
-		queryWrapper.orderByDesc(Setmeal::getUpdateTime);
+		queryWrapper.orderByDesc(Setmeal::getUpdatingTime);
 		// 執行查詢；
 		pageInfo = this.page(pageInfo, queryWrapper);
 		// 聲明數據傳輸類分頁構造器；
