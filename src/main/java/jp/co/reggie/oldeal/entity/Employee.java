@@ -66,23 +66,23 @@ public class Employee implements Serializable {
 	 * 創建時間
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	private LocalDateTime createTime;
+	private LocalDateTime creationTime;
 
 	/**
 	 * 更新時間
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private LocalDateTime updateTime;
+	private LocalDateTime updatingTime;
 
 	/**
 	 * 創建人
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	private Long createUser;
+	private Long creationUser;
 
 	/**
 	 * 修改者
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private Long updateUser;
+	private Long updatingUser;
 }

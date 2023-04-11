@@ -70,5 +70,5 @@ public class ShoppingCart implements Serializable {
 	 * 創建時間
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	private LocalDateTime createTime;
+	private LocalDateTime creationTime;
 }
