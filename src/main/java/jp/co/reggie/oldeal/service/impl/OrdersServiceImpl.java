@@ -3,8 +3,9 @@ package jp.co.reggie.oldeal.service.impl;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.postgresql.util.PSQLException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,13 +20,8 @@ import jp.co.reggie.oldeal.service.IOrdersService;
  * @date 2023-02-18
  */
 @Service
+@Transactional(rollbackFor = PSQLException.class)
 public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> implements IOrdersService {
-
-	/**
-	 * 訂單實體類接口
-	 */
-	@Autowired
-	private OrdersMapper ordersMapper;
 
 	/**
 	 * 分頁查詢
@@ -53,6 +49,6 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 			queryWrapper.le(Orders::getOrderTime, LocalDateTime.parse(terminalTime, timeFormatter));
 		}
 		// 執行分頁查詢；
-		return this.ordersMapper.selectPage(pageInfo, queryWrapper);
+		return super.getBaseMapper().selectPage(pageInfo, queryWrapper);
 	}
 }

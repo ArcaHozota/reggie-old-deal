@@ -2,8 +2,10 @@ package jp.co.reggie.oldeal.service.impl;
 
 import java.util.List;
 
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -24,13 +26,8 @@ import jp.co.reggie.oldeal.service.SetmealService;
  * @date 2022-11-19
  */
 @Service
+@Transactional(rollbackFor = PSQLException.class)
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
-
-	/**
-	 * 分類mapper
-	 */
-	@Autowired
-	private CategoryMapper categoryMapper;
 
 	/**
 	 * 菜品服務類；
@@ -81,7 +78,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 	public List<Category> findByType(final Integer categoryType) {
 		final LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
 		queryWrapper.eq(categoryType != null, Category::getType, categoryType);
-		return this.categoryMapper.selectList(queryWrapper);
+		return super.getBaseMapper().selectList(queryWrapper);
 	}
 
 	/**
@@ -100,6 +97,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 		// 添加排序條件，根據sort進行排序；
 		queryWrapper.orderByAsc(Category::getSort);
 		// 執行查詢；
-		return this.categoryMapper.selectPage(pageInfo, queryWrapper);
+		return super.getBaseMapper().selectPage(pageInfo, queryWrapper);
 	}
 }

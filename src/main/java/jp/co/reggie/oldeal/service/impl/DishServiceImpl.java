@@ -31,6 +31,7 @@ import jp.co.reggie.oldeal.utils.StringUtils;
  * @date 2022-11-19
  */
 @Service
+@Transactional(rollbackFor = PSQLException.class)
 public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements DishService {
 
 	/**
@@ -56,7 +57,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	 *
 	 * @param dishDto 菜品及口味數據傳輸類
 	 */
-	@Transactional(rollbackFor = PSQLException.class)
 	@Override
 	public void saveWithFlavour(final DishDto dishDto) {
 		// 保存菜品的基本信息到菜品表；
@@ -122,7 +122,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	 *
 	 * @param dishDto 菜品及口味數據傳輸類
 	 */
-	@Transactional(rollbackFor = PSQLException.class)
 	@Override
 	public void updateWithFlavour(final DishDto dishDto) {
 		// 更新菜品信息；

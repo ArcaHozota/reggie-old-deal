@@ -1,7 +1,8 @@
 package jp.co.reggie.oldeal.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.postgresql.util.PSQLException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -20,10 +21,8 @@ import jp.co.reggie.oldeal.utils.StringUtils;
  * @date 2022-11-09
  */
 @Service
+@Transactional(rollbackFor = PSQLException.class)
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
-
-	@Autowired
-	private EmployeeMapper employeeMapper;
 
 	/**
 	 * 員工登錄處理
@@ -38,7 +37,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 		// 根據頁面提交的用戸名查詢數據庫；
 		final LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
 		queryWrapper.eq(Employee::getUsername, employee.getUsername());
-		final Employee aEmployee = this.employeeMapper.selectOne(queryWrapper);
+		final Employee aEmployee = super.getBaseMapper().selectOne(queryWrapper);
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
 		if (aEmployee == null || StringUtils.isNotEqual(password, aEmployee.getPassword())) {
 			throw new CustomException(Constants.NOT_LOGIN);
@@ -65,9 +64,9 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 		queryWrapper.orderByDesc(Employee::getUpdatingTime);
 		if (StringUtils.isNotEmpty(keyword)) {
 			queryWrapper.eq(Employee::getName, keyword);
-			pageInfo = this.employeeMapper.selectPage(pageInfo, queryWrapper);
+			pageInfo = super.getBaseMapper().selectPage(pageInfo, queryWrapper);
 		} else {
-			pageInfo = this.employeeMapper.selectPage(pageInfo, queryWrapper);
+			pageInfo = super.getBaseMapper().selectPage(pageInfo, queryWrapper);
 		}
 		return pageInfo;
 	}

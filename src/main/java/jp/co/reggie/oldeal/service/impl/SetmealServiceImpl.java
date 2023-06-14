@@ -31,6 +31,7 @@ import jp.co.reggie.oldeal.utils.StringUtils;
  * @date 2022-11-19
  */
 @Service
+@Transactional(rollbackFor = PSQLException.class)
 public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> implements SetmealService {
 
 	/**
@@ -38,12 +39,6 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	 */
 	@Autowired
 	private CategoryMapper categoryMapper;
-
-	/**
-	 * 套餐管理實體類接口
-	 */
-	@Autowired
-	private SetmealMapper setmealMapper;
 
 	/**
 	 * 套餐與菜品服務類
@@ -56,7 +51,6 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	 *
 	 * @param setmealDto 數據傳輸類
 	 */
-	@Transactional(rollbackFor = PSQLException.class)
 	@Override
 	public void saveWithDish(final SetmealDto setmealDto) {
 		// 保存套餐的基本信息；
@@ -79,15 +73,15 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	public void batchUpdateByIds(final String status, final List<Long> smIdList) {
 		if (StringUtils.isEqual("0", status)) {
 			smIdList.forEach(item -> {
-				final Setmeal setmeal = this.setmealMapper.selectById(item);
+				final Setmeal setmeal = super.getBaseMapper().selectById(item);
 				setmeal.setStatus("1");
-				this.setmealMapper.updateById(setmeal);
+				super.getBaseMapper().updateById(setmeal);
 			});
 		} else if (StringUtils.isEqual("1", status)) {
 			smIdList.forEach(item -> {
-				final Setmeal setmeal = this.setmealMapper.selectById(item);
+				final Setmeal setmeal = super.getBaseMapper().selectById(item);
 				setmeal.setStatus("0");
-				this.setmealMapper.updateById(setmeal);
+				super.getBaseMapper().updateById(setmeal);
 			});
 		} else {
 			throw new CustomException(CustomMessages.ERP022);
@@ -144,7 +138,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		// 拷貝屬性；
 		BeanUtils.copyProperties(pageInfo, dtoPage, "records");
 		// 獲取數據傳輸類分頁；
-		final List<SetmealDto> records = pageInfo.getRecords().stream().map((item) -> {
+		final List<SetmealDto> records = pageInfo.getRecords().stream().map(item -> {
 			// 聲明套餐數據傳輸類；
 			final SetmealDto setmealDto = new SetmealDto();
 			// 對象拷貝；
