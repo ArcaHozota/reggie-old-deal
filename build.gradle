@@ -43,7 +43,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation 'org.postgresql:postgresql'
     // https://mvnrepository.com/artifact/com.google.guava/guava
-    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'com.google.guava:guava:32.1.2-jre'
     // https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core
 	implementation 'com.aliyun:aliyun-java-sdk-core:4.5.30'
 	// https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-dysmsapi
