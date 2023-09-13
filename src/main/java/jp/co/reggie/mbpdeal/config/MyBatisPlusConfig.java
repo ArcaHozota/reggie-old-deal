@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
  * MBP分頁攔截器配置
  *
  * @author Administrator
+ * @since 1.68
  */
 @Configuration
 public class MyBatisPlusConfig {

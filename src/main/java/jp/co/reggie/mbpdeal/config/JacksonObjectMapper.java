@@ -22,7 +22,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
  * [从JSON反序列化Java对象] 从Java对象生成JSON的过程称为 [序列化Java对象到JSON]
  *
  * @author Administrator
- * @date 2022-11-16
+ * @since 1.00beta
  */
 public class JacksonObjectMapper extends ObjectMapper {
 
