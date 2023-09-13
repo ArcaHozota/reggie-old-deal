@@ -11,6 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * SpringMVC環境變量配置類
+ *
  * @author Administrator
  * @since 1.00beta
  */
