@@ -52,8 +52,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     // Use JUnit test framework.
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    annotationProcessor 'org.projectlombok:lombok'
 }
 
 test {
