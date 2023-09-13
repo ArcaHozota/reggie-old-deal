@@ -52,8 +52,8 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		this.save(setmealDto);
 		// 獲取套餐菜品關聯集合；
 		final List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
-		// 獲取菜品ID並插入集合；
-		setmealDishes.forEach(item -> item.setDishId(setmealDto.getId()));
+		// 獲取套餐ID並插入集合；
+		setmealDishes.forEach(item -> item.setSetmealId(setmealDto.getId()));
 		// 保存套餐和菜品的關聯關係；
 		this.setmealDishService.saveBatch(setmealDishes);
 	}
@@ -64,8 +64,8 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		this.updateById(setmealDto);
 		// 獲取套餐菜品關聯集合；
 		final List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
-		// 獲取菜品ID並插入集合；
-		setmealDishes.forEach(item -> item.setDishId(setmealDto.getId()));
+		// 獲取套餐ID並插入集合；
+		setmealDishes.forEach(item -> item.setSetmealId(setmealDto.getId()));
 		// 保存套餐和菜品的關聯關係；
 		this.setmealDishService.updateBatchById(setmealDishes);
 	}
