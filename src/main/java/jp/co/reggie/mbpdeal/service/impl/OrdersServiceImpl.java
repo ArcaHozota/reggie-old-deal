@@ -45,8 +45,8 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 		// 添加過濾條件；
 		queryWrapper.eq(orderId != null, Orders::getId, orderId);
 		if (beginTime != null && terminalTime != null) {
-			queryWrapper.ge(Orders::getOrderTime, LocalDateTime.parse(beginTime, timeFormatter));
-			queryWrapper.le(Orders::getOrderTime, LocalDateTime.parse(terminalTime, timeFormatter));
+			queryWrapper.ge(Orders::getOrdersTime, LocalDateTime.parse(beginTime, timeFormatter));
+			queryWrapper.le(Orders::getOrdersTime, LocalDateTime.parse(terminalTime, timeFormatter));
 		}
 		// 執行分頁查詢；
 		return super.getBaseMapper().selectPage(pageInfo, queryWrapper);

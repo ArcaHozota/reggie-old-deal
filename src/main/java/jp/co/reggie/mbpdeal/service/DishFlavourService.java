@@ -2,10 +2,10 @@ package jp.co.reggie.mbpdeal.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import jp.co.reggie.mbpdeal.entity.DishFlavor;
+import jp.co.reggie.mbpdeal.entity.DishFlavour;
 
 /**
  * @author Administrator
  */
-public interface DishFlavorService extends IService<DishFlavor> {
+public interface DishFlavourService extends IService<DishFlavour> {
 }

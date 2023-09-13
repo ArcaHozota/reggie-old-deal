@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import jp.co.reggie.mbpdeal.entity.DishFlavor;
+import jp.co.reggie.mbpdeal.entity.DishFlavour;
 
 /**
  * 菜品口味實體類接口
@@ -13,5 +13,5 @@ import jp.co.reggie.mbpdeal.entity.DishFlavor;
  * @date 2022-11-23
  */
 @Mapper
-public interface DishFlavorMapper extends BaseMapper<DishFlavor> {
+public interface DishFlavourMapper extends BaseMapper<DishFlavour> {
 }
