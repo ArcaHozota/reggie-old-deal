@@ -25,7 +25,7 @@ mybatis-plus:
       logic-delete-value: removed
       logic-not-delete-value: visible
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: jp.co.reggie.oldeal.entity
+  type-aliases-package: jp.co.reggie.mbpdeal.entity
 # 自定義傳入文件根目錄路徑
 reggie:
   path: D:\VSCode\JavaKaiHatsu\ReggieFoods\
