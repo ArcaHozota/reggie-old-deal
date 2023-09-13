@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * ArkamaHozota
+ * Reggie-MyBatisPlus啓動類
  *
- * @author Administrator
+ * @author ArkamaHozota
  * @since 1.00beta
  */
 @Slf4j
