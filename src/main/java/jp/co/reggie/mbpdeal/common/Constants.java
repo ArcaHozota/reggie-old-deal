@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
  * 項目常量定義類
  *
  * @author Administrator
+ * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Constants {

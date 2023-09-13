@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
  * 自定義返回信息集合類
  *
  * @author Administrator
- * @date 2022-11-28
+ * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CustomMessages {
