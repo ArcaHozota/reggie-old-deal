@@ -25,7 +25,7 @@ public class MyBatisPlusConfig {
 	protected MybatisPlusInterceptor mybatisPlusInterceptor() {
 		final MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
 		final PaginationInnerInterceptor innerInterceptor = new PaginationInnerInterceptor();
-		innerInterceptor.setDbType(DbType.POSTGRE_SQL);
+		innerInterceptor.setDbType(DbType.ORACLE_12C);
 		innerInterceptor.setOverflow(true);
 		mybatisPlusInterceptor.addInnerInterceptor(innerInterceptor);
 		return mybatisPlusInterceptor;
