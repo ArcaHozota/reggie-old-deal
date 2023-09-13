@@ -5,7 +5,15 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
@@ -41,6 +49,20 @@ public class SetmealController {
 		// 儲存套餐；
 		this.setmealService.saveWithDish(setmealDto);
 		return Reggie.success(CustomMessages.SRP010);
+	}
+
+	/**
+	 * 修改套餐信息
+	 *
+	 * @param setmealDto 數據傳輸類
+	 * @return R.success(修改成功的信息)
+	 */
+	@PutMapping
+	public Reggie<String> update(@RequestBody final SetmealDto setmealDto) {
+		log.info("套餐信息：{}", setmealDto);
+		// 儲存套餐；
+		this.setmealService.updateWithDish(setmealDto);
+		return Reggie.success(CustomMessages.SRP021);
 	}
 
 	/**

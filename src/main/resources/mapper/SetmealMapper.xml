@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 套餐數據操作文件 -->
+<mapper namespace="jp.co.reggie.mbpdeal.mapper.SetmealMapper">
+	<resultMap id="BasicResultMap"
+		type="jp.co.reggie.mbpdeal.entity.Setmeal" autoMapping="true">
+		<id property="id" jdbcType="BIGINT" column="id" />
+	</resultMap>
+	<update id="batchUpdateByIds" parameterType="java.util.List">
+		UPDATE REGGIE_SETMEAL STL 
+		SET
+		    STL.STATUS = #{status,jdbcType=NVARCHAR}
+		    , STL.UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
+		    , STL.UPDATED_USER = #{updatedUser,jdbcType=BIGINT} 
+		WHERE
+		    STL.DEL_FLG = 'visible'
+		AND 
+			STL.ID IN
+		<foreach collection="smIdList" item="smId" index="index"
+			open="(" close=")" separator=",">
+			#{smId,jdbcType=BIGINT}
+		</foreach>
+	</update>
+	<update id="batchRemoveByIds" parameterType="java.util.List">
+		UPDATE REGGIE_SETMEAL STL 
+		SET
+		    STL.DEL_FLG = 'removed' 
+		WHERE
+		    STL.ID IN
+		<foreach collection="smIdList" item="smId" index="index"
+			open="(" close=")" separator=",">
+			#{smId,jdbcType=BIGINT}
+		</foreach>
+	</update>
+</mapper>

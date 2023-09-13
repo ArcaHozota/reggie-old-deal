@@ -46,11 +46,6 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	@Autowired
 	private SetmealDishService setmealDishService;
 
-	/**
-	 * 新增套餐同時保存套餐和菜品的關聯關係
-	 *
-	 * @param setmealDto 數據傳輸類
-	 */
 	@Override
 	public void saveWithDish(final SetmealDto setmealDto) {
 		// 保存套餐的基本信息；
@@ -63,36 +58,30 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		this.setmealDishService.saveBatch(setmealDishes);
 	}
 
-	/**
-	 * 根據套餐集合批量停發售
-	 *
-	 * @param status   在售狀態
-	 * @param smIdList 套餐集合
-	 */
 	@Override
-	public void batchUpdateByIds(final String status, final List<Long> smIdList) {
+	public void updateWithDish(final SetmealDto setmealDto) {
+		// 保存套餐的基本信息；
+		this.updateById(setmealDto);
+		// 獲取套餐菜品關聯集合；
+		final List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
+		// 獲取菜品ID並插入集合；
+		setmealDishes.forEach(item -> item.setDishId(setmealDto.getId()));
+		// 保存套餐和菜品的關聯關係；
+		this.setmealDishService.updateBatchById(setmealDishes);
+	}
+
+	@Override
+	public void batchUpdateByIds(String status, final List<Long> smIdList) {
 		if (StringUtils.isEqual("0", status)) {
-			smIdList.forEach(item -> {
-				final Setmeal setmeal = super.getBaseMapper().selectById(item);
-				setmeal.setStatus("1");
-				super.getBaseMapper().updateById(setmeal);
-			});
+			status = "1";
 		} else if (StringUtils.isEqual("1", status)) {
-			smIdList.forEach(item -> {
-				final Setmeal setmeal = super.getBaseMapper().selectById(item);
-				setmeal.setStatus("0");
-				super.getBaseMapper().updateById(setmeal);
-			});
+			status = "0";
 		} else {
 			throw new CustomException(CustomMessages.ERP022);
 		}
+		super.getBaseMapper().batchUpdateByIds(status, smIdList);
 	}
 
-	/**
-	 * 刪除套餐同時刪除套餐和菜品的關聯關係
-	 *
-	 * @param ids 套餐ID的集合
-	 */
 	@Override
 	@Transactional(rollbackFor = OracleSQLException.class)
 	public void removeWithDish(final List<Long> ids) {
@@ -113,14 +102,6 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		this.setmealDishService.remove(lambdaQueryWrapper);
 	}
 
-	/**
-	 * 進行分頁
-	 *
-	 * @param pageNum  頁碼
-	 * @param pageSize 頁面大小
-	 * @param keyword  檢索文
-	 * @return Page<SetmealDto>
-	 */
 	@Override
 	public Page<SetmealDto> pagination(final Integer pageNum, final Integer pageSize, final String keyword) {
 		// 聲明分頁構造器；
@@ -159,4 +140,5 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		dtoPage.setRecords(records);
 		return dtoPage;
 	}
+
 }
