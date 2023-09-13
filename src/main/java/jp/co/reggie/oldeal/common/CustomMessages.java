@@ -1,11 +1,15 @@
 package jp.co.reggie.oldeal.common;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * 自定義返回信息集合類
  *
  * @author Administrator
  * @date 2022-11-28
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CustomMessages {
 
 	/**
@@ -100,10 +104,4 @@ public final class CustomMessages {
 	 * 套餐狀態修改成功
 	 */
 	public static final String SRP023 = "套餐狀態修改成功";
-
-	/**
-	 * 私用構造方法
-	 */
-	private CustomMessages() {
-	}
 }
