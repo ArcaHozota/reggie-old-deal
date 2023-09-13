@@ -128,7 +128,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Setmeal> queryWrapper = Wrappers.lambdaQuery(new Setmeal());
 		// 添加查詢條件，根據檢索文進行模糊查詢；
-		queryWrapper.like(StringUtils.isNotEmpty(keyword), Setmeal::getName, keyword);
+		queryWrapper.like(Setmeal::getName, StringUtils.toHankaku(keyword));
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Setmeal::getUpdatedTime);
 		// 執行查詢；

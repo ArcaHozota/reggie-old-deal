@@ -96,6 +96,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 		final LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加排序條件，根據sort進行排序；
 		queryWrapper.orderByAsc(Category::getSort);
+		// 添加排序條件，根據updatedTime進行降序排序；
+		queryWrapper.orderByDesc(Category::getUpdatedTime);
 		// 執行查詢；
 		return super.getBaseMapper().selectPage(pageInfo, queryWrapper);
 	}
