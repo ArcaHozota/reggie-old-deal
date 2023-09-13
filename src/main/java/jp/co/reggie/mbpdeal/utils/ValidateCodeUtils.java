@@ -3,10 +3,13 @@ package jp.co.reggie.mbpdeal.utils;
 import java.util.Random;
 
 import jp.co.reggie.mbpdeal.common.CustomException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * 驗證碼生成工具類
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidateCodeUtils {
 
 	/**
