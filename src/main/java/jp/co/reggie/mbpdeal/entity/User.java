@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
 
@@ -13,6 +14,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
+@TableName(value = "REGGIE_USER")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 2324630650798877027L;
@@ -31,13 +33,12 @@ public class User implements Serializable {
 	/**
 	 * 手機號
 	 */
-	@TableField(value = "phone_num")
+	@TableField(value = "PHONE_NUMBER")
 	private String phoneNo;
 
 	/**
-	 * 性別：0女，1男
+	 * 性別
 	 */
-	@TableField(value = "sex")
 	private String gender;
 
 	/**

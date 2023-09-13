@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
 
@@ -16,6 +17,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
+@TableName(value = "REGGIE_SHOPPINGCART")
 public class ShoppingCart implements Serializable {
 
 	private static final long serialVersionUID = 1618550099529253148L;
@@ -49,7 +51,7 @@ public class ShoppingCart implements Serializable {
 	/**
 	 * 口味
 	 */
-	private String dishFlavor;
+	private String dishflavourId;
 
 	/**
 	 * 數量
@@ -70,5 +72,5 @@ public class ShoppingCart implements Serializable {
 	 * 創建時間
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	private LocalDateTime creationTime;
+	private LocalDateTime createdTime;
 }

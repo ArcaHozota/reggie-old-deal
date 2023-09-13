@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
 
@@ -15,6 +16,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
+@TableName(value = "REGGIE_EMPLOYEE")
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = -6540113185665801143L;
@@ -26,14 +28,15 @@ public class Employee implements Serializable {
 	private Long id;
 
 	/**
+	 * 姓名
+	 */
+	@TableField(value = "KANJI_NAME")
+	private String name;
+
+	/**
 	 * 賬號名
 	 */
 	private String username;
-
-	/**
-	 * 姓名
-	 */
-	private String name;
 
 	/**
 	 * 密碼
@@ -43,13 +46,12 @@ public class Employee implements Serializable {
 	/**
 	 * 手機號
 	 */
-	@TableField(value = "phone_num")
+	@TableField(value = "PHONE_NUMBER")
 	private String phoneNo;
 
 	/**
 	 * 性別
 	 */
-	@TableField(value = "sex")
 	private String gender;
 
 	/**
@@ -66,23 +68,23 @@ public class Employee implements Serializable {
 	 * 創建時間
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	private LocalDateTime creationTime;
+	private LocalDateTime createdTime;
 
 	/**
 	 * 更新時間
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private LocalDateTime updatingTime;
+	private LocalDateTime updatedTime;
 
 	/**
 	 * 創建人
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	private Long creationUser;
+	private Long createdUser;
 
 	/**
 	 * 修改者
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private Long updatingUser;
+	private Long updatedUser;
 }

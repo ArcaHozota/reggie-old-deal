@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
 
@@ -17,6 +18,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
+@TableName(value = "REGGIE_DISH")
 public class Dish implements Serializable {
 
 	private static final long serialVersionUID = 6089472680388107154L;
@@ -71,29 +73,30 @@ public class Dish implements Serializable {
 	 * 創建時間
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	private LocalDateTime creationTime;
+	private LocalDateTime createdTime;
 
 	/**
 	 * 更新時間
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private LocalDateTime updatingTime;
+	private LocalDateTime updatedTime;
 
 	/**
 	 * 創建人
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	private Long creationUser;
+	private Long createdUser;
 
 	/**
 	 * 修改者
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private Long updatingUser;
+	private Long updatedUser;
 
 	/**
 	 * 邏輯刪除字段
 	 */
 	@TableLogic
+	@TableField(value = "DEL_FLG")
 	private String logicDeleteFlg;
 }

@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
 
@@ -12,6 +14,7 @@ import lombok.Data;
  * 訂單實體類
  */
 @Data
+@TableName(value = "REGGIE_ORDERS")
 public class Orders implements Serializable {
 
 	private static final long serialVersionUID = -4760386733875449380L;
@@ -40,12 +43,13 @@ public class Orders implements Serializable {
 	/**
 	 * 派送地址ID
 	 */
+	@TableField(value = "ADDRESSBOOK_ID")
 	private Long addressBookId;
 
 	/**
 	 * 訂單生成時間
 	 */
-	private LocalDateTime orderTime;
+	private LocalDateTime ordersTime;
 
 	/**
 	 * 付款時間
@@ -55,7 +59,7 @@ public class Orders implements Serializable {
 	/**
 	 * 支付方式
 	 */
-	private String payMethod;
+	private String paymentMethod;
 
 	/**
 	 * 實收金額
@@ -68,19 +72,20 @@ public class Orders implements Serializable {
 	private String remark;
 
 	/**
-	 * 客戸名稱
-	 */
-	private String userName;
-
-	/**
 	 * 收貨人手機號
 	 */
-	private String phone;
+	@TableField(value = "PHONE_NUMBER")
+	private String phoneNo;
 
 	/**
 	 * 派送地址
 	 */
 	private String address;
+
+	/**
+	 * 客戸名稱
+	 */
+	private String userName;
 
 	/**
 	 * 簽收人昵稱

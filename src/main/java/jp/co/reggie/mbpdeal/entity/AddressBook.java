@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
 
@@ -16,6 +17,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
+@TableName(value = "REGGIE_ADDRESSBOOK")
 public class AddressBook implements Serializable {
 
 	private static final long serialVersionUID = 3548464562522747007L;
@@ -37,16 +39,15 @@ public class AddressBook implements Serializable {
 	private String consignee;
 
 	/**
-	 * 手機號
-	 */
-	@TableField(value = "phone_num")
-	private String phoneNo;
-
-	/**
 	 * 性別
 	 */
-	@TableField(value = "sex")
 	private String gender;
+
+	/**
+	 * 手機號
+	 */
+	@TableField(value = "PHONE_NUMBER")
+	private String phoneNo;
 
 	/**
 	 * 省級行政區劃
@@ -97,29 +98,30 @@ public class AddressBook implements Serializable {
 	 * 創建時間
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	private LocalDateTime creationTime;
+	private LocalDateTime createdTime;
 
 	/**
 	 * 更新時間
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private LocalDateTime updatingTime;
+	private LocalDateTime updatedTime;
 
 	/**
 	 * 創建人
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	private Long creationUser;
+	private Long createdUser;
 
 	/**
 	 * 修改者
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private Long updatingUser;
+	private Long updatedUser;
 
 	/**
 	 * 邏輯刪除字段
 	 */
 	@TableLogic
+	@TableField(value = "DEL_FLG")
 	private String logicDeleteFlg;
 }
