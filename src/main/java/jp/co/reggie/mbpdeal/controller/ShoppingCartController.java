@@ -71,7 +71,7 @@ public class ShoppingCartController {
 		log.info("查看購物車...");
 		final LambdaQueryWrapper<ShoppingCart> queryWrapper = Wrappers.lambdaQuery(new ShoppingCart());
 		queryWrapper.eq(ShoppingCart::getUserId, BaseContext.getCurrentId());
-		queryWrapper.orderByAsc(ShoppingCart::getCreationTime);
+		queryWrapper.orderByAsc(ShoppingCart::getCreatedTime);
 		final List<ShoppingCart> list = this.shoppingCartService.list(queryWrapper);
 		return Reggie.success(list);
 	}

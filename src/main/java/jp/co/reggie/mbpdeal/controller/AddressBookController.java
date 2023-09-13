@@ -73,9 +73,8 @@ public class AddressBookController {
 		final AddressBook addressBook = this.addressBookService.getById(id);
 		if (addressBook != null) {
 			return Reggie.success(addressBook);
-		} else {
-			return Reggie.error(CustomMessages.ERP019);
 		}
+		return Reggie.error(CustomMessages.ERP019);
 	}
 
 	/**
@@ -91,9 +90,8 @@ public class AddressBookController {
 		final AddressBook addressBook = this.addressBookService.getOne(queryWrapper);
 		if (addressBook != null) {
 			return Reggie.success(addressBook);
-		} else {
-			return Reggie.error(CustomMessages.ERP019);
 		}
+		return Reggie.error(CustomMessages.ERP019);
 	}
 
 	/**
@@ -108,7 +106,7 @@ public class AddressBookController {
 		log.info("addressBook:{}", addressBook);
 		final LambdaQueryWrapper<AddressBook> queryWrapper = Wrappers.lambdaQuery(new AddressBook());
 		queryWrapper.eq(AddressBook::getUserId, addressBook.getUserId());
-		queryWrapper.orderByDesc(AddressBook::getUpdatingTime);
+		queryWrapper.orderByDesc(AddressBook::getUpdatedTime);
 		final List<AddressBook> addressBooks = this.addressBookService.list(queryWrapper);
 		return Reggie.success(addressBooks);
 	}
