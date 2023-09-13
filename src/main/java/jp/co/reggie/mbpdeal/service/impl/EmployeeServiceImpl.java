@@ -1,6 +1,5 @@
 package jp.co.reggie.mbpdeal.service.impl;
 
-import org.postgresql.util.PSQLException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
@@ -15,13 +14,14 @@ import jp.co.reggie.mbpdeal.entity.Employee;
 import jp.co.reggie.mbpdeal.mapper.EmployeeMapper;
 import jp.co.reggie.mbpdeal.service.EmployeeService;
 import jp.co.reggie.mbpdeal.utils.StringUtils;
+import oracle.jdbc.driver.OracleSQLException;
 
 /**
  * @author Administrator
  * @date 2022-11-09
  */
 @Service
-@Transactional(rollbackFor = PSQLException.class)
+@Transactional(rollbackFor = OracleSQLException.class)
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
 
 	/**

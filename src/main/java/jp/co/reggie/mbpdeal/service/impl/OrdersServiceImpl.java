@@ -3,7 +3,6 @@ package jp.co.reggie.mbpdeal.service.impl;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import org.postgresql.util.PSQLException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,13 +13,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jp.co.reggie.mbpdeal.entity.Orders;
 import jp.co.reggie.mbpdeal.mapper.OrdersMapper;
 import jp.co.reggie.mbpdeal.service.IOrdersService;
+import oracle.jdbc.driver.OracleSQLException;
 
 /**
  * @author Administrator
  * @date 2023-02-18
  */
 @Service
-@Transactional(rollbackFor = PSQLException.class)
+@Transactional(rollbackFor = OracleSQLException.class)
 public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> implements IOrdersService {
 
 	/**
