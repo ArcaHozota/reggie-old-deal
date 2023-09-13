@@ -1,4 +1,4 @@
-package jp.co.reggie.oldeal.common;
+package jp.co.reggie.oldeal.config;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
@@ -26,13 +26,12 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
  */
 public class JacksonObjectMapper extends ObjectMapper {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8961793485448476503L;
+	private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
+	private static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	private static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
 
-	public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
-	public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-	public static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
-
-	public JacksonObjectMapper() {
+	protected JacksonObjectMapper() {
 		super();
 		// 收到未知屬性時不報異常；
 		this.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

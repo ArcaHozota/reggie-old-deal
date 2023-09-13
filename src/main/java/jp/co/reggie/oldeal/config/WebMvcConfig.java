@@ -1,6 +1,5 @@
 package jp.co.reggie.oldeal.config;
 
-import jp.co.reggie.oldeal.common.JacksonObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
