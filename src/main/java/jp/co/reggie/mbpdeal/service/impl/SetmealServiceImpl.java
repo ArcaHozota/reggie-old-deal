@@ -141,4 +141,10 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		return dtoPage;
 	}
 
+	@Override
+	public SetmealDto getByIdWithDish(Long id) {
+		Setmeal setmeal = this.getById(id);
+		return null;
+	}
+
 }
