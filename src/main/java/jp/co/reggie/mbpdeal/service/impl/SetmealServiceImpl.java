@@ -20,8 +20,8 @@ import jp.co.reggie.mbpdeal.entity.Category;
 import jp.co.reggie.mbpdeal.entity.Setmeal;
 import jp.co.reggie.mbpdeal.entity.SetmealDish;
 import jp.co.reggie.mbpdeal.mapper.CategoryMapper;
+import jp.co.reggie.mbpdeal.mapper.SetmealDishMapper;
 import jp.co.reggie.mbpdeal.mapper.SetmealMapper;
-import jp.co.reggie.mbpdeal.service.SetmealDishService;
 import jp.co.reggie.mbpdeal.service.SetmealService;
 import jp.co.reggie.mbpdeal.utils.StringUtils;
 import oracle.jdbc.driver.OracleSQLException;
@@ -44,7 +44,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	 * 套餐與菜品服務類
 	 */
 	@Autowired
-	private SetmealDishService setmealDishService;
+	private SetmealDishMapper setmealDishMapper;
 
 	@Override
 	public void saveWithDish(final SetmealDto setmealDto) {
@@ -57,9 +57,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		// 獲取套餐菜品關聯集合；
 		final List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
 		// 獲取套餐ID並插入集合；
-		setmealDishes.forEach(item -> item.setSetmealId(setmealDto.getId()));
-		// 保存套餐和菜品的關聯關係；
-		this.setmealDishService.saveBatch(setmealDishes);
+		setmealDishes.forEach(item -> this.setmealDishMapper.insert(item));
 	}
 
 	@Override
@@ -72,10 +70,14 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		this.updateById(setmeal);
 		// 獲取套餐菜品關聯集合；
 		final List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
-		// 獲取套餐ID並插入集合；
-		setmealDishes.forEach(item -> item.setSetmealId(setmealDto.getId()));
 		// 更新套餐和菜品的關聯關係；
-		this.setmealDishService.updateBatchById(setmealDishes);
+		setmealDishes.forEach(item -> {
+			final LambdaQueryWrapper<SetmealDish> queryWrapper = Wrappers.lambdaQuery();
+			queryWrapper.eq(SetmealDish::getDishId, item.getDishId());
+			queryWrapper.eq(SetmealDish::getSetmealId, setmealDto.getId());
+			final SetmealDish setmealDish = this.setmealDishMapper.selectOne(queryWrapper);
+			this.setmealDishMapper.updateById(setmealDish);
+		});
 	}
 
 	@Override
@@ -107,7 +109,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		// 刪除套餐口味表中的數據；
 		final LambdaQueryWrapper<SetmealDish> lambdaQueryWrapper = new LambdaQueryWrapper<>();
 		lambdaQueryWrapper.in(SetmealDish::getSetmealId, ids);
-		this.setmealDishService.remove(lambdaQueryWrapper);
+		this.setmealDishMapper.delete(lambdaQueryWrapper);
 	}
 
 	@Override
@@ -154,7 +156,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		final Setmeal setmeal = this.getById(id);
 		final LambdaQueryWrapper<SetmealDish> queryWrapper = Wrappers.lambdaQuery();
 		queryWrapper.eq(SetmealDish::getSetmealId, id);
-		final List<SetmealDish> setmealDishes = this.setmealDishService.list(queryWrapper);
+		final List<SetmealDish> setmealDishes = this.setmealDishMapper.selectList(queryWrapper);
 		final SetmealDto setmealDto = new SetmealDto();
 		BeanUtils.copyProperties(setmeal, setmealDto);
 		setmealDto.setSetmealDishes(setmealDishes);
