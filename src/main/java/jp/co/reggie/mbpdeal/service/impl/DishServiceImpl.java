@@ -82,7 +82,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		final Dish dish = this.getById(id);
 		// 查詢當前菜品所對應的口味信息；
 		final LambdaQueryWrapper<DishFlavour> queryWrapper = new LambdaQueryWrapper<>();
-		queryWrapper.eq(DishFlavour::getId, dish.getId());
+		queryWrapper.eq(DishFlavour::getDishId, dish.getId());
 		// 獲取菜品口味列表；
 		final List<DishFlavour> flavors = this.dishFlavourService.list(queryWrapper);
 		// 聲明一個菜品及口味數據傳輸類對象並拷貝屬性；
