@@ -44,14 +44,6 @@ public interface DishService extends IService<Dish> {
 	void batchUpdateByIds(String status, List<Long> dishIdList);
 
 	/**
-	 * 回顯菜品表單數據
-	 *
-	 * @param dish 實體類對象
-	 * @return List<Dish>
-	 */
-	List<DishDto> findList(Dish dish);
-
-	/**
 	 * 查詢分頁數據
 	 *
 	 * @param pageNum  頁碼
@@ -60,4 +52,12 @@ public interface DishService extends IService<Dish> {
 	 * @return Page<DishDto>
 	 */
 	Page<DishDto> pagination(Integer pageNum, Integer pageSize, String keyword);
+
+	/**
+	 * 回顯菜品表單數據
+	 *
+	 * @param categoryId 分類ID
+	 * @return List<Dish>
+	 */
+	List<DishDto> findListByCategoryId(Long categoryId);
 }

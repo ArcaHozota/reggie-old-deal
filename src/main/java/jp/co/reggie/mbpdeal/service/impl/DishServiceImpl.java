@@ -52,11 +52,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	@Autowired
 	private DishFlavourService dishFlavourService;
 
-	/**
-	 * 新增菜品，同時插入菜品所對應的口味數據
-	 *
-	 * @param dishDto 菜品及口味數據傳輸類
-	 */
 	@Override
 	public void saveWithFlavour(final DishDto dishDto) {
 		// 保存菜品的基本信息到菜品表；
@@ -70,12 +65,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		this.dishFlavourService.saveBatch(flavors);
 	}
 
-	/**
-	 * 根據ID查詢菜品信息以及對應的口味信息
-	 *
-	 * @param id 菜品ID
-	 * @return dishDto 菜品及口味數據傳輸類
-	 */
 	@Override
 	public DishDto getByIdWithFlavour(final Long id) {
 		// 查詢菜品的基本信息；
@@ -92,12 +81,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		return dishDto;
 	}
 
-	/**
-	 * 根據菜品集合批量停發售
-	 *
-	 * @param status     在售狀態
-	 * @param dishIdList 菜品集合
-	 */
 	@Override
 	public void batchUpdateByIds(final String status, final List<Long> dishIdList) {
 		if (StringUtils.isEqual("0", status)) {
@@ -117,11 +100,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		}
 	}
 
-	/**
-	 * 修改菜品信息並同時插入菜品所對應的口味數據
-	 *
-	 * @param dishDto 菜品及口味數據傳輸類
-	 */
 	@Override
 	public void updateWithFlavour(final DishDto dishDto) {
 		// 更新菜品信息；
@@ -140,59 +118,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		this.dishFlavourService.saveBatch(flavors);
 	}
 
-	/**
-	 * 回顯菜品表單數據
-	 *
-	 * @param dish 實體類對象
-	 * @return List<Dish>
-	 */
-	@Override
-	public List<DishDto> findList(final Dish dish) {
-		// 創建條件構造器；
-		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
-		// 添加搜索條件；
-		queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
-		queryWrapper.eq(Dish::getStatus, "ea");
-		// 添加排序條件；
-		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdatedTime);
-		// 查詢菜品信息；
-		final List<Dish> list = this.list(queryWrapper);
-		// 獲取菜品及口味數據傳輸類；
-		return list.stream().map(item -> {
-			// 聲明菜品及口味數據傳輸類對象；
-			final DishDto dishDto = new DishDto();
-			// 拷貝除分類ID以外的屬性；
-			BeanUtils.copyProperties(item, dishDto);
-			// 獲取分類ID；
-			final Long categoryId = item.getCategoryId();
-			// 根據ID查詢分類對象；
-			final Category category = this.categoryMapper.selectById(categoryId);
-			if (category != null) {
-				// 獲取分類名稱；
-				final String categoryName = category.getName();
-				// 存儲於DTO對象中並返回；
-				dishDto.setCategoryName(categoryName);
-			}
-			// 當前菜品的ID；
-			final Long dishId = item.getId();
-			// 創建條件構造器；
-			final LambdaQueryWrapper<DishFlavour> queryWrapper2 = Wrappers.lambdaQuery(new DishFlavour());
-			queryWrapper2.eq(DishFlavour::getDishId, dishId);
-			// 檢索口味信息；
-			final List<DishFlavour> flavors = this.dishFlavourService.list(queryWrapper2);
-			dishDto.setFlavours(flavors);
-			return dishDto;
-		}).collect(Collectors.toList());
-	}
-
-	/**
-	 * 查詢分頁數據
-	 *
-	 * @param pageNum  頁碼
-	 * @param pageSize 頁面大小
-	 * @param keyword  檢索關鍵詞
-	 * @return Page<DishDto>
-	 */
 	@Override
 	public Page<DishDto> pagination(final Integer pageNum, final Integer pageSize, final String keyword) {
 		// 聲明分頁構造器對象；
@@ -228,5 +153,42 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		// 設置分頁數據於構造器中並返回；
 		dtoPage.setRecords(records);
 		return dtoPage;
+	}
+
+	@Override
+	public List<DishDto> findListByCategoryId(final Long categoryId) {
+		// 創建條件構造器；
+		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
+		// 添加搜索條件；
+		queryWrapper.eq(Dish::getCategoryId, categoryId);
+		queryWrapper.eq(Dish::getStatus, "1");
+		// 添加排序條件；
+		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdatedTime);
+		// 查詢菜品信息；
+		final List<Dish> list = this.list(queryWrapper);
+		// 獲取菜品及口味數據傳輸類；
+		return list.stream().map(item -> {
+			// 聲明菜品及口味數據傳輸類對象；
+			final DishDto dishDto = new DishDto();
+			// 拷貝除分類ID以外的屬性；
+			BeanUtils.copyProperties(item, dishDto);
+			// 獲取分類ID並根據ID查詢分類對象；
+			final Category category = this.categoryMapper.selectById(item.getCategoryId());
+			if (category != null) {
+				// 獲取分類名稱；
+				final String categoryName = category.getName();
+				// 存儲於DTO對象中並返回；
+				dishDto.setCategoryName(categoryName);
+			}
+			// 當前菜品的ID；
+			final Long dishId = item.getId();
+			// 創建條件構造器；
+			final LambdaQueryWrapper<DishFlavour> queryWrapper2 = Wrappers.lambdaQuery(new DishFlavour());
+			queryWrapper2.eq(DishFlavour::getDishId, dishId);
+			// 檢索口味信息；
+			final List<DishFlavour> flavors = this.dishFlavourService.list(queryWrapper2);
+			dishDto.setFlavours(flavors);
+			return dishDto;
+		}).collect(Collectors.toList());
 	}
 }

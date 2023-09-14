@@ -4,13 +4,19 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import jp.co.reggie.mbpdeal.common.CustomMessages;
 import jp.co.reggie.mbpdeal.dto.DishDto;
-import jp.co.reggie.mbpdeal.entity.Dish;
 import jp.co.reggie.mbpdeal.service.DishService;
 import jp.co.reggie.mbpdeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
@@ -89,8 +95,8 @@ public class DishController {
 	 * @return R.success(菜品信息)
 	 */
 	@GetMapping("/list")
-	public Reggie<List<DishDto>> list(final Dish dish) {
-		final List<DishDto> list = this.dishService.findList(dish);
+	public Reggie<List<DishDto>> list(@RequestParam("categoryId") final Long categoryId) {
+		final List<DishDto> list = this.dishService.findListByCategoryId(categoryId);
 		return Reggie.success(list);
 	}
 
