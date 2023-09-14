@@ -544,7 +544,7 @@
                       this.$message.error('請求出錯了：' + err)
                     })
                 } else {
-                  delete prams.updateTime
+                  delete prams.updatedTime
                   editSetmeal(prams)
                     .then((res) => {
                       if (res.code === 'SUCCESS') {
