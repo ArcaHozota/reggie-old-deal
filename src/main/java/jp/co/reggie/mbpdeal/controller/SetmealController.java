@@ -38,6 +38,18 @@ public class SetmealController {
 	private SetmealService setmealService;
 
 	/**
+	 * 根據ID顯示套餐信息
+	 *
+	 * @param id 套餐ID
+	 * @return R.success(套餐信息)
+	 */
+	@GetMapping("/{id}")
+	public Reggie<String> getSetmealInfo(@PathVariable Long id) {
+		this.setmealService.getByIdWithDish(id);
+		return Reggie.success(CustomMessages.SRP010);
+	}
+
+	/**
 	 * 新增套餐
 	 *
 	 * @param setmealDto 數據傳輸類
