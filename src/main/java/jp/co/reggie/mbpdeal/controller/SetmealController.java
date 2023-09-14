@@ -44,9 +44,9 @@ public class SetmealController {
 	 * @return R.success(套餐信息)
 	 */
 	@GetMapping("/{id}")
-	public Reggie<String> getSetmealInfo(@PathVariable Long id) {
-		this.setmealService.getByIdWithDish(id);
-		return Reggie.success(CustomMessages.SRP010);
+	public Reggie<SetmealDto> getSetmealInfo(@PathVariable Long id) {
+		final SetmealDto setmealDto = this.setmealService.getByIdWithDish(id);
+		return Reggie.success(setmealDto);
 	}
 
 	/**
