@@ -30,7 +30,6 @@ public class Employee implements Serializable {
 	/**
 	 * 姓名
 	 */
-	@TableField(value = "KANJI_NAME")
 	private String name;
 
 	/**
