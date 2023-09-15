@@ -4,10 +4,10 @@ spring:
   application:
     name: reggie-take-out
   datasource:
-    driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@//localhost:1521/XEPDB1
-    username: ORACLECT
-    password: ORACLECT
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://54.250.57.240:5432/reggie
+    username: postgres
+    password: postgres
     hikari:
       maximum-pool-size: 30
       max-lifetime: 1500000
