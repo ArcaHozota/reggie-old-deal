@@ -17,7 +17,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
-@TableName(value = "REGGIE_DISHFLAVOUR")
+@TableName(value = "dish_flavor")
 public class DishFlavour implements Serializable {
 
 	private static final long serialVersionUID = 6752106293794210881L;
@@ -71,6 +71,6 @@ public class DishFlavour implements Serializable {
 	 * 邏輯刪除字段
 	 */
 	@TableLogic
-	@TableField(value = "DEL_FLG")
+	@TableField(value = "is_deleted")
 	private String logicDeleteFlg;
 }

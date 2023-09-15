@@ -16,7 +16,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
-@TableName(value = "REGGIE_EMPLOYEE")
+@TableName(value = "employee")
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = -6540113185665801143L;
@@ -46,12 +46,13 @@ public class Employee implements Serializable {
 	/**
 	 * 手機號
 	 */
-	@TableField(value = "PHONE_NUMBER")
+	@TableField(value = "phone_num")
 	private String phoneNo;
 
 	/**
 	 * 性別
 	 */
+	@TableField(value = "sex")
 	private String gender;
 
 	/**
