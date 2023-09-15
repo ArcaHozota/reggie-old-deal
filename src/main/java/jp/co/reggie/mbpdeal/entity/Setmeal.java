@@ -18,7 +18,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
-@TableName(value = "REGGIE_SETMEAL")
+@TableName(value = "setmeal")
 public class Setmeal implements Serializable {
 
 	private static final long serialVersionUID = 4020217756505140488L;
