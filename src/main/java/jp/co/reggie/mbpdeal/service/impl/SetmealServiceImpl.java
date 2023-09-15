@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,14 +27,13 @@ import jp.co.reggie.mbpdeal.mapper.SetmealDishMapper;
 import jp.co.reggie.mbpdeal.mapper.SetmealMapper;
 import jp.co.reggie.mbpdeal.service.SetmealService;
 import jp.co.reggie.mbpdeal.utils.StringUtils;
-import oracle.jdbc.driver.OracleSQLException;
 
 /**
  * @author Administrator
  * @date 2022-11-19
  */
 @Service
-@Transactional(rollbackFor = OracleSQLException.class)
+@Transactional(rollbackFor = PSQLException.class)
 public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> implements SetmealService {
 
 	/**
@@ -97,7 +97,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	}
 
 	@Override
-	@Transactional(rollbackFor = OracleSQLException.class)
+	@Transactional(rollbackFor = PSQLException.class)
 	public void removeWithDish(final List<Long> ids) {
 		// 查詢套餐狀態以確認是否可以刪除；
 		final LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();

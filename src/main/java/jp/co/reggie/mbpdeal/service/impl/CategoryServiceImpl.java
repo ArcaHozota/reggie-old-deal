@@ -2,6 +2,7 @@ package jp.co.reggie.mbpdeal.service.impl;
 
 import java.util.List;
 
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,14 +20,13 @@ import jp.co.reggie.mbpdeal.mapper.CategoryMapper;
 import jp.co.reggie.mbpdeal.service.CategoryService;
 import jp.co.reggie.mbpdeal.service.DishService;
 import jp.co.reggie.mbpdeal.service.SetmealService;
-import oracle.jdbc.driver.OracleSQLException;
 
 /**
  * @author Administrator
  * @date 2022-11-19
  */
 @Service
-@Transactional(rollbackFor = OracleSQLException.class)
+@Transactional(rollbackFor = PSQLException.class)
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
 
 	/**

@@ -3,6 +3,7 @@ package jp.co.reggie.mbpdeal.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,13 @@ import jp.co.reggie.mbpdeal.mapper.DishMapper;
 import jp.co.reggie.mbpdeal.service.DishFlavourService;
 import jp.co.reggie.mbpdeal.service.DishService;
 import jp.co.reggie.mbpdeal.utils.StringUtils;
-import oracle.jdbc.driver.OracleSQLException;
 
 /**
  * @author Administrator
  * @date 2022-11-19
  */
 @Service
-@Transactional(rollbackFor = OracleSQLException.class)
+@Transactional(rollbackFor = PSQLException.class)
 public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements DishService {
 
 	/**

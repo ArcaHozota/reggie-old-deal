@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.postgresql.util.PSQLException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,6 @@ import jp.co.reggie.mbpdeal.utils.SMSUtils;
 import jp.co.reggie.mbpdeal.utils.StringUtils;
 import jp.co.reggie.mbpdeal.utils.ValidateCodeUtils;
 import lombok.extern.slf4j.Slf4j;
-import oracle.jdbc.driver.OracleSQLException;
 
 /**
  * @author Administrator
@@ -27,7 +27,7 @@ import oracle.jdbc.driver.OracleSQLException;
  */
 @Slf4j
 @Service
-@Transactional(rollbackFor = OracleSQLException.class)
+@Transactional(rollbackFor = PSQLException.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
 	/**
