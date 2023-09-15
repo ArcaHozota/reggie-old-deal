@@ -1,5 +1,6 @@
 package jp.co.reggie.mbpdeal.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ import jp.co.reggie.mbpdeal.dto.SetmealDto;
 import jp.co.reggie.mbpdeal.entity.Category;
 import jp.co.reggie.mbpdeal.entity.Setmeal;
 import jp.co.reggie.mbpdeal.entity.SetmealDish;
+import jp.co.reggie.mbpdeal.handler.BaseContext;
 import jp.co.reggie.mbpdeal.mapper.CategoryMapper;
 import jp.co.reggie.mbpdeal.mapper.SetmealDishMapper;
 import jp.co.reggie.mbpdeal.mapper.SetmealMapper;
@@ -89,7 +91,9 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		} else {
 			throw new CustomException(CustomMessages.ERP022);
 		}
-		super.getBaseMapper().batchUpdateByIds(status, smIdList);
+		final LocalDateTime now = LocalDateTime.now();
+		final Long currentId = BaseContext.getCurrentId();
+		super.getBaseMapper().batchUpdateByIds(status, currentId, now, smIdList);
 	}
 
 	@Override
