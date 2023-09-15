@@ -28,6 +28,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 		metaObject.setValue("updatedTime", LocalDateTime.now());
 		metaObject.setValue("createdUser", BaseContext.getCurrentId());
 		metaObject.setValue("updatedUser", BaseContext.getCurrentId());
+		metaObject.setValue("logicDeleteFlg", "visible");
 	}
 
 	/**
