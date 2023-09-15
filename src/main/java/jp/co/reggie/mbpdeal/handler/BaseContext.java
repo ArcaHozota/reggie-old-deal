@@ -8,13 +8,16 @@ package jp.co.reggie.mbpdeal.handler;
  */
 public class BaseContext {
 
-	private static Long CURRENT_ID;
+	private static Long currentId;
+
+	private BaseContext() {
+	}
 
 	protected static void setCurrentId(final Long id) {
-		CURRENT_ID = id;
+		currentId = id;
 	}
 
 	public static Long getCurrentId() {
-		return CURRENT_ID;
+		return currentId;
 	}
 }
