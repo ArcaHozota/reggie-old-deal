@@ -162,7 +162,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
 		// 添加搜索條件；
 		queryWrapper.eq(Dish::getCategoryId, categoryId);
-		queryWrapper.eq(Dish::getStatus, "1");
+		queryWrapper.eq(Dish::getStatus, Constants.STATUS_VALID);
 		// 添加排序條件；
 		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdatedTime);
 		// 查詢菜品信息；
@@ -184,7 +184,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 			// 當前菜品的ID；
 			final Long dishId = item.getId();
 			// 創建條件構造器；
-			final LambdaQueryWrapper<DishFlavour> queryWrapper2 = Wrappers.lambdaQuery(new DishFlavour());
+			final LambdaQueryWrapper<DishFlavour> queryWrapper2 = Wrappers.lambdaQuery();
 			queryWrapper2.eq(DishFlavour::getDishId, dishId);
 			// 檢索口味信息；
 			final List<DishFlavour> flavors = this.dishFlavourService.list(queryWrapper2);
