@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import jp.co.reggie.mbpdeal.common.Constants;
 import jp.co.reggie.mbpdeal.common.CustomException;
 import jp.co.reggie.mbpdeal.common.CustomMessages;
 import jp.co.reggie.mbpdeal.dto.DishDto;
@@ -86,13 +87,13 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		if (StringUtils.isEqual("0", status)) {
 			dishIdList.forEach(item -> {
 				final Dish dish = this.dishMapper.selectById(item);
-				dish.setStatus("1");
+				dish.setStatus(Constants.STATUS_VALID);
 				this.dishMapper.updateById(dish);
 			});
 		} else if (StringUtils.isEqual("1", status)) {
 			dishIdList.forEach(item -> {
 				final Dish dish = this.dishMapper.selectById(item);
-				dish.setStatus("0");
+				dish.setStatus(Constants.STATUS_FORBIDDEN);
 				this.dishMapper.updateById(dish);
 			});
 		} else {

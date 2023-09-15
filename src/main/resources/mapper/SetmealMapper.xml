@@ -9,7 +9,7 @@
 	<update id="batchUpdateByIds" parameterType="java.util.List">
 		UPDATE REGGIE_SETMEAL STL 
 		SET
-		    STL.STATUS = #{status,jdbcType=NVARCHAR}
+		    STL.STATUS = #{status,jdbcType=INTEGER}
 		    , STL.UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
 		    , STL.UPDATED_USER = #{updatedUser,jdbcType=BIGINT} 
 		WHERE

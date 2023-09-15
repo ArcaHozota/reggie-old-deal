@@ -60,9 +60,9 @@ public class Dish implements Serializable {
 	private String description;
 
 	/**
-	 * 菜品銷售狀態:ea在售, ec停售;
+	 * 菜品銷售狀態:1在售, 0停售;
 	 */
-	private String status;
+	private Integer status;
 
 	/**
 	 * 順序
