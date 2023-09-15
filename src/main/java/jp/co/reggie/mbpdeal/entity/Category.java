@@ -17,7 +17,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
-@TableName(value = "REGGIE_CATEGORY")
+@TableName(value = "category")
 public class Category implements Serializable {
 
 	private static final long serialVersionUID = -5583580956537498025L;
@@ -71,6 +71,6 @@ public class Category implements Serializable {
 	 * 邏輯刪除字段
 	 */
 	@TableLogic
-	@TableField(value = "DEL_FLG")
+	@TableField(value = "is_deleted")
 	private String logicDeleteFlg;
 }

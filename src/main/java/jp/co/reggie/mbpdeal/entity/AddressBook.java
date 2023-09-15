@@ -17,7 +17,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
-@TableName(value = "REGGIE_ADDRESSBOOK")
+@TableName(value = "address_book")
 public class AddressBook implements Serializable {
 
 	private static final long serialVersionUID = 3548464562522747007L;
@@ -46,7 +46,7 @@ public class AddressBook implements Serializable {
 	/**
 	 * 手機號
 	 */
-	@TableField(value = "PHONE_NUMBER")
+	@TableField(value = "phone_num")
 	private String phoneNo;
 
 	/**
@@ -122,6 +122,6 @@ public class AddressBook implements Serializable {
 	 * 邏輯刪除字段
 	 */
 	@TableLogic
-	@TableField(value = "DEL_FLG")
+	@TableField(value = "is_deleted")
 	private String logicDeleteFlg;
 }
