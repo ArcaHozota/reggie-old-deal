@@ -75,6 +75,7 @@ public class EmployeeController {
 		log.info("員工信息：{}", employee.toString());
 		// 設置初始密碼，需進行MD5加密；
 		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
+		employee.setStatus(Constants.STATUS_VALID);
 		this.employeeService.save(employee);
 		return Reggie.success(CustomMessages.SRP006);
 	}
