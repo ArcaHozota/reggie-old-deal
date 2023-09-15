@@ -45,9 +45,9 @@ public class Setmeal implements Serializable {
 	private BigDecimal price;
 
 	/**
-	 * 套餐在售狀態:ea在售, ec停售;
+	 * 套餐在售狀態:1在售, 0停售;
 	 */
-	private String status;
+	private Integer status;
 
 	/**
 	 * 編碼
