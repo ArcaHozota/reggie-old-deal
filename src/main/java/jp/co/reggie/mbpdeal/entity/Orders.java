@@ -14,7 +14,7 @@ import lombok.Data;
  * 訂單實體類
  */
 @Data
-@TableName(value = "REGGIE_ORDERS")
+@TableName(value = "orders")
 public class Orders implements Serializable {
 
 	private static final long serialVersionUID = -4760386733875449380L;
@@ -43,7 +43,6 @@ public class Orders implements Serializable {
 	/**
 	 * 派送地址ID
 	 */
-	@TableField(value = "ADDRESSBOOK_ID")
 	private Long addressBookId;
 
 	/**
@@ -74,7 +73,7 @@ public class Orders implements Serializable {
 	/**
 	 * 收貨人手機號
 	 */
-	@TableField(value = "PHONE_NUMBER")
+	@TableField(value = "phone_num")
 	private String phoneNo;
 
 	/**

@@ -17,7 +17,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
-@TableName(value = "REGGIE_SHOPPINGCART")
+@TableName(value = "shopping_cart")
 public class ShoppingCart implements Serializable {
 
 	private static final long serialVersionUID = 1618550099529253148L;
@@ -51,7 +51,7 @@ public class ShoppingCart implements Serializable {
 	/**
 	 * 口味
 	 */
-	private String dishflavourId;
+	private String dishFlavorId;
 
 	/**
 	 * 數量
