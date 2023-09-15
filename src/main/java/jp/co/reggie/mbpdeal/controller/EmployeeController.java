@@ -20,6 +20,7 @@ import jp.co.reggie.mbpdeal.common.CustomMessages;
 import jp.co.reggie.mbpdeal.entity.Employee;
 import jp.co.reggie.mbpdeal.service.EmployeeService;
 import jp.co.reggie.mbpdeal.utils.Reggie;
+import jp.co.reggie.mbpdeal.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -76,6 +77,8 @@ public class EmployeeController {
 		// 設置初始密碼，需進行MD5加密；
 		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
 		employee.setStatus(Constants.STATUS_VALID);
+		final String genderString = StringUtils.isNotEqual("1", employee.getGender()) ? "Female" : "Male";
+		employee.setGender(genderString);
 		this.employeeService.save(employee);
 		return Reggie.success(CustomMessages.SRP006);
 	}

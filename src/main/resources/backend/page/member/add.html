@@ -115,7 +115,7 @@
                                 gender: this.ruleForm.gender === '女' ? '0' : '1'
                             }
                             addEmployee(params).then(res => {
-                                if (res.code === 1) {
+                                if (res.code === 'SUCCESS') {
                                     this.$message.success('員工信息添加成功！')
                                     if (!st) {
                                         this.goBack()
@@ -124,8 +124,6 @@
                                             username: '',
                                             'name': '',
                                             'phoneNo': '',
-                                            // 'password': '',
-                                            // 'rePassword': '',/
                                             'gender': '男',
                                             'idNumber': ''
                                         }
@@ -142,7 +140,7 @@
                                 gender: this.ruleForm.gender === '女' ? '0' : '1'
                             }
                             editEmployee(params).then(res => {
-                                if (res.code === 1) {
+                                if (res.code === 'SUCCESS') {
                                     this.$message.success('員工信息修改成功！')
                                     this.goBack()
                                 } else {
