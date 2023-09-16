@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 套餐數據操作文件 -->
+<mapper namespace="jp.co.reggie.mbpdeal.mapper.SetmealMapper">
+	<resultMap id="BasicResultMap"
+		type="jp.co.reggie.mbpdeal.entity.Setmeal" autoMapping="true">
+		<id property="id" jdbcType="BIGINT" column="id" />
+	</resultMap>
+	<update id="batchRemoveBySmIds" parameterType="java.util.List">
+		UPDATE setmeal_dish AS smdsh
+		SET
+		    smdsh.is_deleted = 'removed' 
+		WHERE
+		    smdsh.setmeal_id IN
+		<foreach collection="smIdList" item="smId" index="index"
+			open="(" close=")" separator=",">
+			#{smId,jdbcType=BIGINT}
+		</foreach>
+	</update>
+</mapper>
