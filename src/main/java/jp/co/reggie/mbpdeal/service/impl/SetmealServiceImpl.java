@@ -2,6 +2,7 @@ package jp.co.reggie.mbpdeal.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.postgresql.util.PSQLException;
@@ -36,6 +37,8 @@ import jp.co.reggie.mbpdeal.utils.StringUtils;
 @Transactional(rollbackFor = PSQLException.class)
 public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> implements SetmealService {
 
+	private static final Random RANDOM = new Random();
+
 	/**
 	 * 分類管理實體類接口
 	 */
@@ -63,6 +66,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		// 獲取套餐ID並插入集合；
 		setmealDishes.forEach(item -> {
 			item.setSetmealId(setmeal.getId());
+			item.setSort(RANDOM.nextInt(setmealDishes.size()));
 			this.setmealDishMapper.insert(item);
 		});
 	}
