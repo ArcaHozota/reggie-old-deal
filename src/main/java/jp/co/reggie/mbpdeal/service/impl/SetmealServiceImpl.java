@@ -121,9 +121,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		// 刪除套餐表中的數據；
 		this.removeByIds(ids);
 		// 刪除套餐口味表中的數據；
-		final LambdaQueryWrapper<SetmealDish> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-		lambdaQueryWrapper.in(SetmealDish::getSetmealId, ids);
-		this.setmealDishMapper.delete(lambdaQueryWrapper);
+		this.setmealDishMapper.batchRemoveBySmIds(ids);
 	}
 
 	@Override

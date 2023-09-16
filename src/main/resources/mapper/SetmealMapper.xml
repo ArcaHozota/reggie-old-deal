@@ -21,15 +21,4 @@
 			#{smId,jdbcType=BIGINT}
 		</foreach>
 	</update>
-	<update id="batchRemoveByIds" parameterType="java.util.List">
-		UPDATE setmeal AS stml 
-		SET
-		    stml.is_deleted = 'removed' 
-		WHERE
-		    stml.id IN
-		<foreach collection="smIdList" item="smId" index="index"
-			open="(" close=")" separator=",">
-			#{smId,jdbcType=BIGINT}
-		</foreach>
-	</update>
 </mapper>
