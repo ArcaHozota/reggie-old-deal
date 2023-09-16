@@ -7,11 +7,11 @@
 		<id property="id" jdbcType="BIGINT" column="id" />
 	</resultMap>
 	<update id="batchRemoveBySmIds" parameterType="java.util.List">
-		UPDATE setmeal_dish AS smdsh
+		UPDATE setmeal_dish
 		SET
-		    smdsh.is_deleted = 'removed' 
+		    is_deleted = 'removed' 
 		WHERE
-		    smdsh.setmeal_id IN
+		    setmeal_id IN
 		<foreach collection="smIdList" item="smId" index="index"
 			open="(" close=")" separator=",">
 			#{smId,jdbcType=BIGINT}
