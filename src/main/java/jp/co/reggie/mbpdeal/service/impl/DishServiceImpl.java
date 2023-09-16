@@ -68,7 +68,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		// 獲取菜品口味的集合並將菜品ID設置到口味集合中；
 		dishDto.getFlavors().forEach(item -> {
 			// 獲取菜品ID；
-			item.setDishId(dishDto.getId());
+			item.setDishId(dish.getId());
 			// 保存菜品的口味數據到口味表；
 			this.dishFlavourMapper.insert(item);
 		});
