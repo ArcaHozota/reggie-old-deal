@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import jp.co.reggie.mbpdeal.common.Constants;
 import jp.co.reggie.mbpdeal.common.CustomException;
 import jp.co.reggie.mbpdeal.common.CustomMessages;
 import jp.co.reggie.mbpdeal.dto.SetmealDto;
@@ -93,17 +94,18 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	}
 
 	@Override
-	public void batchUpdateByIds(String status, final List<Long> smIdList) {
+	public void batchUpdateByIds(final String status, final List<Long> smIdList) {
+		Integer newStatus;
 		if (StringUtils.isEqual("0", status)) {
-			status = "1";
+			newStatus = Constants.STATUS_VALID;
 		} else if (StringUtils.isEqual("1", status)) {
-			status = "0";
+			newStatus = Constants.STATUS_FORBIDDEN;
 		} else {
 			throw new CustomException(CustomMessages.ERP022);
 		}
 		final LocalDateTime now = LocalDateTime.now();
 		final Long currentId = BaseContext.getCurrentId();
-		super.getBaseMapper().batchUpdateByIds(status, currentId, now, smIdList);
+		super.getBaseMapper().batchUpdateByIds(newStatus, currentId, now, smIdList);
 	}
 
 	@Override

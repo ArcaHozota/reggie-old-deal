@@ -7,15 +7,15 @@
 		<id property="id" jdbcType="BIGINT" column="id" />
 	</resultMap>
 	<update id="batchUpdateByIds" parameterType="java.util.List">
-		UPDATE setmeal AS stml 
+		UPDATE setmeal
 		SET
-		    stml.status = #{status,jdbcType=INTEGER}
-		    , stml.updated_time = #{updatedTime,jdbcType=TIMESTAMP}
-		    , stml.updated_user = #{updatedUser,jdbcType=BIGINT} 
+		    status = #{status,jdbcType=INTEGER}
+		    , updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+		    , updated_user = #{updatedUser,jdbcType=BIGINT} 
 		WHERE
-		    stml.is_deleted = 'visible'
+		    is_deleted = 'visible'
 		AND 
-			stml.id IN
+			id IN
 		<foreach collection="smIdList" item="smId" index="index"
 			open="(" close=")" separator=",">
 			#{smId,jdbcType=BIGINT}

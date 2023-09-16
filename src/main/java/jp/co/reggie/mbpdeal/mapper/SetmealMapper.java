@@ -27,6 +27,6 @@ public interface SetmealMapper extends BaseMapper<Setmeal> {
 	 * @param currentId 員工ID
 	 * @param smIdList  套餐ID集合
 	 */
-	void batchUpdateByIds(@Param("status") String status, @Param("updatedUser") Long currentId,
+	void batchUpdateByIds(@Param("status") Integer status, @Param("updatedUser") Long currentId,
 			@Param("updatedTime") LocalDateTime localDateTime, @Param("smIdList") List<Long> smIdList);
 }
