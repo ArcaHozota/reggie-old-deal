@@ -7,26 +7,26 @@
 		<id property="id" jdbcType="BIGINT" column="id" />
 	</resultMap>
 	<update id="batchUpdateByIds" parameterType="java.util.List">
-		UPDATE REGGIE_SETMEAL STL 
+		UPDATE setmeal AS stml 
 		SET
-		    STL.STATUS = #{status,jdbcType=INTEGER}
-		    , STL.UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
-		    , STL.UPDATED_USER = #{updatedUser,jdbcType=BIGINT} 
+		    stml.status = #{status,jdbcType=INTEGER}
+		    , stml.updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+		    , stml.updated_user = #{updatedUser,jdbcType=BIGINT} 
 		WHERE
-		    STL.DEL_FLG = 'visible'
+		    stml.is_deleted = 'visible'
 		AND 
-			STL.ID IN
+			stml.id IN
 		<foreach collection="smIdList" item="smId" index="index"
 			open="(" close=")" separator=",">
 			#{smId,jdbcType=BIGINT}
 		</foreach>
 	</update>
 	<update id="batchRemoveByIds" parameterType="java.util.List">
-		UPDATE REGGIE_SETMEAL STL 
+		UPDATE setmeal AS stml 
 		SET
-		    STL.DEL_FLG = 'removed' 
+		    stml.is_deleted = 'removed' 
 		WHERE
-		    STL.ID IN
+		    stml.id IN
 		<foreach collection="smIdList" item="smId" index="index"
 			open="(" close=")" separator=",">
 			#{smId,jdbcType=BIGINT}

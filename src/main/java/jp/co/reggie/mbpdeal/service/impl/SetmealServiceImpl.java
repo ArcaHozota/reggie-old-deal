@@ -67,6 +67,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		setmealDishes.forEach(item -> {
 			item.setSetmealId(setmeal.getId());
 			item.setSort(RANDOM.nextInt(setmealDishes.size()));
+			item.setIsDeleted("visible");
 			this.setmealDishMapper.insert(item);
 		});
 	}
