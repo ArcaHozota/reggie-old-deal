@@ -71,6 +71,5 @@ public class DishFlavour implements Serializable {
 	 * 邏輯刪除字段
 	 */
 	@TableLogic
-	@TableField(value = "is_deleted")
-	private String logicDeleteFlg;
+	private String isDeleted;
 }
