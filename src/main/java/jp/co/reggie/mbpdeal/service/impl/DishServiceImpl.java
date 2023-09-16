@@ -22,8 +22,8 @@ import jp.co.reggie.mbpdeal.entity.Category;
 import jp.co.reggie.mbpdeal.entity.Dish;
 import jp.co.reggie.mbpdeal.entity.DishFlavour;
 import jp.co.reggie.mbpdeal.mapper.CategoryMapper;
+import jp.co.reggie.mbpdeal.mapper.DishFlavourMapper;
 import jp.co.reggie.mbpdeal.mapper.DishMapper;
-import jp.co.reggie.mbpdeal.service.DishFlavourService;
 import jp.co.reggie.mbpdeal.service.DishService;
 import jp.co.reggie.mbpdeal.utils.StringUtils;
 
@@ -51,19 +51,23 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	 * 菜品口味服務類
 	 */
 	@Autowired
-	private DishFlavourService dishFlavourService;
+	private DishFlavourMapper dishFlavourMapper;
 
 	@Override
 	public void saveWithFlavour(final DishDto dishDto) {
+		// 聲明菜品實體類；
+		final Dish dish = new Dish();
+		// 拷貝相關屬性；
+		BeanUtils.copyProperties(dishDto, dish, "flavours", "copy", "categoryName");
 		// 保存菜品的基本信息到菜品表；
-		this.save(dishDto);
+		this.save(dish);
 		// 獲取菜品口味的集合並將菜品ID設置到口味集合中；
-		final List<DishFlavour> flavors = dishDto.getFlavours().stream().map(item -> {
+		dishDto.getFlavours().forEach(item -> {
+			// 獲取菜品ID；
 			item.setDishId(dishDto.getId());
-			return item;
-		}).collect(Collectors.toList());
-		// 保存 菜品的口味數據到口味表；
-		this.dishFlavourService.saveBatch(flavors);
+			// 保存菜品的口味數據到口味表；
+			this.dishFlavourMapper.insert(item);
+		});
 	}
 
 	@Override
@@ -74,7 +78,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		final LambdaQueryWrapper<DishFlavour> queryWrapper = new LambdaQueryWrapper<>();
 		queryWrapper.eq(DishFlavour::getDishId, dish.getId());
 		// 獲取菜品口味列表；
-		final List<DishFlavour> flavors = this.dishFlavourService.list(queryWrapper);
+		final List<DishFlavour> flavors = this.dishFlavourMapper.selectList(queryWrapper);
 		// 聲明一個菜品及口味數據傳輸類對象並拷貝屬性；
 		final DishDto dishDto = new DishDto();
 		BeanUtils.copyProperties(dish, dishDto);
@@ -103,20 +107,22 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
 	@Override
 	public void updateWithFlavour(final DishDto dishDto) {
+		// 聲明菜品實體類；
+		final Dish dish = new Dish();
+		// 拷貝相關屬性；
+		BeanUtils.copyProperties(dishDto, dish, "flavours", "copy", "categoryName");
 		// 更新菜品信息；
-		this.updateById(dishDto);
+		this.updateById(dish);
 		// 清理當前菜品所對應的口味信息；
 		final LambdaQueryWrapper<DishFlavour> queryWrapper = new LambdaQueryWrapper<>();
-		queryWrapper.eq(DishFlavour::getId, dishDto.getId());
-		this.dishFlavourService.remove(queryWrapper);
-		// 添加當前菜品的口味數據；
-		List<DishFlavour> flavors = dishDto.getFlavours();
-		// 將菜品ID設置到口味集合中；
-		flavors = flavors.stream().map(item -> {
-			item.setDishId(dishDto.getId());
-			return item;
-		}).collect(Collectors.toList());
-		this.dishFlavourService.saveBatch(flavors);
+		queryWrapper.eq(DishFlavour::getDishId, dish.getId());
+		this.dishFlavourMapper.delete(queryWrapper);
+		// 添加當前菜品的口味數據並將菜品ID設置到口味集合中；
+		dishDto.getFlavours().forEach(item -> {
+			item.setDishId(dish.getId());
+			item.setIsDeleted("visible");
+			this.dishFlavourMapper.insert(item);
+		});
 	}
 
 	@Override
@@ -187,7 +193,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 			final LambdaQueryWrapper<DishFlavour> queryWrapper2 = Wrappers.lambdaQuery();
 			queryWrapper2.eq(DishFlavour::getDishId, dishId);
 			// 檢索口味信息；
-			final List<DishFlavour> flavors = this.dishFlavourService.list(queryWrapper2);
+			final List<DishFlavour> flavors = this.dishFlavourMapper.selectList(queryWrapper2);
 			dishDto.setFlavours(flavors);
 			return dishDto;
 		}).collect(Collectors.toList());
