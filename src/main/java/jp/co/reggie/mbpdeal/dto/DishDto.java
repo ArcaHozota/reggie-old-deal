@@ -21,7 +21,7 @@ public class DishDto extends Dish {
 	/**
 	 * 口味集合
 	 */
-	private List<DishFlavour> flavours;
+	private List<DishFlavour> flavors;
 
 	/**
 	 * 分類名稱

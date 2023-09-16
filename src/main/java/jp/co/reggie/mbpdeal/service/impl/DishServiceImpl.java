@@ -66,7 +66,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		// 保存菜品的基本信息到菜品表；
 		super.getBaseMapper().insert(dish);
 		// 獲取菜品口味的集合並將菜品ID設置到口味集合中；
-		dishDto.getFlavours().forEach(item -> {
+		dishDto.getFlavors().forEach(item -> {
 			// 獲取菜品ID；
 			item.setDishId(dishDto.getId());
 			// 保存菜品的口味數據到口味表；
@@ -86,7 +86,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		// 聲明一個菜品及口味數據傳輸類對象並拷貝屬性；
 		final DishDto dishDto = new DishDto();
 		BeanUtils.copyProperties(dish, dishDto);
-		dishDto.setFlavours(flavors);
+		dishDto.setFlavors(flavors);
 		return dishDto;
 	}
 
@@ -122,7 +122,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		queryWrapper.eq(DishFlavour::getDishId, dish.getId());
 		this.dishFlavourMapper.delete(queryWrapper);
 		// 添加當前菜品的口味數據並將菜品ID設置到口味集合中；
-		dishDto.getFlavours().forEach(item -> {
+		dishDto.getFlavors().forEach(item -> {
 			item.setDishId(dish.getId());
 			item.setIsDeleted("visible");
 			this.dishFlavourMapper.insert(item);
@@ -198,7 +198,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 			queryWrapper2.eq(DishFlavour::getDishId, dishId);
 			// 檢索口味信息；
 			final List<DishFlavour> flavors = this.dishFlavourMapper.selectList(queryWrapper2);
-			dishDto.setFlavours(flavors);
+			dishDto.setFlavors(flavors);
 			return dishDto;
 		}).collect(Collectors.toList());
 	}
