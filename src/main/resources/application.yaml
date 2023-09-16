@@ -21,7 +21,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
-      logic-delete-field: logicDeleteFlg
+      logic-delete-field: isDeleted
       logic-delete-value: removed
       logic-not-delete-value: visible
   mapper-locations: classpath:mapper/*.xml
