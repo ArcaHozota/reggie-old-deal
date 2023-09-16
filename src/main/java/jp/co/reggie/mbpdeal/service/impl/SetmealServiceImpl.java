@@ -54,12 +54,17 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		final Setmeal setmeal = new Setmeal();
 		// 拷貝屬性；
 		BeanUtils.copyProperties(setmealDto, setmeal, "categoryName", "setmealDishes");
+		// 設置邏輯刪除字段；
+		setmeal.setIsDeleted("visible");
 		// 保存套餐的基本信息；
 		super.getBaseMapper().insert(setmeal);
 		// 獲取套餐菜品關聯集合；
 		final List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
 		// 獲取套餐ID並插入集合；
-		setmealDishes.forEach(item -> this.setmealDishMapper.insert(item));
+		setmealDishes.forEach(item -> {
+			item.setSetmealId(setmeal.getId());
+			this.setmealDishMapper.insert(item);
+		});
 	}
 
 	@Override
