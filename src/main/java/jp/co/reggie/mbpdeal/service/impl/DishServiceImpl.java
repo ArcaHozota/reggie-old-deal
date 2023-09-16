@@ -59,8 +59,12 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		final Dish dish = new Dish();
 		// 拷貝相關屬性；
 		BeanUtils.copyProperties(dishDto, dish, "flavours", "copy", "categoryName");
+		// 設置基礎順序；
+		dish.setSort(0);
+		// 設置邏輯刪除標志；
+		dish.setIsDeleted("visible");
 		// 保存菜品的基本信息到菜品表；
-		this.save(dish);
+		super.getBaseMapper().insert(dish);
 		// 獲取菜品口味的集合並將菜品ID設置到口味集合中；
 		dishDto.getFlavours().forEach(item -> {
 			// 獲取菜品ID；
@@ -112,7 +116,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		// 拷貝相關屬性；
 		BeanUtils.copyProperties(dishDto, dish, "flavours", "copy", "categoryName");
 		// 更新菜品信息；
-		this.updateById(dish);
+		super.getBaseMapper().updateById(dish);
 		// 清理當前菜品所對應的口味信息；
 		final LambdaQueryWrapper<DishFlavour> queryWrapper = new LambdaQueryWrapper<>();
 		queryWrapper.eq(DishFlavour::getDishId, dish.getId());
