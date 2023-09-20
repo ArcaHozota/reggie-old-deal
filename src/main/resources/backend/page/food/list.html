@@ -48,7 +48,7 @@
             </el-table-column>
             <el-table-column label="售賣狀態">
                 <template slot-scope="scope">
-                    <span style="margin-right: 10px;">{{scope.row.status === '0' ? '售罄' : '在售'}}</span>
+                    <span style="margin-right: 10px;">{{scope.row.status == '0' ? '售罄' : '在售'}}</span>
                 </template>
             </el-table-column>
             <el-table-column label="最後操作時間" prop="updatedTime"></el-table-column>
@@ -56,7 +56,7 @@
                 <template slot-scope="scope">
                     <el-button @click="addFoodtype(scope.row.id)" class="blueBug" size="small" type="text">修改</el-button>
                     <el-button @click="statusHandle(scope.row)" class="blueBug" size="small" type="text">
-                        {{scope.row.status === '0' ? '發售' : '停售'}}
+                        {{scope.row.status == '0' ? '發售' : '停售'}}
                     </el-button>
                     <el-button @click="deleteHandle('單個刪除', scope.row.id)" class="delBut non" size="small" type="text">刪除</el-button>
                 </template>
