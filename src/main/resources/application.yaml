@@ -1,5 +1,5 @@
 server:
-  port: 8281
+  port: 8286
 spring:
   application:
     name: reggie-take-out
@@ -21,7 +21,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
-      logic-delete-field: isDeleted
+      logic-delete-field: deleteFlg
       logic-delete-value: removed
       logic-not-delete-value: visible
   mapper-locations: classpath:mapper/*.xml
