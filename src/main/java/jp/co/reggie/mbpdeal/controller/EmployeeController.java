@@ -37,6 +37,23 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 
 	/**
+	 * 根據ID查詢員工信息
+	 *
+	 * @param id 員工ID
+	 * @return R.success(查詢到的員工的信息)
+	 */
+	@GetMapping("/{id}")
+	public Reggie<Employee> getById(@PathVariable final Long id) {
+		log.info("根據ID查詢員工信息...");
+		final Employee employee = this.employeeService.getById(id);
+		// 如果沒有相對應的結果，則返回錯誤信息；
+		if (employee == null) {
+			return Reggie.error(CustomMessages.ERP019);
+		}
+		return Reggie.success(employee);
+	}
+
+	/**
 	 * 員工登錄
 	 *
 	 * @param request  請求
@@ -48,7 +65,7 @@ public class EmployeeController {
 		// 進行登錄處理；
 		final Employee aEmployee = this.employeeService.login(employee);
 		// 登錄成功，將員工ID存入Session並返回登錄成功；
-		request.getSession().setAttribute(Constants.getEntityName(employee), aEmployee.getId());
+		request.getSession().setAttribute("employee", aEmployee.getId());
 		return Reggie.success(aEmployee);
 	}
 
@@ -61,8 +78,24 @@ public class EmployeeController {
 	@PostMapping("/logout")
 	public Reggie<String> logout(final HttpServletRequest request) {
 		// 清除Session中保存的當前登錄員工的ID；
-		request.getSession().removeAttribute(Constants.getEntityName(new Employee()));
+		request.getSession().removeAttribute("employee");
 		return Reggie.success(CustomMessages.SRP007);
+	}
+
+	/**
+	 * 員工信息分頁查詢
+	 *
+	 * @param pageNum  頁碼
+	 * @param pageSize 頁面大小
+	 * @param keyword  檢索文
+	 * @return R.success(分頁信息)
+	 */
+	@GetMapping("/page")
+	public Reggie<Page<Employee>> pagination(@RequestParam("pageNum") final Integer pageNum,
+			@RequestParam("pageSize") final Integer pageSize,
+			@RequestParam(name = "name", required = false) final String keyword) {
+		final Page<Employee> pageInfo = this.employeeService.pagination(pageNum, pageSize, keyword);
+		return Reggie.success(pageInfo);
 	}
 
 	/**
@@ -84,22 +117,6 @@ public class EmployeeController {
 	}
 
 	/**
-	 * 員工信息分頁查詢
-	 *
-	 * @param pageNum  頁碼
-	 * @param pageSize 頁面大小
-	 * @param keyword  檢索文
-	 * @return R.success(分頁信息)
-	 */
-	@GetMapping("/page")
-	public Reggie<Page<Employee>> pagination(@RequestParam("pageNum") final Integer pageNum,
-			@RequestParam("pageSize") final Integer pageSize,
-			@RequestParam(name = "name", required = false) final String keyword) {
-		final Page<Employee> pageInfo = this.employeeService.pagination(pageNum, pageSize, keyword);
-		return Reggie.success(pageInfo);
-	}
-
-	/**
 	 * 根據ID修改員工信息
 	 *
 	 * @param employee 實體類對象
@@ -109,22 +126,5 @@ public class EmployeeController {
 	public Reggie<String> update(@RequestBody final Employee employee) {
 		this.employeeService.updateById(employee);
 		return Reggie.success(CustomMessages.SRP008);
-	}
-
-	/**
-	 * 根據ID查詢員工信息
-	 *
-	 * @param id 員工ID
-	 * @return R.success(查詢到的員工的信息)
-	 */
-	@GetMapping("/{id}")
-	public Reggie<Employee> getById(@PathVariable final Long id) {
-		log.info("根據ID查詢員工信息...");
-		final Employee employee = this.employeeService.getById(id);
-		// 如果沒有相對應的結果，則返回錯誤信息；
-		if (employee == null) {
-			return Reggie.error(Constants.NO_CONSEQUENCE);
-		}
-		return Reggie.success(employee);
 	}
 }
