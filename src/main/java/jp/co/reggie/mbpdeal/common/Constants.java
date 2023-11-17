@@ -43,14 +43,19 @@ public final class Constants {
 	public static final String ERROR = "ERROR_OCCURRED";
 
 	/**
-	 * 重複的主鍵値
+	 * 重複的主鍵值
 	 */
-	public static final String DUPLICATED_KEY = "DUPLICATE_KY_ETR";
+	public static final String DUPLICATED_KEY = "Duplicate entry";
 
 	/**
-	 * 沒有相對應的結果
+	 * 邏輯刪除標志
 	 */
-	public static final String NO_CONSEQUENCE = "NO_SUCH_CONSEQUENCES";
+	public static final String LOGIC_FLAG = "visible";
+
+	/**
+	 * 邏輯刪除符號
+	 */
+	public static final String LOGIC_DELETED = "removed";
 
 	/**
 	 * 非禁用狀態
@@ -61,15 +66,4 @@ public final class Constants {
 	 * 禁用狀態
 	 */
 	public static final Integer STATUS_FORBIDDEN = 0;
-
-	/**
-	 * 獲取Entity類名
-	 *
-	 * @param obj object
-	 * @return class_name
-	 */
-	public static String getEntityName(final Object obj) {
-		return obj.getClass().getSimpleName().toLowerCase();
-	}
-
 }
