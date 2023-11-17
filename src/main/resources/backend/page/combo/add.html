@@ -275,8 +275,7 @@
 				<div v-show="seachKey.trim() == ''" class="tabBut">
 					<span v-for="(item, index) in dishType" :key="index"
 						:class="{act:index == keyInd}"
-						@click="checkTypeHandle(index, item.id)">{{
-						item.name }}</span>
+						@click="checkTypeHandle(index, item.id)">{{ item.name }}</span>
 				</div>
 				<div class="tabList">
 					<div class="table">
@@ -289,7 +288,7 @@
 							<el-checkbox :key="index" :label="item">
 							<div class="item">
 								<span style="flex: 3; text-align: left">{{ item.dishName
-									}}</span> <span>{{ item.status == 0 ? '停售' : '在售' }}</span> <span>{{
+									}}</span> <span>{{ item.status == '0' ? '停售' : '在售' }}</span> <span>{{
 									Number(item.price)/100 }}</span>
 							</div>
 							</el-checkbox>
@@ -302,7 +301,7 @@
 				<div class="tit">已選菜品({{ checkedList.length }})</div>
 				<div class="items">
 					<div v-for="(item, ind) in checkedList" :key="ind" class="item">
-						<span>{{ item.dishName }}</span> <span class="price">￥ {{
+						<span>{{ item.dishName }}</span> <span class="price">¥{{
 							Number(item.price)/100 }} </span> <span class="del"
 							@click="delCheck(ind)"> <img
 							src="../../images/icons/btn_clean@2x.png" alt="">
@@ -345,15 +344,15 @@
             dialogVisible: false,
             checkList: [],
             ruleForm: {
-              name: '',
-              categoryId: '',
-              price: '',
-              code: '',
-              image: '',
-              description: '',
-              dishList: [],
-              status: true,
-              idType: '',
+              'name': '',
+              'price': '',
+              'code': '',
+              'image': '',
+              'idType': '',
+              'description': '',
+              'dishList': [],
+              'status': true,
+              categoryId: ''
             },
             dishType: [],
             dishAddList: [],
@@ -378,20 +377,19 @@
               },
               price: {
                 required: true,
-                // 'message': '請輸入套餐價格',
                 validator: (rules, value, callback) => {
                     if (!value) {
-                      callback(new Error('請填寫菜品價格'))
+                      callback(new Error('請填寫套餐價格'))
                     } else {
                       const reg = /^\d+(\.\d{0,2})?$/
                       if (reg.test(value)) {
-                        if(value < 10000){
+                        if(value >= 100){
                           callback()
                         }else{
-                          callback(new Error('菜品價格小於10000'))
+                          callback(new Error('套餐價格小於10000'))
                         }
                       } else {
-                        callback(new Error('菜品價格格式只能為數字，且最多保留兩位小數。'))
+                        callback(new Error('套餐價格格式只能為數字，且最多保留兩位小數。'))
                       }
                     }
                   },
@@ -425,13 +423,12 @@
             querySetmealById(this.id).then((res) => {
               if (res.code === 'SUCCESS') {
                 this.ruleForm = res.data
-                this.ruleForm.status = res.data.status === 'ea'
+                this.ruleForm.status = res.data.status === '1'
                 this.ruleForm.price = res.data.price / 100
                 this.imageUrl = `/common/download?name=${res.data.image}`
                 this.checkList = res.data.setmealDishes
                 this.dishTable = res.data.setmealDishes
                 this.ruleForm.idType = res.data.categoryId
-                // this.ruleForm.password = ''
               } else {
                 this.$message.error(res.msg || '操作失敗')
               }
@@ -544,7 +541,7 @@
                       this.$message.error('請求出錯了：' + err)
                     })
                 } else {
-                  delete prams.updatedTime
+                  delete prams.updateTime
                   editSetmeal(prams)
                     .then((res) => {
                       if (res.code === 'SUCCESS') {
@@ -635,7 +632,7 @@
           // 关键词收搜菜品列表分类
           getDishForName (name) {
             queryDishList({name}).then(res => {
-              if (res.code === 'SUCCESS') {
+              if (res.code === 1) {
                 let newArr = res.data
                 newArr.forEach((n) => {
                   n.dishId = n.id

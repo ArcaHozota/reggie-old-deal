@@ -46,7 +46,7 @@ const querySetmealById = (id) => {
 const setmealStatusByStatus = (params) => {
     return $axios({
         url: `/setmeal/status/${params.status}`,
-        method: 'post',
+        method: 'put',
         params: {ids: params.ids}
     })
 }
