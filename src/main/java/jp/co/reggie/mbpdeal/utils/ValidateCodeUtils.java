@@ -2,7 +2,7 @@ package jp.co.reggie.mbpdeal.utils;
 
 import java.util.Random;
 
-import jp.co.reggie.mbpdeal.common.CustomException;
+import jp.co.reggie.mbpdeal.common.ReggieException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -35,7 +35,7 @@ public class ValidateCodeUtils {
 				code += 100000;
 			}
 		} else {
-			throw new CustomException("只能生成4位或6位數字的驗證碼。");
+			throw new ReggieException("只能生成4位或6位數字的驗證碼。");
 		}
 		return code;
 	}

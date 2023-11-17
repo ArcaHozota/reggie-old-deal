@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import jp.co.reggie.mbpdeal.common.Constants;
-import jp.co.reggie.mbpdeal.common.CustomException;
+import jp.co.reggie.mbpdeal.common.ReggieException;
 import jp.co.reggie.mbpdeal.entity.Employee;
 import jp.co.reggie.mbpdeal.mapper.EmployeeMapper;
 import jp.co.reggie.mbpdeal.service.EmployeeService;
@@ -40,11 +40,11 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 		final Employee aEmployee = super.getBaseMapper().selectOne(queryWrapper);
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
 		if (aEmployee == null || StringUtils.isNotEqual(password, aEmployee.getPassword())) {
-			throw new CustomException(Constants.NOT_LOGIN);
+			throw new ReggieException(Constants.NOT_LOGIN);
 		}
 		// 查看用戸狀態，如果已被禁用，則返回賬號已禁用；
 		if (aEmployee.getStatus() == 0) {
-			throw new CustomException(Constants.FORBIDDEN);
+			throw new ReggieException(Constants.FORBIDDEN);
 		}
 		return aEmployee;
 	}

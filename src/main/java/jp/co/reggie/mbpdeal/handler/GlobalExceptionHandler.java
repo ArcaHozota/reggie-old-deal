@@ -3,7 +3,7 @@ package jp.co.reggie.mbpdeal.handler;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 import jp.co.reggie.mbpdeal.common.Constants;
-import jp.co.reggie.mbpdeal.common.CustomException;
+import jp.co.reggie.mbpdeal.common.ReggieException;
 import jp.co.reggie.mbpdeal.utils.Reggie;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -47,8 +47,8 @@ public class GlobalExceptionHandler {
 	 * @param exception 通用業務異常
 	 * @return 錯誤信息
 	 */
-	@ExceptionHandler(CustomException.class)
-	public Reggie<String> exceptionHandler02(final CustomException exception) {
+	@ExceptionHandler(ReggieException.class)
+	public Reggie<String> exceptionHandler02(final ReggieException exception) {
 		log.error(exception.getMessage());
 		return Reggie.error(exception.getMessage());
 	}
