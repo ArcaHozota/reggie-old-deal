@@ -31,8 +31,10 @@ import jp.co.reggie.mbpdeal.service.SetmealService;
 import jp.co.reggie.mbpdeal.utils.StringUtils;
 
 /**
- * @author Administrator
- * @date 2022-11-19
+ * 套餐服務類
+ *
+ * @author ArcaHozota
+ * @since 1.71
  */
 @Service
 @Transactional(rollbackFor = PSQLException.class)
@@ -41,57 +43,16 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	private static final Random RANDOM = new Random();
 
 	/**
-	 * 分類管理實體類接口
+	 * 分類管理接口類
 	 */
 	@Autowired
 	private CategoryMapper categoryMapper;
 
 	/**
-	 * 套餐與菜品服務類
+	 * 套餐與菜品接口類
 	 */
 	@Autowired
 	private SetmealDishMapper setmealDishMapper;
-
-	@Override
-	public void saveWithDish(final SetmealDto setmealDto) {
-		// 聲明套餐實體類；
-		final Setmeal setmeal = new Setmeal();
-		// 拷貝屬性；
-		BeanUtils.copyProperties(setmealDto, setmeal, "categoryName", "setmealDishes");
-		// 設置邏輯刪除字段；
-		setmeal.setIsDeleted("visible");
-		// 保存套餐的基本信息；
-		super.getBaseMapper().insert(setmeal);
-		// 獲取套餐菜品關聯集合；
-		final List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
-		// 獲取套餐ID並插入集合；
-		setmealDishes.forEach(item -> {
-			item.setSetmealId(setmeal.getId());
-			item.setSort(RANDOM.nextInt(setmealDishes.size()));
-			item.setIsDeleted("visible");
-			this.setmealDishMapper.insert(item);
-		});
-	}
-
-	@Override
-	public void updateWithDish(final SetmealDto setmealDto) {
-		// 聲明套餐實體類；
-		final Setmeal setmeal = new Setmeal();
-		// 拷貝屬性；
-		BeanUtils.copyProperties(setmealDto, setmeal, "categoryName", "setmealDishes");
-		// 更新套餐的基本信息；
-		this.updateById(setmeal);
-		// 獲取套餐菜品關聯集合；
-		final List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
-		// 更新套餐和菜品的關聯關係；
-		setmealDishes.forEach(item -> {
-			final LambdaQueryWrapper<SetmealDish> queryWrapper = Wrappers.lambdaQuery();
-			queryWrapper.eq(SetmealDish::getDishId, item.getDishId());
-			queryWrapper.eq(SetmealDish::getSetmealId, setmealDto.getId());
-			final SetmealDish setmealDish = this.setmealDishMapper.selectOne(queryWrapper);
-			this.setmealDishMapper.updateById(setmealDish);
-		});
-	}
 
 	@Override
 	public void batchUpdateByIds(final String status, final List<Long> smIdList) {
@@ -105,25 +66,19 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		}
 		final LocalDateTime now = LocalDateTime.now();
 		final Long currentId = BaseContext.getCurrentId();
-		super.getBaseMapper().batchUpdateByIds(newStatus, currentId, now, smIdList);
+		this.getBaseMapper().batchUpdateByIds(newStatus, currentId, now, smIdList);
 	}
 
 	@Override
-	@Transactional(rollbackFor = PSQLException.class)
-	public void removeWithDish(final List<Long> ids) {
-		// 查詢套餐狀態以確認是否可以刪除；
-		final LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
-		queryWrapper.in(Setmeal::getId, ids);
-		queryWrapper.eq(Setmeal::getStatus, 1);
-		final long count = this.count(queryWrapper);
-		if (count > 0) {
-			// 如果無法刪除，則抛出異常；
-			throw new CustomException(CustomMessages.ERP012);
-		}
-		// 刪除套餐表中的數據；
-		this.removeByIds(ids);
-		// 刪除套餐口味表中的數據；
-		this.setmealDishMapper.batchRemoveBySmIds(ids);
+	public SetmealDto getByIdWithDish(final Long id) {
+		final Setmeal setmeal = this.getById(id);
+		final LambdaQueryWrapper<SetmealDish> queryWrapper = Wrappers.lambdaQuery();
+		queryWrapper.eq(SetmealDish::getSetmealId, id);
+		final List<SetmealDish> setmealDishes = this.setmealDishMapper.selectList(queryWrapper);
+		final SetmealDto setmealDto = new SetmealDto();
+		BeanUtils.copyProperties(setmeal, setmealDto);
+		setmealDto.setSetmealDishes(setmealDishes);
+		return setmealDto;
 	}
 
 	@Override
@@ -166,15 +121,62 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	}
 
 	@Override
-	public SetmealDto getByIdWithDish(final Long id) {
-		final Setmeal setmeal = this.getById(id);
-		final LambdaQueryWrapper<SetmealDish> queryWrapper = Wrappers.lambdaQuery();
-		queryWrapper.eq(SetmealDish::getSetmealId, id);
-		final List<SetmealDish> setmealDishes = this.setmealDishMapper.selectList(queryWrapper);
-		final SetmealDto setmealDto = new SetmealDto();
-		BeanUtils.copyProperties(setmeal, setmealDto);
-		setmealDto.setSetmealDishes(setmealDishes);
-		return setmealDto;
+	@Transactional(rollbackFor = PSQLException.class)
+	public void removeWithDish(final List<Long> ids) {
+		// 查詢套餐狀態以確認是否可以刪除；
+		final LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.in(Setmeal::getId, ids);
+		queryWrapper.eq(Setmeal::getStatus, 1);
+		final long count = this.count(queryWrapper);
+		if (count > 0) {
+			// 如果無法刪除，則抛出異常；
+			throw new CustomException(CustomMessages.ERP012);
+		}
+		// 刪除套餐表中的數據；
+		this.removeByIds(ids);
+		// 刪除套餐口味表中的數據；
+		this.setmealDishMapper.batchRemoveBySmIds(ids);
+	}
+
+	@Override
+	public void saveWithDish(final SetmealDto setmealDto) {
+		// 聲明套餐實體類；
+		final Setmeal setmeal = new Setmeal();
+		// 拷貝屬性；
+		BeanUtils.copyProperties(setmealDto, setmeal, "categoryName", "setmealDishes");
+		// 設置邏輯刪除字段；
+		setmeal.setDeleteFlg(Constants.LOGIC_FLAG);
+		// 保存套餐的基本信息；
+		super.getBaseMapper().insert(setmeal);
+		// 獲取套餐菜品關聯集合；
+		final List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
+		// 獲取套餐ID並插入集合；
+		setmealDishes.forEach(item -> {
+			item.setSetmealId(setmeal.getId());
+			item.setSort(RANDOM.nextInt(setmealDishes.size()));
+			item.setDeleteFlg(Constants.LOGIC_FLAG);
+			this.setmealDishMapper.insert(item);
+		});
+	}
+
+	@Override
+	public void updateWithDish(final SetmealDto setmealDto) {
+		// 聲明套餐實體類；
+		final Setmeal setmeal = new Setmeal();
+		// 拷貝屬性；
+		BeanUtils.copyProperties(setmealDto, setmeal, "categoryName", "setmealDishes");
+		// 更新套餐的基本信息；
+		this.updateById(setmeal);
+		// 獲取套餐菜品關聯集合；
+		final List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
+		// 更新套餐和菜品的關聯關係；
+		setmealDishes.forEach(item -> {
+			final LambdaQueryWrapper<SetmealDish> queryWrapper = Wrappers.lambdaQuery();
+			queryWrapper.eq(SetmealDish::getDishId, item.getDishId());
+			queryWrapper.eq(SetmealDish::getSetmealId, setmealDto.getId());
+			final SetmealDish setmealDish = this.setmealDishMapper.selectOne(queryWrapper);
+			this.setmealDishMapper.updateById(setmealDish);
+		});
 	}
 
 }
