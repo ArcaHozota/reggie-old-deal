@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import jp.co.reggie.mbpdeal.common.Constants;
-import jp.co.reggie.mbpdeal.common.CustomMessages;
+import jp.co.reggie.mbpdeal.common.CommonMessages;
 import jp.co.reggie.mbpdeal.entity.Employee;
 import jp.co.reggie.mbpdeal.service.EmployeeService;
 import jp.co.reggie.mbpdeal.utils.Reggie;
@@ -26,7 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 員工管理控制器
  *
- * @author Administrator
+ * @author ArcaHozota
+ * @since 1.00beta
  */
 @Slf4j
 @RestController
@@ -48,7 +49,7 @@ public class EmployeeController {
 		final Employee employee = this.employeeService.getById(id);
 		// 如果沒有相對應的結果，則返回錯誤信息；
 		if (employee == null) {
-			return Reggie.error(CustomMessages.ERP019);
+			return Reggie.error(CommonMessages.ERP019);
 		}
 		return Reggie.success(employee);
 	}
@@ -79,7 +80,7 @@ public class EmployeeController {
 	public Reggie<String> logout(final HttpServletRequest request) {
 		// 清除Session中保存的當前登錄員工的ID；
 		request.getSession().removeAttribute("employee");
-		return Reggie.success(CustomMessages.SRP007);
+		return Reggie.success(CommonMessages.SRP007);
 	}
 
 	/**
@@ -113,7 +114,7 @@ public class EmployeeController {
 		final String genderString = StringUtils.isNotEqual("1", employee.getGender()) ? "Female" : "Male";
 		employee.setGender(genderString);
 		this.employeeService.save(employee);
-		return Reggie.success(CustomMessages.SRP006);
+		return Reggie.success(CommonMessages.SRP006);
 	}
 
 	/**
@@ -125,6 +126,6 @@ public class EmployeeController {
 	@PutMapping
 	public Reggie<String> update(@RequestBody final Employee employee) {
 		this.employeeService.updateById(employee);
-		return Reggie.success(CustomMessages.SRP008);
+		return Reggie.success(CommonMessages.SRP008);
 	}
 }

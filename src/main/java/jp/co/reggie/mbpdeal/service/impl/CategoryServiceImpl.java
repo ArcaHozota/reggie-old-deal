@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import jp.co.reggie.mbpdeal.common.CustomException;
-import jp.co.reggie.mbpdeal.common.CustomMessages;
+import jp.co.reggie.mbpdeal.common.CommonMessages;
 import jp.co.reggie.mbpdeal.entity.Category;
 import jp.co.reggie.mbpdeal.entity.Dish;
 import jp.co.reggie.mbpdeal.entity.Setmeal;
@@ -54,7 +54,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 		final long count1 = this.dishService.count(dishQueryWrapper);
 		// 查詢當前分類是否已經關聯了菜品，如果已經關聯抛出一個異常；
 		if (count1 > 0) {
-			throw new CustomException(CustomMessages.ERP009);
+			throw new CustomException(CommonMessages.ERP009);
 		}
 		final LambdaQueryWrapper<Setmeal> setMealQueryWrapper = new LambdaQueryWrapper<>();
 		// 添加查詢條件，根據ID進行查詢；
@@ -62,7 +62,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 		final long count2 = this.setmealService.count(setMealQueryWrapper);
 		// 查詢當前分類是否已經關聯了套餐，如果已經關聯抛出一個異常；
 		if (count2 > 0) {
-			throw new CustomException(CustomMessages.ERP009);
+			throw new CustomException(CommonMessages.ERP009);
 		}
 		// 正常刪除分類；
 		super.removeById(id);

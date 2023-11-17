@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
-import jp.co.reggie.mbpdeal.common.CustomMessages;
+import jp.co.reggie.mbpdeal.common.CommonMessages;
 import jp.co.reggie.mbpdeal.entity.AddressBook;
 import jp.co.reggie.mbpdeal.handler.BaseContext;
 import jp.co.reggie.mbpdeal.service.AddressBookService;
@@ -74,7 +74,7 @@ public class AddressBookController {
 		if (addressBook != null) {
 			return Reggie.success(addressBook);
 		}
-		return Reggie.error(CustomMessages.ERP019);
+		return Reggie.error(CommonMessages.ERP019);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class AddressBookController {
 		if (addressBook != null) {
 			return Reggie.success(addressBook);
 		}
-		return Reggie.error(CustomMessages.ERP019);
+		return Reggie.error(CommonMessages.ERP019);
 	}
 
 	/**

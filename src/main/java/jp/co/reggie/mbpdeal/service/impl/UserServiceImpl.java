@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import jp.co.reggie.mbpdeal.common.CustomException;
-import jp.co.reggie.mbpdeal.common.CustomMessages;
+import jp.co.reggie.mbpdeal.common.CommonMessages;
 import jp.co.reggie.mbpdeal.entity.User;
 import jp.co.reggie.mbpdeal.mapper.UserMapper;
 import jp.co.reggie.mbpdeal.service.UserService;
@@ -47,7 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		final String codeInSession = session.getAttribute(phoneNo).toString();
 		// 進行驗證碼的比對；
 		if (StringUtils.isNotEqual(code, codeInSession) || StringUtils.isEmpty(codeInSession)) {
-			throw new CustomException(CustomMessages.ERP014);
+			throw new CustomException(CommonMessages.ERP014);
 		}
 		// 認證成功，放行登錄並驗證是否為新注冊手機號；
 		final LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
@@ -74,7 +74,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		// 獲取手機號；
 		final String phoneNo = user.getPhoneNo();
 		if (phoneNo.isBlank()) {
-			throw new CustomException(CustomMessages.ERP013);
+			throw new CustomException(CommonMessages.ERP013);
 		}
 		// 生成隨機的6位數驗證碼；
 		final String code = ValidateCodeUtils.generateValidateCode(6).toString();

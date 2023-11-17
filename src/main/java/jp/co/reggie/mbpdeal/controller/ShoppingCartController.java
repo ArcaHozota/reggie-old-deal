@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
-import jp.co.reggie.mbpdeal.common.CustomMessages;
+import jp.co.reggie.mbpdeal.common.CommonMessages;
 import jp.co.reggie.mbpdeal.entity.ShoppingCart;
 import jp.co.reggie.mbpdeal.handler.BaseContext;
 import jp.co.reggie.mbpdeal.service.ShoppingCartService;
@@ -87,6 +87,6 @@ public class ShoppingCartController {
 		final LambdaQueryWrapper<ShoppingCart> queryWrapper = Wrappers.lambdaQuery(new ShoppingCart());
 		queryWrapper.eq(ShoppingCart::getUserId, BaseContext.getCurrentId());
 		this.shoppingCartService.remove(queryWrapper);
-		return Reggie.success(CustomMessages.SRP018);
+		return Reggie.success(CommonMessages.SRP018);
 	}
 }

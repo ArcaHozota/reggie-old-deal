@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import jp.co.reggie.mbpdeal.common.CustomMessages;
+import jp.co.reggie.mbpdeal.common.CommonMessages;
 import jp.co.reggie.mbpdeal.dto.SetmealDto;
 import jp.co.reggie.mbpdeal.service.SetmealService;
 import jp.co.reggie.mbpdeal.utils.Reggie;
@@ -60,7 +60,7 @@ public class SetmealController {
 		log.info("套餐信息：{}", setmealDto);
 		// 儲存套餐；
 		this.setmealService.saveWithDish(setmealDto);
-		return Reggie.success(CustomMessages.SRP010);
+		return Reggie.success(CommonMessages.SRP010);
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class SetmealController {
 		log.info("套餐信息：{}", setmealDto);
 		// 儲存套餐；
 		this.setmealService.updateWithDish(setmealDto);
-		return Reggie.success(CustomMessages.SRP021);
+		return Reggie.success(CommonMessages.SRP021);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class SetmealController {
 	public Reggie<String> delete(@RequestParam("ids") final List<Long> ids) {
 		log.info("套餐ID：{}", ids);
 		this.setmealService.removeWithDish(ids);
-		return Reggie.success(CustomMessages.SRP011);
+		return Reggie.success(CommonMessages.SRP011);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class SetmealController {
 	@PostMapping("/status/{status}")
 	public Reggie<String> changeStatus(@PathVariable final String status, @RequestParam("ids") final Long[] ids) {
 		this.setmealService.batchUpdateByIds(status, Arrays.asList(ids));
-		return Reggie.success(CustomMessages.SRP023);
+		return Reggie.success(CommonMessages.SRP023);
 	}
 
 	/**

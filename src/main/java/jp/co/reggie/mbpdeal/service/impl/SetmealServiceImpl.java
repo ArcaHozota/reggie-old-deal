@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import jp.co.reggie.mbpdeal.common.Constants;
 import jp.co.reggie.mbpdeal.common.CustomException;
-import jp.co.reggie.mbpdeal.common.CustomMessages;
+import jp.co.reggie.mbpdeal.common.CommonMessages;
 import jp.co.reggie.mbpdeal.dto.SetmealDto;
 import jp.co.reggie.mbpdeal.entity.Category;
 import jp.co.reggie.mbpdeal.entity.Setmeal;
@@ -62,7 +62,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		} else if (StringUtils.isEqual("1", status)) {
 			newStatus = Constants.STATUS_FORBIDDEN;
 		} else {
-			throw new CustomException(CustomMessages.ERP022);
+			throw new CustomException(CommonMessages.ERP022);
 		}
 		final LocalDateTime now = LocalDateTime.now();
 		final Long currentId = BaseContext.getCurrentId();
@@ -130,7 +130,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		final long count = this.count(queryWrapper);
 		if (count > 0) {
 			// 如果無法刪除，則抛出異常；
-			throw new CustomException(CustomMessages.ERP012);
+			throw new CustomException(CommonMessages.ERP012);
 		}
 		// 刪除套餐表中的數據；
 		this.removeByIds(ids);

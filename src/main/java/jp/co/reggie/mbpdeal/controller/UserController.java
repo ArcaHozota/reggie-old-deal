@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jp.co.reggie.mbpdeal.common.CustomMessages;
+import jp.co.reggie.mbpdeal.common.CommonMessages;
 import jp.co.reggie.mbpdeal.entity.User;
 import jp.co.reggie.mbpdeal.service.UserService;
 import jp.co.reggie.mbpdeal.utils.Reggie;
@@ -45,6 +45,6 @@ public class UserController {
 	@PostMapping("/sendMsg")
 	public Reggie<String> sendMsg(@RequestBody final User user, final HttpSession session) {
 		this.userService.sendMessage(user, session);
-		return Reggie.success(CustomMessages.SRP015);
+		return Reggie.success(CommonMessages.SRP015);
 	}
 }
