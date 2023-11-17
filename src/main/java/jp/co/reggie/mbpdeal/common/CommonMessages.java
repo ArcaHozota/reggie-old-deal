@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 /**
  * 自定義返回信息集合類
  *
- * @author Administrator
+ * @author ArcaHozota
  * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
