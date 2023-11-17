@@ -122,5 +122,5 @@ public class AddressBook implements Serializable {
 	 * 邏輯刪除字段
 	 */
 	@TableLogic
-	private String isDeleted;
+	private String deleteFlg;
 }
