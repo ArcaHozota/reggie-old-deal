@@ -14,9 +14,9 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import jp.co.reggie.mbpdeal.common.CommonMessages;
 import jp.co.reggie.mbpdeal.common.Constants;
 import jp.co.reggie.mbpdeal.common.ReggieException;
-import jp.co.reggie.mbpdeal.common.CommonMessages;
 import jp.co.reggie.mbpdeal.dto.DishDto;
 import jp.co.reggie.mbpdeal.entity.Category;
 import jp.co.reggie.mbpdeal.entity.Dish;
@@ -174,8 +174,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		dishDto.getFlavors().forEach(item -> {
 			// 獲取菜品ID；
 			item.setDishId(dish.getId());
-			// 設置邏輯刪除標志；
-			item.setDeleteFlg("visible");
 			// 保存菜品的口味數據到口味表；
 			this.dishFlavourMapper.insert(item);
 		});
@@ -196,7 +194,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		// 添加當前菜品的口味數據並將菜品ID設置到口味集合中；
 		dishDto.getFlavors().forEach(item -> {
 			item.setDishId(dish.getId());
-			item.setDeleteFlg(Constants.LOGIC_FLAG);
 			this.dishFlavourMapper.insert(item);
 		});
 	}

@@ -16,9 +16,9 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import jp.co.reggie.mbpdeal.common.CommonMessages;
 import jp.co.reggie.mbpdeal.common.Constants;
 import jp.co.reggie.mbpdeal.common.ReggieException;
-import jp.co.reggie.mbpdeal.common.CommonMessages;
 import jp.co.reggie.mbpdeal.dto.SetmealDto;
 import jp.co.reggie.mbpdeal.entity.Category;
 import jp.co.reggie.mbpdeal.entity.Setmeal;
@@ -154,7 +154,6 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		setmealDishes.forEach(item -> {
 			item.setSetmealId(setmeal.getId());
 			item.setSort(RANDOM.nextInt(setmealDishes.size()));
-			item.setDeleteFlg(Constants.LOGIC_FLAG);
 			this.setmealDishMapper.insert(item);
 		});
 	}

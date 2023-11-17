@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
@@ -66,10 +65,4 @@ public class DishFlavour implements Serializable {
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Long updatedUser;
-
-	/**
-	 * 邏輯刪除字段
-	 */
-	@TableLogic
-	private String deleteFlg;
 }
