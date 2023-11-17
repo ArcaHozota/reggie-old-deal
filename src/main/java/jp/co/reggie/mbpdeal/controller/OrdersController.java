@@ -18,7 +18,7 @@ import jp.co.reggie.mbpdeal.utils.Reggie;
  * @author Administrator
  */
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrdersController {
 
 	/**
@@ -42,9 +42,8 @@ public class OrdersController {
 			@RequestParam("pageSize") final Integer pageSize,
 			@RequestParam(value = "number", required = false) final Long orderId,
 			@RequestParam(value = "beginTime", required = false) final String beginTime,
-			@RequestParam(value = "terminalTime", required = false) final String terminalTime) {
-		final Page<Orders> pageInfo = this.ordersService.pagination(pageNum, pageSize, orderId, beginTime,
-				terminalTime);
+			@RequestParam(value = "endTime", required = false) final String endTime) {
+		final Page<Orders> pageInfo = this.ordersService.pagination(pageNum, pageSize, orderId, beginTime, endTime);
 		return Reggie.success(pageInfo);
 	}
 }
