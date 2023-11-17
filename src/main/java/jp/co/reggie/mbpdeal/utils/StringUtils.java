@@ -17,7 +17,8 @@ import lombok.NoArgsConstructor;
 /**
  * 通用判斷工具類
  *
- * @author Administrator
+ * @author ArcaHozota
+ * @since 1.00beta
  *
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -228,6 +229,38 @@ public final class StringUtils {
 	}
 
 	/**
+	 * 該当文字列はすべて半角かどうかを判断する
+	 *
+	 * @param hankakuString 文字列
+	 * @return true: すべて半角文字列, false: 全角文字も含める
+	 */
+	public static boolean isAllHankaku(final String hankakuString) {
+		final List<String> zenkakuList = new ArrayList<>(HALF_FULL_CONVERTAR.keySet());
+		for (final char aChar : hankakuString.toCharArray()) {
+			if (zenkakuList.contains(String.valueOf(aChar))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * 該当文字列はすべて全角かどうかを判断する
+	 *
+	 * @param zenkakuString 文字列
+	 * @return true: すべて全角文字列, false: 半角文字も含める
+	 */
+	public static boolean isAllZenkaku(final String zenkakuString) {
+		final List<String> hankakuList = new ArrayList<>(HALF_FULL_CONVERTAR.values());
+		for (final char aChar : zenkakuString.toCharArray()) {
+			if (hankakuList.contains(String.valueOf(aChar))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * ある文字列はすべて数字であるかどうかを判断する
 	 *
 	 * @param string ストリング
@@ -244,7 +277,7 @@ public final class StringUtils {
 	 * @return true: 空, false: 空ではない
 	 */
 	public static boolean isEmpty(@Nullable final String str) {
-		return (str == null) || (str.length() == 0) || str.isBlank();
+		return (str == null) || str.isEmpty() || str.isBlank();
 	}
 
 	/**
@@ -262,22 +295,6 @@ public final class StringUtils {
 			return false;
 		}
 		return str1.trim().equals(str2.trim());
-	}
-
-	/**
-	 * 該当文字列はすべて半角かどうかを判断する
-	 *
-	 * @param hankakuString 文字列
-	 * @return true: すべて半角文字列, false: 全角文字も含める
-	 */
-	public static boolean isHankaku(final String hankakuString) {
-		final List<String> zenkakuList = new ArrayList<>(HALF_FULL_CONVERTAR.keySet());
-		for (final char aChar : hankakuString.toCharArray()) {
-			if (zenkakuList.contains(String.valueOf(aChar))) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	/**
@@ -299,22 +316,6 @@ public final class StringUtils {
 	 */
 	public static boolean isNotEqual(@Nullable final String str1, @Nullable final String str2) {
 		return !StringUtils.isEqual(str1, str2);
-	}
-
-	/**
-	 * 該当文字列はすべて全角かどうかを判断する
-	 *
-	 * @param hankakuString 文字列
-	 * @return true: すべて全角文字列, false: 半角文字も含める
-	 */
-	public static boolean isZenkaku(final String zenkakuString) {
-		final List<String> hankakuList = new ArrayList<>(HALF_FULL_CONVERTAR.values());
-		for (final char aChar : zenkakuString.toCharArray()) {
-			if (hankakuList.contains(String.valueOf(aChar))) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	/**
